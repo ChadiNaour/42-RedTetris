@@ -6,8 +6,9 @@ export const roomsSlice = createSlice({
     rooms: [],
   },
   reducers: {
-    updateRooms: (state) => {
-      state.rooms = [{name:"sdsfsff"}];
+    updateRooms: (state, action) => {
+      // console.log(action)
+      state.rooms = action.payload;
       // console.log(action.payload);
 
     },

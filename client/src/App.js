@@ -1,11 +1,16 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import updateRooms from './reducers/roomsSlice'
+import { updateRooms } from './reducers/roomsSlice'
+import { getRoomsRequest } from './actions/roomsActions';
+import { ToastContainer, toast } from 'react-toastify';
 import io from 'socket.io-client';
 import styled from "styled-components";
+import 'react-toastify/dist/ReactToastify.css';
 
 const socket = io.connect("http://localhost:3001");
+
+toast.configure()
 
 const StyledCreateRoom = styled.div`
         width: 100vw;
@@ -37,8 +42,10 @@ const StyledCreateRoom = styled.div`
                         height: 30px;
                         margin: 0.5rem 1rem;
                         font-size: 1rem;
+                        color: gray;
                 }
                 &__submit {
+                        cursor: pointer;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -60,7 +67,7 @@ const StyledCreateRoom = styled.div`
         }`;
 
 const StyledListRooms = styled.div`
-        // height: 600px;
+        height: 600px;
         width: 600px;
         background-color: rgba(255, 255, 255, 0.8);
         border-radius: 20px;
@@ -73,21 +80,20 @@ const StyledListRooms = styled.div`
                 color: #5e454b;
                 background-color: rgba(255, 255, 255, 0.5);
         }
-        ul {
-                list-style: none;
+        .list {
+                // padding: 10px;
                 width: 100%;
+                // background-color: red;
         }
         .item {
-                padding: 0.5em;
-                width: 100%;
+                margin: 10px;
+                // width: 100%;
                 height: 50px;
         }
         .button {
                 cursor: pointer;
                 width: 100%;
                 height: 100%;
-                background-color: #e9dac1;
-                background-color: #21d4fd;
                 background-image: linear-gradient(
                         19deg,
                         #21d4fd 0%,
@@ -102,29 +108,39 @@ const StyledListRooms = styled.div`
 function App() {
         const [username, setUsername] = useState("");
         const [room, setRoom] = useState("");
-        const [rooms, setRooms] = useState([]);
-        // const rooms = useSelector((state) => state.roomsReducer.rooms);
-        const dispatch = useDispatch();
+        const [mode, setMode] = useState("solo");
+        // const [rooms, setRooms] = useState([]);
         
+        const rooms = useSelector((state) => state.roomsReducer.rooms);
+        const dispatch = useDispatch();
+
         // console.log(rooms);
 
-        const joinRoom = () => {
+        const createRoom = () => {
                 if (username !== "" && room !== "") {
-                        socket.emit("create_room", room)
+                        socket.emit("create_room", {room, mode, username})
                 }
         }
 
         useEffect(() => {
+                // console.log("the mode is", mode);
+                dispatch(getRoomsRequest());
+                // socket.emit("get_rooms");
                 socket.on("update_rooms", (data) => {
-                        // console.log(data);
-                        setRooms(data);
-                        // dispatch(updateRooms())
+                        console.log("the data is ana");
+                        dispatch(updateRooms(data));                     
+                });
+                socket.on("room_exists", () => {
+                        console.log("room_already_exist");
+                        toast("Room already exist")
                 });
 
-        }, [socket])
+
+        }, [])
 
         return (
                 <div className="App">
+                        {/* <ToastContainer /> */}
                         <StyledCreateRoom>
                                 <h1 className="title">Create Room</h1>
                                 <div className="form">
@@ -142,9 +158,15 @@ function App() {
                                                 // value={room}
                                                 onChange={(e) => { setRoom(e.target.value); }}
                                         />
+                                        <div>
+                                                <select value={mode} onChange={(e) => {console.log(e.target.value);setMode(e.target.value); }} className="form__input" style={{ height: "45px" }}>
+                                                        <option value={mode}>{mode}</option>
+                                                        <option value={mode === "solo" ? "battle" : "solo"}>{mode === "solo" ? "battle" : "solo"}</option>
+                                                </select>
+                                        </div>
                                         <button
                                                 className="form__submit"
-                                                onClick={joinRoom}
+                                                onClick={createRoom}
                                         >
                                                 Create
                                         </button>
@@ -152,20 +174,19 @@ function App() {
                         </StyledCreateRoom>
                         <StyledListRooms>
                                 <h1 className="title">Rooms</h1>
-                                <ul className="list">
+                                {/* <ul className="list" style={{ backgroundColor: "red" }}> */}
+                                <div className="list">
                                         {rooms.map((room, key) => (
-                                                <li className="item" key={key}>
+                                                <div className="item" key={key}>
                                                         <button
                                                                 className="button"
-                                                                // onClick={() => {
-                                                                //         setRoom(room);
-                                                                // }}
                                                         >
-                                                                {room.name}
+                                                                {room.name} {room.mode} {room.playersIn}/{room.maxPlayers}
                                                         </button>
-                                                </li>
+                                                </div>
                                         ))}
-                                </ul>
+                                </div>
+                                {/* </ul> */}
                         </StyledListRooms>
                 </div>
         );
