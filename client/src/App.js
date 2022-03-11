@@ -110,7 +110,7 @@ function App() {
         const [room, setRoom] = useState("");
         const [mode, setMode] = useState("solo");
         // const [rooms, setRooms] = useState([]);
-        
+
         const rooms = useSelector((state) => state.roomsReducer.rooms);
         const dispatch = useDispatch();
 
@@ -124,10 +124,11 @@ function App() {
 
         useEffect(() => {
                 // console.log("the mode is", mode);
-                dispatch(getRoomsRequest());
+                // dispatch(getRoomsRequest());
+                setInterval(() => {dispatch(getRoomsRequest())}, 3000);
                 // socket.emit("get_rooms");
                 socket.on("update_rooms", (data) => {
-                        console.log("the data is ana");
+                        // console.log("the data is ana");
                         dispatch(updateRooms(data));                     
                 });
                 socket.on("room_exists", () => {

@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
             socket.join(data.room);
             // console.log("user with id:", socket.id, "joined room:", data.room);
             console.log("rooms are", rooms);
-            console.log("players are", players);
+            // console.log("players are", players);
             socket.emit("update_rooms", rooms);
         }
         else {
