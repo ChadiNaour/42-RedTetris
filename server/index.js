@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
             // console.log("user with id:", socket.id, "joined room:", data.room);
             console.log("rooms are", rooms);
             // console.log("players are", players);
-            socket.emit("update_rooms", rooms);
+            socket.broadcast.emit("update_rooms", rooms);
         }
         else {
             socket.emit("room_exists");
