@@ -67,12 +67,19 @@ export const RightSide = styled.div`
     }
     .input {
       width: 50%;
+      color: white;
       label {
-        font-size: 1rem;
         color: white;
+        font-size: 1rem;
       }
       .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
         border-color: #b33030;
+      }
+      .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+        color : white;
+      }
+      .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+        color : white;
       }
     }
   }

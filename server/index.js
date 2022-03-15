@@ -26,6 +26,23 @@ app.get("/rooms", (req, res) => {
 io.on("connection", (socket) => {
     console.log("User connected =>", socket.id);
 
+    //new user
+    socket.on("new_user", (data) => {
+        console.log(data);
+        const exist = players.find(player => player.username === data.username);
+        console.log(exist);
+        if (!exist)
+        {
+            players = [...players, { username: data.username, socketId: socket.id, room: ""}];
+            socket.emit("user_exists", {username: data.username});
+
+        }
+        else
+        {
+            socket.emit("user_exists", {error: "user existe"});
+        }
+    })
+
     //create new room
     socket.on("create_room", (data) => {
         const exist = rooms.find(room => room.name === data.room)
@@ -39,8 +56,8 @@ io.on("connection", (socket) => {
             socket.join(data.room);
             // console.log("user with id:", socket.id, "joined room:", data.room);
             console.log("rooms are", rooms);
-            // console.log("players are", players);
-            socket.broadcast.emit("update_rooms", rooms);
+            console.log("players are", players);
+            io.emit("update_rooms", rooms);
         }
         else {
             socket.emit("room_exists");
