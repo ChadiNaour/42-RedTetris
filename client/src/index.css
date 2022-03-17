@@ -33,3 +33,8 @@ code {
   src: url("../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf")
     format("ttf");
 }
+
+@font-face {
+  font-family: "Pixel";
+  src: url("../assets/fonts/Pixel-LCD-7.woff") format("woff");
+}

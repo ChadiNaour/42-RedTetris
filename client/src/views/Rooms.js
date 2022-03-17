@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateRooms } from '../reducers/roomsSlice'
 import { getRoomsRequest } from '../actions/roomsActions';
 import { ToastContainer, toast } from 'react-toastify';
+import StartButton from '../components/StartButton/StartButton';
 
 const { Option } = Select;
 
@@ -76,7 +77,9 @@ const Rooms = ({ socket }) => {
             <Option value="solo">solo</Option>
             <Option value="battle">battle</Option>
           </Select>
-          <input type="submit" value="create" onClick={createRoom} />
+          {/* <div> */}
+          <StartButton />
+          {/* <input type="submit" value="create" onClick={createRoom} /> */}
         </div>
       </div>
       <JoinRoom>
