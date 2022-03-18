@@ -1,5 +1,5 @@
 import { StyledNav } from "./Navbar.Style";
-const Navbar = () => {
+const Navbar = ({user}) => {
     return (
         <StyledNav>
             <ul className="list">
@@ -14,9 +14,9 @@ const Navbar = () => {
                 <li className="list--element">
                     <li className="profile">
                         <div className="banyola">
-                            <p className="letter">f</p>
+                            <p className="letter">{user.userName.charAt(0)}</p>
                         </div>
-                        <p className="username">farwila</p>
+                        <p className="username">{user.userName}</p>
                     </li>
                 </li>
             </ul>

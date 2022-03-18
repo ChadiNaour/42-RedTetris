@@ -32,7 +32,7 @@ function App() {
                 <div className="App">
                         <ThemeProvider theme={Theme}>
                                 <StyledApp className="App">
-                                        {(user.userName && !user.roomName) ?<NavBar /> : ""}
+                                        {(user.userName && !user.roomName) ?<NavBar user={user} /> : ""}
                                         {!user.userName ? <Home socket={socket} /> : ""}
                                         {/* <Route path="/game" element={<Game />} /> */}
                                         {(user.userName && !user.roomName) ? <Rooms socket={socket} /> : ""}

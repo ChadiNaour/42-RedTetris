@@ -28,25 +28,29 @@ export const StyledNav = styled.nav`
                 }
             }
             .profile {
+                // background-color: red;
                 display: flex;
                 align-items: center;
-                gap: 15px;
-                height: 70px;
-                padding: 0 1.2rem 0 0.5rem;
+                justify-content: center;
+                gap: 10px;
+                height: 60px;
+                padding: 0 1.5rem 0 0.2rem;
                 border-radius: 50px;
                 .banyola {
                     position: relative;
-                    width: 60px;
-                    height: 60px;
+                    width: 58px;
+                    height: 58px;
                     border-radius: 50%;
                     background-color: #0a3d62;
                     border: solid #f9253c 3px;
+                    justify-content: center;
+                    align-items: center;
                     .letter {
                         position: absolute;
-                        top: 50%;
-                        left: 50%;
+                        top: 38%;
+                        left: 48%;
                         transform: translate(-50%, -50%);
-                        font-size: 2rem;
+                        font-size: 3rem;
                         color: #f9253c;
                     }
                 }

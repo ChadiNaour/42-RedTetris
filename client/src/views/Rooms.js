@@ -78,7 +78,7 @@ const Rooms = ({ socket }) => {
             <Option value="battle">battle</Option>
           </Select>
           {/* <div> */}
-          <StartButton />
+          <StartButton createRoom={createRoom} />
           {/* <input type="submit" value="create" onClick={createRoom} /> */}
         </div>
       </div>
@@ -92,7 +92,7 @@ const Rooms = ({ socket }) => {
             <div className="item status">status</div>
           </header>
           {rooms.map((room, key) => (
-            <div className="room" key={key}>
+            <div className="room hover:bg-gray-700" key={key}>
               <div className="item name">{room.name}</div>
               <div className="item mode">{room.mode}</div>
               <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
