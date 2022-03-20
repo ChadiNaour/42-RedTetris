@@ -1,14 +1,20 @@
 import styled from "styled-components";
+import Tetris from '../../src/images/redTetris2.png';
+
 export const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  // object-fit: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  // background-image: url(${Tetris});
 `;
 
 export const LeftSide = styled.div`
-  width: 50%;
+  width: 60%;
   height: 100%;
-  background-image: url("https://images.unsplash.com/photo-1555864400-cc47dd93d427?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dGV0cmlzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60");
+  background-image: url(${Tetris});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -18,7 +24,7 @@ export const LeftSide = styled.div`
 `;
 export const RightSide = styled.div`
   display: inline-block;
-  width: 50%;
+  width: 40%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -66,7 +72,7 @@ export const RightSide = styled.div`
       }
     }
     .input {
-      width: 50%;
+      width: 500px;
       color: white;
       label {
         color: white;

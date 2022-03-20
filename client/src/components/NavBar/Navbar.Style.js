@@ -18,10 +18,12 @@ export const StyledNav = styled.nav`
             display: flex;
             height: 100%;
             align-items: center;
-            font-size: 1.2rem;
+            font-size: 2rem;
+            font-family: ${(props) => props.theme.headers.h1.font};
             &--title {
-                color: #fad390;
-                font-size: 50px;
+                color: whitesmoke;
+                font-size: 70px;
+                font-family: ${(props) => props.theme.headers.h1.font};
                 &--span {
                     margin-left: 10px;
                     color: #f9253c;
@@ -41,25 +43,22 @@ export const StyledNav = styled.nav`
                     width: 58px;
                     height: 58px;
                     border-radius: 50%;
-                    background-color: #0a3d62;
+                    background-color: #212121;
                     border: solid #f9253c 3px;
                     justify-content: center;
                     align-items: center;
                     .letter {
                         position: absolute;
-                        top: 38%;
-                        left: 48%;
+                        top: 50%;
+                        left: 50%;
                         transform: translate(-50%, -50%);
-                        font-size: 3rem;
+                        font-size: 4rem;
                         color: #f9253c;
                     }
                 }
                 .username {
-                    color: #fad390;
-                    font-size: 1.8rem;
-                }
-                &:hover {
-                    background-color: #072a43;
+                    color: whitesmoke;
+                    font-size: 2.6rem;
                 }
             }
         }

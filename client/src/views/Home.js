@@ -6,6 +6,7 @@ import { StyledContainer, LeftSide, RightSide } from "./Home.Style";
 import { addUser, clearUser } from '../reducers/playerSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import {StyledStartButton1} from "../components/StartButton/StyledStartButton";
 
 const Home = ({ socket }) => {
   // let navigate = useNavigate();
@@ -60,7 +61,12 @@ const Home = ({ socket }) => {
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <input type="submit" />
+          {/* <input type="submit" /> */}
+          {/* <StartButton /> */}
+          <StyledStartButton1 >
+        {/* <div style={{marginTop:"-8px"}}></div> */}
+    play
+    </StyledStartButton1 >
           <span style={{ color: "red" }}>{errorUsername}</span>
         </form>
       </RightSide>

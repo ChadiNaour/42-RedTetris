@@ -31,15 +31,12 @@ io.on("connection", (socket) => {
         console.log(data);
         const exist = players.find(player => player.username === data.username);
         console.log(exist);
-        if (!exist)
-        {
-            players = [...players, { username: data.username, socketId: socket.id, room: ""}];
-            socket.emit("user_exists", {username: data.username});
+        if (!exist) {
+            players = [...players, { username: data.username, socketId: socket.id, room: "" }];
+            socket.emit("user_exists", { username: data.username });
 
-        }
-        else
-        {
-            socket.emit("user_exists", {error: "user existe"});
+        } else {
+            socket.emit("user_exists", { error: "user existe" });
         }
     })
 
@@ -57,9 +54,9 @@ io.on("connection", (socket) => {
             // console.log("user with id:", socket.id, "joined room:", data.room);
             console.log("rooms are", rooms);
             console.log("players are", players);
+            // io.emit("created_room", data.room);
             io.emit("update_rooms", rooms);
-        }
-        else {
+        } else {
             socket.emit("room_exists");
         }
     })
