@@ -57,11 +57,9 @@ export const StyledRoomCard = styled.div`
     }
 `;
 export const StyledContainer = styled.div`
-  width: 100%;
-  height: 95%;
-  padding: 5rem;
   display: flex;
   flex-direction: column;
+  padding-top: 2rem;
   align-items: center;
   .title {
     width: 50%;
@@ -87,8 +85,7 @@ export const StyledContainer = styled.div`
       gap: 50px;
     }
     &--select {
-      width: 50%;
-      width: 10%;
+      width: 15%;
       border: none;
       .ant-select-selector {
         height: 3rem;

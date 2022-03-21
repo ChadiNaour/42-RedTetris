@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Rooms from "./views/Rooms";
 import { Theme } from "./utils/theme";
 import NavBar from "./components/NavBar/NavBar";
-// import Game from "./views/Game";
+import Game from "./views/Game";
 import Home from "./views/Home";
 
 const socket = io.connect("http://localhost:3001");
@@ -26,7 +26,18 @@ function App() {
 
         let user = useSelector((state) => state.playerReducer);
         const [avatar, setAvatar] = useState("");
+        const rooms = useSelector((state) => state.roomsReducer.rooms)
+        const [userRoom, setUserRoom] = useState(null);
         console.log("the user is", user);
+
+        useEffect(() => {
+                if (user.roomName && rooms.length > 0)
+                {
+                        setUserRoom(rooms.find(room => room.name === user.roomName))
+
+                }
+                console.log("the user name is",userRoom);
+        },[rooms])
 
         return (
                 // <BrowserRouter>
@@ -34,8 +45,9 @@ function App() {
                         <ThemeProvider theme={Theme}>
                                 <StyledApp className="App">
                                         {(user.userName && !user.roomName) ?<NavBar user={user} avatar={avatar} /> : ""}
+                                        {/* {(user.userName && user.roomName) ? <div className='bg-green-300'>{userRoom?.name}</div> : ""} */}
                                         {!user.userName ? <Home socket={socket} avatar={avatar} setAvatar={setAvatar} /> : ""}
-                                        {/* <Route path="/game" element={<Game />} /> */}
+                                        {(user.userName && user.roomName) ? <Game userRoom={userRoom} /> : ""}
                                         {(user.userName && !user.roomName) ? <Rooms socket={socket} /> : ""}
 
                                 </StyledApp>

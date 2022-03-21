@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
             console.log("rooms are", rooms);
             console.log("players are", players);
             // io.emit("created_room", data.room);
-            io.emit("update_rooms", rooms);
+            io.emit("update_rooms", {rooms: rooms, created: true, roomname: data.room});
         } else {
             socket.emit("room_exists");
         }

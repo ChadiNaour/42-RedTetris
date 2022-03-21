@@ -3,7 +3,8 @@ import { Select } from "antd";
 import { useEffect, useState } from "react";
 import { StyledContainer, JoinRoom , StyledRoomCard} from "./Rooms.Style";
 import { useSelector, useDispatch } from 'react-redux';
-import { updateRooms } from '../reducers/roomsSlice'
+import { updateRooms } from '../reducers/roomsSlice';
+import { addRoomName } from '../reducers/playerSlice';
 import { getRoomsRequest } from '../actions/roomsActions';
 import { ToastContainer, toast } from 'react-toastify';
 import StartButton from '../components/StartButton/StartButton';
@@ -12,12 +13,12 @@ import { AiOutlineUser } from "react-icons/ai";
 
 import { Badge } from "antd";
 
-const RoomCard = () => {
+const RoomCard = ({room}) => {
     return (
-        <Badge.Ribbon text="Battle" color="red">
+        <Badge.Ribbon text={room.mode} color="red">
             <StyledRoomCard>
                 <div className="name">
-                    pikala <AiOutlineUser  /> 1 / 4
+                {room.name} <AiOutlineUser  /> {room.playersIn}/{room.maxPlayers}
                 </div>
                 {/* <div className="players">
                     <AiOutlineUser style={{ marginRight: "30px" }} /> 1 / 4
@@ -29,7 +30,7 @@ const RoomCard = () => {
                 desktopSize={"128px"}
                 mobileSize={"80px"}
             /> */}
-                <div className="status">In Game...</div>
+                <div className="status">status</div>
             </StyledRoomCard>
         </Badge.Ribbon>
     );
@@ -66,9 +67,19 @@ const Rooms = ({ socket }) => {
     // dispatch(getRoomsRequest());
     dispatch(getRoomsRequest());
     // socket.emit("get_rooms");
-    socket.on("update_rooms", (data) => {
-      // console.log("the data is ana");
-      dispatch(updateRooms(data));
+    socket.on("update_rooms", async (data) => {
+      console.log(data.created);
+      if (data.created)
+      {
+        console.log("add name", data.roomname);
+        setRoom(data.roomname);
+        try{
+
+          dispatch(addRoomName(data.roomname));
+        }catch{}
+
+      }
+      dispatch(updateRooms(data.rooms));
     });
     socket.on("room_exists", () => {
       console.log("room_already_exist");
@@ -114,9 +125,15 @@ const Rooms = ({ socket }) => {
       <JoinRoom>
         <h2 className="title">join room</h2>
         <div className="rooms-container">
-
-        <RoomCard/>
-        <RoomCard/>
+        {rooms.map((room, key) => (
+          <RoomCard room={room} key={key}/>
+            // <div className="room hover:bg-gray-700" key={key}>
+            //   <div className="item name">{room.name}</div>
+            //   <div className="item mode">{room.mode}</div>
+            //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
+            //   <div className="item status">status</div>
+            // </div>
+          ))}
         </div>
       </JoinRoom>
     </StyledContainer>
