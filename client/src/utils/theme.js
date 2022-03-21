@@ -47,7 +47,7 @@ export const Theme = {
         fillCol: "#46b3e6",
     },
     border: {
-        stage: "#f9253c",
+        stage: "#424242",
         avatar: "#b33030",
     },
 };

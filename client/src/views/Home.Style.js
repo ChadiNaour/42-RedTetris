@@ -10,14 +10,16 @@ export const StyledContainer = styled.div`
   // background-repeat: no-repeat;
   // background-image:
   // linear-gradient(to right, #212121, rgba(117, 19, 93, 0.73)),url(${Tetris});
-  // background-image: url(${Tetris});
+  background-image: url(${Tetris});
+  background-size: cover;
+  background-position: center;
 `;
 
 export const LeftSide = styled.div`
   width: 60%;
   height: 100%;
   
-  background-image: url(${Tetris});
+  // background-image: url(${Tetris});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,12 +32,12 @@ export const StyledAvatar = styled.div`
     cursor: pointer;
     width: 200px;
     height: 200px;
-    background-color: ${(props) => props.theme.background.primary};
+    // background-color: ${(props) => props.theme.background.primary};
     svg {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-color: ${(props) => props.theme.background.primary};
+        // background-color: ${(props) => props.theme.background.primary};
         background-size: cover;
         background-position: center;
     };

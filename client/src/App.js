@@ -44,7 +44,7 @@ function App() {
                 <div className="App">
                         <ThemeProvider theme={Theme}>
                                 <StyledApp className="App">
-                                        {(user.userName && !user.roomName) ?<NavBar user={user} avatar={avatar} /> : ""}
+                                        {(user.userName) ?<NavBar user={user} avatar={avatar} /> : ""}
                                         {/* {(user.userName && user.roomName) ? <div className='bg-green-300'>{userRoom?.name}</div> : ""} */}
                                         {!user.userName ? <Home socket={socket} avatar={avatar} setAvatar={setAvatar} /> : ""}
                                         {(user.userName && user.roomName) ? <Game userRoom={userRoom} /> : ""}

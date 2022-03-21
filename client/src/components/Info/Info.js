@@ -65,6 +65,8 @@ const GameDetails = styled.div`
     background-color: black;
     width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     border-top: 1px solid #b33030;
     border-left: 1px solid #b33030;
@@ -73,8 +75,8 @@ const GameDetails = styled.div`
   p {
     width: 100%;
     text-align: center;
-    font-size: 0.8rem;
-    font-family: ${(props) => props.theme.message.font};
+    font-size: 1rem;
+    font-family: Pixel, Arial, Helvetica, sans-serif;
     font-weight: ${(props) => props.theme.message.fontWeight};
     letter-spacing: ${(props) => props.theme.message.letterSpacing};
     color: ${(props) => props.theme.message.color};
@@ -89,9 +91,9 @@ const Info = () => {
       <GameDetails>
         <h1>Details</h1>
         <div className="content">
-          <p>score : 50</p>
+          <p >score : 50</p>
           <p>level : 10</p>
-          <p>mode select</p>
+          <p>mode : select</p>
         </div>
       </GameDetails>
       <NextTetromino>
