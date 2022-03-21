@@ -2,17 +2,20 @@ import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
-import { StyledContainer, LeftSide, RightSide } from "./Home.Style";
+import { StyledContainer, LeftSide, RightSide, StyledAvatar  } from "./Home.Style";
 import { addUser, clearUser } from '../reducers/playerSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import {StyledStartButton1} from "../components/StartButton/StyledStartButton";
+import {getAvatar} from '../utils/Helpers';
+import parse from "html-react-parser";
 
 const Home = ({ socket }) => {
   // let navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const dispatch = useDispatch();
+  const [avatar, setAvatar] = useState("");
 
   const addUsername = () => {
     userName.trim();
@@ -38,7 +41,16 @@ const Home = ({ socket }) => {
       socket.off("user_exists");
     };
   }, [])
-
+  useEffect(() => {
+    // console.log(avatar)
+    getAvatar()
+        .then((avatar) => {
+            setAvatar(avatar);
+        })
+        .catch((err) => {
+            console.log(err.response.data);
+        });
+}, []);
   return (
     <StyledContainer>
       <ToastContainer />
@@ -53,6 +65,21 @@ const Home = ({ socket }) => {
             addUsername();
           }}
         >
+             <StyledAvatar>
+                        {avatar ? parse(avatar) : ""}
+                        <div
+                            onClick={() => {
+                                getAvatar()
+                                    .then((avatar) => {
+                                        setAvatar(avatar);
+                                    })
+                                    .catch((err) => {
+                                        console.log(err.response.data);
+                                    });
+                            }}
+                        >
+                        </div>
+                    </StyledAvatar>
           <TextField
             className="input"
             id="outlined-basic"
