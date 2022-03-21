@@ -1,5 +1,7 @@
 import { StyledNav } from "./Navbar.Style";
-const Navbar = ({user}) => {
+import parse from "html-react-parser";
+
+const Navbar = ({user, avatar}) => {
     return (
         <StyledNav>
             <ul className="list">
@@ -14,7 +16,7 @@ const Navbar = ({user}) => {
                 <li className="list--element">
                     <li className="profile">
                         <div className="banyola">
-                            <p className="letter">{user.userName.charAt(0)}</p>
+                        {avatar ? parse(avatar) : ""}
                         </div>
                         <p className="username">{user.userName}</p>
                     </li>

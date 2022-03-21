@@ -27,6 +27,7 @@ export const LeftSide = styled.div`
 `;
 
 export const StyledAvatar = styled.div`
+    cursor: pointer;
     width: 200px;
     height: 200px;
     background-color: ${(props) => props.theme.background.primary};

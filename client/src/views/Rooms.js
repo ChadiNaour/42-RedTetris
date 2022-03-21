@@ -1,14 +1,43 @@
 import TextField from "@mui/material/TextField";
 import { Select } from "antd";
 import { useEffect, useState } from "react";
-import { StyledContainer, JoinRoom } from "./Rooms.Style";
+import { StyledContainer, JoinRoom , StyledRoomCard} from "./Rooms.Style";
 import { useSelector, useDispatch } from 'react-redux';
 import { updateRooms } from '../reducers/roomsSlice'
 import { getRoomsRequest } from '../actions/roomsActions';
 import { ToastContainer, toast } from 'react-toastify';
 import StartButton from '../components/StartButton/StartButton';
+import { AiOutlineUser } from "react-icons/ai";
+// import { BoxesLoader } from "react-awesome-loaders";
+
+import { Badge } from "antd";
+
+const RoomCard = () => {
+    return (
+        <Badge.Ribbon text="Battle" color="red">
+            <StyledRoomCard>
+                <div className="name">
+                    pikala <AiOutlineUser  /> 1 / 4
+                </div>
+                {/* <div className="players">
+                    <AiOutlineUser style={{ marginRight: "30px" }} /> 1 / 4
+                </div> */}
+                <div className="cover"></div>
+                {/* <BoxesLoader
+                boxColor={"#6366F1"}
+                style={{ marginBottom: "20px" }}
+                desktopSize={"128px"}
+                mobileSize={"80px"}
+            /> */}
+                <div className="status">In Game...</div>
+            </StyledRoomCard>
+        </Badge.Ribbon>
+    );
+};
 
 const { Option } = Select;
+
+
 
 const Rooms = ({ socket }) => {
   const [mode, setMode] = useState("solo");
@@ -84,21 +113,10 @@ const Rooms = ({ socket }) => {
       </div>
       <JoinRoom>
         <h2 className="title">join room</h2>
-        <div className="container">
-          <header>
-            <div className="item name">name</div>
-            <div className="item mode">mode</div>
-            <div className="item players">players</div>
-            <div className="item status">status</div>
-          </header>
-          {rooms.map((room, key) => (
-            <div className="room hover:bg-gray-700" key={key}>
-              <div className="item name">{room.name}</div>
-              <div className="item mode">{room.mode}</div>
-              <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
-              <div className="item status">status</div>
-            </div>
-          ))}
+        <div className="rooms-container">
+
+        <RoomCard/>
+        <RoomCard/>
         </div>
       </JoinRoom>
     </StyledContainer>

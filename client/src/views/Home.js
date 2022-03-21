@@ -9,13 +9,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import {StyledStartButton1} from "../components/StartButton/StyledStartButton";
 import {getAvatar} from '../utils/Helpers';
 import parse from "html-react-parser";
+import { Popover, Button } from 'antd';
 
-const Home = ({ socket }) => {
+const Home = ({ socket, avatar , setAvatar}) => {
   // let navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const dispatch = useDispatch();
-  const [avatar, setAvatar] = useState("");
+  // const [avatar, setAvatar] = useState("");
+  // const []
 
   const addUsername = () => {
     userName.trim();
@@ -65,10 +67,8 @@ const Home = ({ socket }) => {
             addUsername();
           }}
         >
-             <StyledAvatar>
-                        {avatar ? parse(avatar) : ""}
-                        <div
-                            onClick={() => {
+            <Popover  placement="left"  content={"Click here to change your avatar"}>
+             <StyledAvatar   onClick={() => {
                                 getAvatar()
                                     .then((avatar) => {
                                         setAvatar(avatar);
@@ -76,10 +76,11 @@ const Home = ({ socket }) => {
                                     .catch((err) => {
                                         console.log(err.response.data);
                                     });
-                            }}
-                        >
-                        </div>
+                            }}>
+                        {avatar ? parse(avatar) : ""}
+           
                     </StyledAvatar>
+                    </Popover>
           <TextField
             className="input"
             id="outlined-basic"

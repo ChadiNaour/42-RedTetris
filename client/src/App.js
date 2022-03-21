@@ -25,6 +25,7 @@ const StyledApp = styled.div`
 function App() {
 
         let user = useSelector((state) => state.playerReducer);
+        const [avatar, setAvatar] = useState("");
         console.log("the user is", user);
 
         return (
@@ -32,8 +33,8 @@ function App() {
                 <div className="App">
                         <ThemeProvider theme={Theme}>
                                 <StyledApp className="App">
-                                        {(user.userName && !user.roomName) ?<NavBar user={user} /> : ""}
-                                        {!user.userName ? <Home socket={socket} /> : ""}
+                                        {(user.userName && !user.roomName) ?<NavBar user={user} avatar={avatar} /> : ""}
+                                        {!user.userName ? <Home socket={socket} avatar={avatar} setAvatar={setAvatar} /> : ""}
                                         {/* <Route path="/game" element={<Game />} /> */}
                                         {(user.userName && !user.roomName) ? <Rooms socket={socket} /> : ""}
 
