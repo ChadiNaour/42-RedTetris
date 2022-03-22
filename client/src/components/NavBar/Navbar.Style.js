@@ -2,9 +2,12 @@ import styled from "styled-components";
 
 export const StyledNav = styled.nav`
     width: 100%;
-    padding: 50px;
-    height: 150px;
+    padding-top: 60px;
+    padding-inline: 60px;
+    padding-bottom: 40px;
+    height: 120px;
     display: flex;
+    // background-color: red;
     align-items: center;
     margin: 0 auto;
     .list {

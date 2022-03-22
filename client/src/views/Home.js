@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { StyledContainer, LeftSide, RightSide, StyledAvatar  } from "./Home.Style";
-import { addUser, clearUser } from '../reducers/playerSlice';
+import { addUser, setUserAvatar } from '../reducers/playerSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import {StyledStartButton1} from "../components/StartButton/StyledStartButton";
@@ -11,12 +11,12 @@ import {getAvatar} from '../utils/Helpers';
 import parse from "html-react-parser";
 import { Popover, Button } from 'antd';
 
-const Home = ({ socket, avatar , setAvatar}) => {
+const Home = ({ socket }) => {
   // let navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const dispatch = useDispatch();
-  // const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState("");
   // const []
 
   const addUsername = () => {
@@ -65,6 +65,7 @@ const Home = ({ socket, avatar , setAvatar}) => {
           onSubmit={(event) => {
             event.preventDefault();
             addUsername();
+            dispatch(setUserAvatar(avatar));
           }}
         >
             <Popover  placement="left"  content={"Click here to change your avatar"}>

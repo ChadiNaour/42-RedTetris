@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
   background-color: ${(props) => props.theme.background.primary};
   grid-template-columns: 500px 500px 500px;
   grid-template-rows: 350px 350px 350px;
-  padding: 2rem;
+  padding: 1rem;
   gap: 1rem;
   justify-content: center;
   grid-template-areas:
@@ -75,7 +75,9 @@ const StyledMsgs = styled.div`
   grid-area: msgs;
 `;
 
-const Game = () => {
+const Game = ({userRoom}) => {
+
+  console.log(userRoom);
   return (
     <StyledContainer>
       <StyledOtherStages>

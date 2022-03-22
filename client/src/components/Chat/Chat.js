@@ -69,7 +69,7 @@ const StyledChat = styled.div`
 const Chat = () => {
   return (
     <StyledChat>
-      <h1>chat</h1>
+      {/* <h1>chat</h1> */}
       <div className="users">
         <div className="user">
           <UserCard />
