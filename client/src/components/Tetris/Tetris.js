@@ -30,7 +30,7 @@ const Tetris = () => {
     setStage(createStage());
     resetPlayer();
     setGameOver(false);
-    console.log("bskch");
+    // console.log("bskch");
   };
   const drop = () => {
     if (!checkCollision(player, stage, { x: 0, y: 1 }))

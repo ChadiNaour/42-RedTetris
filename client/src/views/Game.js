@@ -4,6 +4,8 @@ import Info from "../components/Info/Info";
 import Chat from "../components/Chat/Chat.js";
 import OtherStages from "../components/OtherStages/OtherStages";
 import Tetris from "../components/Tetris/Tetris";
+import { useSelector , useDispatch} from 'react-redux'
+
 
 const StyledContainer = styled.div`
   /* width: 100%; */
@@ -76,6 +78,8 @@ const StyledMsgs = styled.div`
 `;
 
 const Game = ({userRoom}) => {
+  const players = useSelector(state => state.playersReducer.players)
+  console.log("hado homa lplayers", players)
 
   console.log(userRoom);
   return (
@@ -90,7 +94,7 @@ const Game = ({userRoom}) => {
         <Info />
       </StyledInfo>
       <StyledMsgs>
-        <Chat />
+        <Chat players={players} />
       </StyledMsgs>
     </StyledContainer>
   );

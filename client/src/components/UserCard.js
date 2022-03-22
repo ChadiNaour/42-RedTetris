@@ -1,5 +1,6 @@
 import Avatar from "./UserAvatar";
 import styled from "styled-components";
+import parse from "html-react-parser";
 
 const StyledUserCard = styled.div`
   height: auto;
@@ -17,11 +18,11 @@ const StyledUserCard = styled.div`
   }
 `;
 
-const UserCard = () => {
+const UserCard = ({player}) => {
   return (
     <StyledUserCard>
-      <Avatar />
-      <h3>username</h3>
+      <Avatar avatar= {player.avatar}/>
+      <h3>{player.username}</h3>
     </StyledUserCard>
   );
 };

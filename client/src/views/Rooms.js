@@ -43,6 +43,7 @@ const { Option } = Select;
 const Rooms = ({ socket }) => {
   const [mode, setMode] = useState("solo");
   const [room, setRoom] = useState("");
+  const avatar = useSelector((state) => state.playerReducer.avatar)
   // const rooms = useSelector((state) => state.roomsReducer.rooms);
   const user = useSelector((state) => state.playerReducer);
   const rooms = useSelector((state) => state.roomsReducer.rooms);
@@ -56,7 +57,7 @@ const Rooms = ({ socket }) => {
   const createRoom = () => {
     if (user.userName && room !== "") {
       // console.log(mode, room, user.userName);
-      socket.emit("create_room", { room, mode, username: user.userName })
+      socket.emit("create_room", { room, mode, username: user.userName , avatar: avatar })
       console.log(rooms);
     }
   }

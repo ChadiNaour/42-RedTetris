@@ -23,7 +23,7 @@ const Home = ({ socket }) => {
     userName.trim();
     const regex = /^[a-zA-Z0-9]{4,16}$/;
     if (regex.test(userName)) {
-      socket.emit("new_user", { username: userName })
+      socket.emit("new_user", { username: userName, avatar: avatar });
       // dispatch(addUser(userName));
     }
     else {

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import parse from "html-react-parser";
 
 const StyledAvatar = styled.div`
   width: 40px;
@@ -19,10 +20,10 @@ const StyledAvatar = styled.div`
   }
 `;
 
-const Avatar = () => {
+const Avatar = ({ avatar }) => {
   return (
     <StyledAvatar>
-      <h3>us</h3>
+      {avatar ? parse(avatar) : ""}
     </StyledAvatar>
   );
 };

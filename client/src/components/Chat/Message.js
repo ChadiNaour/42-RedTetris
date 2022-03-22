@@ -80,7 +80,7 @@ const StyledMessage = styled.div`
 `;
 
 const Message = ({ username, message, index }) => {
-  console.log(username, message, index);
+  // console.log(username, message, index);
   return (
     <StyledMessage type={index % 2 === 0 ? 1 : 0}>
       <div className="avatar">
@@ -96,9 +96,9 @@ const Message = ({ username, message, index }) => {
 
 const Messages = () => {
   const messages = [
-    { username: "rwayda", message: "fachkout ibno lbott" },
-    { username: "pikala", message: "fachkout ibno lmaslou9" },
-    { username: "telfaza", message: "fachkout ibno lmandour" },
+    // { username: "rwayda", message: "fachkout ibno lbott" },
+    // { username: "pikala", message: "fachkout ibno lmaslou9" },
+    // { username: "telfaza", message: "fachkout ibno lmandour" },
   ];
   return (
     <StyledMsgs>

@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
             else
                 rooms = [...rooms, { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1 }];
             //still checking the player
-            players = [...players, { username: data.username, socketId: socket.id, room: data.room }];
+            players = [...players, { username: data.username, socketId: socket.id, room: data.room , avatar: data.avatar}];
             socket.join(data.room);
             // console.log("user with id:", socket.id, "joined room:", data.room);
             console.log("rooms are", rooms);
@@ -63,9 +63,26 @@ io.on("connection", (socket) => {
 
     //get room players
     socket.on("getPlayers", (data) => {
+        var temp = [];
+        var roomPlayers = [];
         console.log("in here")
         console.log(data);
-        io.sockets.adapter.rooms.get(data.name);
+        const clients = io.sockets.adapter.rooms.get(data.name);
+        console.log("clients in room are ===>",clients);
+        if (clients) {
+            for (const clientId of clients) {
+                temp.push(clientId);
+            }
+        }
+        for (let i = 0; i < players.length; i++) {
+            for (let j = 0; j < temp.length; j++) {
+                if (players[i].socketId === temp[j]) {
+                    roomPlayers.push(players[i]);
+                }
+            }
+        }
+        console.log(roomPlayers);
+        socket.emit("update_players", roomPlayers);
         // var clients = io.sockets.clients();
         // var clients = io.sockets.clients(data.room);
         // console.log(players);

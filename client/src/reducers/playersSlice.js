@@ -6,14 +6,14 @@ export const playersSlice = createSlice({
     players : [],
   },
   reducers: {
-    // updateRooms: (state, action) => {
-    //   state.rooms = action.payload;
+    updatePlayers: (state, action) => {
+      state.players = action.payload;
 
-    // },
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { updateRooms } = playersSlice.actions
+export const { updatePlayers } = playersSlice.actions
 
 export default playersSlice.reducer

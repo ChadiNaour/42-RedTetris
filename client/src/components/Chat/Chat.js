@@ -66,23 +66,18 @@ const StyledChat = styled.div`
   }
 `;
 
-const Chat = () => {
+const Chat = ({players}) => {
   return (
     <StyledChat>
       {/* <h1>chat</h1> */}
       <div className="users">
-        <div className="user">
-          <UserCard />
-        </div>
-        <div className="user">
-          <UserCard />
-        </div>
-        <div className="user">
-          <UserCard />
-        </div>
-        <div className="user">
-          <UserCard />
-        </div>
+       {players.map((player, key) => (
+        //  console.log(player)
+         <div key={key} className="user">
+           <UserCard player={player}/>
+         </div>
+
+       ))}
       </div>
       <div className="chat-box">
         <Messages />

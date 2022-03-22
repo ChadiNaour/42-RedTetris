@@ -6,8 +6,8 @@ export const StyledContainer = styled.div`
   height: 100%;
   display: flex;
   // object-fit: contain;
-  background-size: cover;
-  // background-repeat: no-repeat;
+  background-size: contain;
+  background-repeat: no-repeat;
   // background-image:
   // linear-gradient(to right, #212121, rgba(117, 19, 93, 0.73)),url(${Tetris});
   background-image: url(${Tetris});

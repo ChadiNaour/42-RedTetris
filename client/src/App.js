@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector , useDispatch} from 'react-redux'
 import io from 'socket.io-client';
 import styled, { ThemeProvider } from "styled-components";
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +8,7 @@ import { Theme } from "./utils/theme";
 import NavBar from "./components/NavBar/NavBar";
 import Game from "./views/Game";
 import Home from "./views/Home";
+import {updatePlayers} from './reducers/playersSlice';
 
 const socket = io.connect("http://localhost:3001");
 
@@ -25,24 +26,40 @@ const StyledApp = styled.div`
 function App() {
 
         let user = useSelector((state) => state.playerReducer);
-        const rooms = useSelector((state) => state.roomsReducer.rooms)
+        const rooms = useSelector((state) => state.roomsReducer.rooms);
+        const dispatch = useDispatch();
         const [userRoom, setUserRoom] = useState(null);
-        console.log("the user is", user);
+        // console.log("the user is", user);
+
+        const setRoomUser = (data) => {
+                var rooom = rooms.find(room => room.name === data);
+                setUserRoom(rooms.find(room => room.name === data));
+                getRoomplayers(rooom);
+        }
 
         const getRoomplayers = (userRoom) => {
-                console.log(userRoom);
+                console.log("the useroooom is", userRoom);
                 if (userRoom) {
                         socket.emit("getPlayers", userRoom);
                 }
         }
 
         useEffect(() => {
+                socket.on("update_players", (data) => {
+                        console.log("the palyers are", data);
+                        dispatch(updatePlayers(data));
+                });
                 if (user.roomName && rooms.length > 0) {
-                        setUserRoom(rooms.find(room => room.name === user.roomName));
-                        if (userRoom)
-                                getRoomplayers(userRoom);
+                        // setUserRoom(rooms.find(room => room.name === user.roomName));
+                        setRoomUser(user.roomName);
+                        // console.log("the userRoom is : ", userRoom);
+                        // getRoomplayers(userRoom);
+                        // if (userRoom)
+                        // {
+                        // console.log("in the if")
+                        // }
                 }
-                console.log("the user name is", userRoom);
+                // console.log("the user name is", userRoom);
         }, [rooms])
 
         return (
