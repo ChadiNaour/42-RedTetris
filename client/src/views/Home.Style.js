@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Tetris from '../../src/images/tetrisRed.jpeg';
+import Tetris from '../../src/images/redTetris2.png';
 
 export const StyledContainer = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ export const StyledContainer = styled.div`
 `;
 
 export const LeftSide = styled.div`
-  width: 60%;
+  // width: 90%;
   height: 100%;
   
   // background-image: url(${Tetris});

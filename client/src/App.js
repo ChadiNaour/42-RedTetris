@@ -25,28 +25,34 @@ const StyledApp = styled.div`
 function App() {
 
         let user = useSelector((state) => state.playerReducer);
-        const [avatar, setAvatar] = useState("");
         const rooms = useSelector((state) => state.roomsReducer.rooms)
         const [userRoom, setUserRoom] = useState(null);
         console.log("the user is", user);
 
-        useEffect(() => {
-                if (user.roomName && rooms.length > 0)
-                {
-                        setUserRoom(rooms.find(room => room.name === user.roomName))
-
+        const getRoomplayers = (userRoom) => {
+                console.log(userRoom);
+                if (userRoom) {
+                        socket.emit("getPlayers", userRoom);
                 }
-                console.log("the user name is",userRoom);
-        },[rooms])
+        }
+
+        useEffect(() => {
+                if (user.roomName && rooms.length > 0) {
+                        setUserRoom(rooms.find(room => room.name === user.roomName));
+                        if (userRoom)
+                                getRoomplayers(userRoom);
+                }
+                console.log("the user name is", userRoom);
+        }, [rooms])
 
         return (
                 // <BrowserRouter>
                 <div className="App">
                         <ThemeProvider theme={Theme}>
                                 <StyledApp className="App">
-                                        {(user.userName) ?<NavBar user={user} /> : ""}
+                                        {(user.userName) ? <NavBar user={user} /> : ""}
                                         {/* {(user.userName && user.roomName) ? <div className='bg-green-300'>{userRoom?.name}</div> : ""} */}
-                                        {!user.userName ? <Home socket={socket}/> : ""}
+                                        {!user.userName ? <Home socket={socket} /> : ""}
                                         {(user.userName && user.roomName) ? <Game userRoom={userRoom} /> : ""}
                                         {(user.userName && !user.roomName) ? <Rooms socket={socket} /> : ""}
 
