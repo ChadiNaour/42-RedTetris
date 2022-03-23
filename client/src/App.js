@@ -40,7 +40,7 @@ function App() {
         const getRoomplayers = (userRoom) => {
                 console.log("the useroooom is", userRoom);
                 if (userRoom) {
-                        socket.emit("getPlayers", userRoom);
+                        socket.emit("getPlayers", userRoom.name);
                 }
         }
 

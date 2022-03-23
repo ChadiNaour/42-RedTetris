@@ -1,7 +1,7 @@
 import TextField from "@mui/material/TextField";
 import { Select } from "antd";
 import { useEffect, useState } from "react";
-import { StyledContainer, JoinRoom , StyledRoomCard} from "./Rooms.Style";
+import { StyledContainer, JoinRoom, StyledRoomCard } from "./Rooms.Style";
 import { useSelector, useDispatch } from 'react-redux';
 import { updateRooms } from '../reducers/roomsSlice';
 import { addRoomName } from '../reducers/playerSlice';
@@ -9,31 +9,32 @@ import { getRoomsRequest } from '../actions/roomsActions';
 import { ToastContainer, toast } from 'react-toastify';
 import StartButton from '../components/StartButton/StartButton';
 import { AiOutlineUser } from "react-icons/ai";
+import {updatePlayers} from '../reducers/playersSlice';
 // import { BoxesLoader } from "react-awesome-loaders";
 
 import { Badge } from "antd";
 
-const RoomCard = ({room}) => {
-    return (
-        <Badge.Ribbon text={room.mode} color="red">
-            <StyledRoomCard>
-                <div className="name">
-                {room.name} <AiOutlineUser  /> {room.playersIn}/{room.maxPlayers}
-                </div>
-                {/* <div className="players">
+const RoomCard = ({ room, joinRoom }) => {
+  return (
+    <Badge.Ribbon text={room.mode} color="red">
+      <StyledRoomCard onClick={() => joinRoom(room.name)}>
+        <div className="name">
+          {room.name} <AiOutlineUser /> {room.playersIn}/{room.maxPlayers}
+        </div>
+        {/* <div className="players">
                     <AiOutlineUser style={{ marginRight: "30px" }} /> 1 / 4
                 </div> */}
-                <div className="cover"></div>
-                {/* <BoxesLoader
+        <div className="cover"></div>
+        {/* <BoxesLoader
                 boxColor={"#6366F1"}
                 style={{ marginBottom: "20px" }}
                 desktopSize={"128px"}
                 mobileSize={"80px"}
             /> */}
-                <div className="status">status</div>
-            </StyledRoomCard>
-        </Badge.Ribbon>
-    );
+        <div className="status">status</div>
+      </StyledRoomCard>
+    </Badge.Ribbon>
+  );
 };
 
 const { Option } = Select;
@@ -57,9 +58,21 @@ const Rooms = ({ socket }) => {
   const createRoom = () => {
     if (user.userName && room !== "") {
       // console.log(mode, room, user.userName);
-      socket.emit("create_room", { room, mode, username: user.userName , avatar: avatar })
+      socket.emit("create_room", { room, mode, username: user.userName, avatar: avatar })
       console.log(rooms);
     }
+  }
+
+  const joinRoom = (data) => {
+    console.log(data);
+    // const exist = rooms.find(room => room.name === data.name);
+    // console.log(exist);
+    // if (exist)
+    // {
+    socket.emit("join_room", {room : data, username : user.userName});
+
+    // }
+
   }
 
 
@@ -68,18 +81,24 @@ const Rooms = ({ socket }) => {
     // dispatch(getRoomsRequest());
     dispatch(getRoomsRequest());
     // socket.emit("get_rooms");
+    socket.on("room_joined", (data) => {
+      setRoom(data);
+      try {
+        dispatch(addRoomName(data));
+      } catch { }
+      socket.emit("getPlayers", data);
+
+    });
+    socket.on("room_created", (data) => {
+      setRoom(data);
+      try {
+
+        dispatch(addRoomName(data));
+      } catch { }
+      socket.emit("getPlayers", data);
+
+    });
     socket.on("update_rooms", async (data) => {
-      console.log(data.created);
-      if (data.created)
-      {
-        console.log("add name", data.roomname);
-        setRoom(data.roomname);
-        try{
-
-          dispatch(addRoomName(data.roomname));
-        }catch{}
-
-      }
       dispatch(updateRooms(data.rooms));
     });
     socket.on("room_exists", () => {
@@ -126,8 +145,8 @@ const Rooms = ({ socket }) => {
       <JoinRoom>
         <h2 className="title">join room</h2>
         <div className="rooms-container">
-        {rooms.map((room, key) => (
-          <RoomCard room={room} key={key}/>
+          {rooms.map((room, key) => (
+            <RoomCard room={room} key={key} joinRoom={joinRoom} />
             // <div className="room hover:bg-gray-700" key={key}>
             //   <div className="item name">{room.name}</div>
             //   <div className="item mode">{room.mode}</div>

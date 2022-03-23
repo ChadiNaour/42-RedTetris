@@ -14,12 +14,12 @@ const Navbar = ({user}) => {
                     </p>
                 </li>
                 <li className="list--element">
-                    <li className="profile">
+                    <div className="profile">
                         <div className="banyola">
                         {user.avatar ? parse(user.avatar) : ""}
                         </div>
                         <p className="username">{user.userName}</p>
-                    </li>
+                    </div>
                 </li>
             </ul>
         </StyledNav>
