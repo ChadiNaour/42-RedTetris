@@ -1,5 +1,5 @@
 import { startConnecting, isConnected } from "./slices/connectionSlice";
-// import { addPlayer } from "./slices/playerSlice";
+import { addUser, setError, UserAdded } from "./slices/playerSlice";
 import { io, Socket } from "socket.io-client";
 export const logger = (store) => (next) => (action) => {
   console.group(action.type);
@@ -22,12 +22,19 @@ export const socketMiddleware = (store) => {
       });
     }
     if (Connected) {
-      //   if (addPlayer.match(action)) {
-      //     socket.emit("new_user", action.payload);
-      //   }
-      socket.on("userAdded", (data) => {
-        // store.dispatch(addPlayer(data));
-        socket.off("userAdded");
+      if (addUser.match(action)) {
+        socket.emit("new_user", {
+          username: action.payload.username,
+          avatar: action.payload.avatar,
+        });
+      }
+      socket.on("user_exists", (data) => {
+        if (data.error) store.dispatch(setError("user already exist"));
+        else
+          store.dispatch(
+            UserAdded({ username: data.username, avatar: data.avatar })
+          );
+        socket.off("user_exists");
       });
     }
     next(action);

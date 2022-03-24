@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import Tetris from '../../src/images/redTetris2.png';
+import Tetris from "../../src/images/redTetris2.png";
 
 export const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   // object-fit: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-size: cover;
+  // background-repeat: no-repeat;
   // background-image:
   // linear-gradient(to right, #212121, rgba(117, 19, 93, 0.73)),url(${Tetris});
   background-image: url(${Tetris});
@@ -16,9 +16,9 @@ export const StyledContainer = styled.div`
 `;
 
 export const LeftSide = styled.div`
-  // width: 90%;
+  width: 60%;
   height: 100%;
-  
+
   // background-image: url(${Tetris});
   background-size: cover;
   background-position: center;
@@ -29,19 +29,19 @@ export const LeftSide = styled.div`
 `;
 
 export const StyledAvatar = styled.div`
-    cursor: pointer;
-    width: 200px;
-    height: 200px;
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  // background-color: ${(props) => props.theme.background.primary};
+  svg {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     // background-color: ${(props) => props.theme.background.primary};
-    svg {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        // background-color: ${(props) => props.theme.background.primary};
-        background-size: cover;
-        background-position: center;
-    };
-    padding-bottom: 2rem;
+    background-size: cover;
+    background-position: center;
+  }
+  padding-bottom: 2rem;
 `;
 
 export const RightSide = styled.div`
@@ -104,10 +104,10 @@ export const RightSide = styled.div`
         border-color: #b33030;
       }
       .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-        color : white;
+        color: white;
       }
       .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
-        color : white;
+        color: white;
       }
     }
   }

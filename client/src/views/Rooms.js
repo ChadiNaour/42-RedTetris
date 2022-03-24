@@ -42,7 +42,7 @@ const RoomCard = ({ room, joinRoom }) => {
 
 const { Option } = Select;
 
-const Rooms = ({ socket }) => {
+const Rooms = () => {
   const [mode, setMode] = useState("solo");
   const [room, setRoom] = useState("");
   const avatar = useSelector((state) => state.playerReducer.avatar);
@@ -59,12 +59,12 @@ const Rooms = ({ socket }) => {
   const createRoom = () => {
     if (user.userName && room !== "") {
       // console.log(mode, room, user.userName);
-      socket.emit("create_room", {
-        room,
-        mode,
-        username: user.userName,
-        avatar: avatar,
-      });
+      // socket.emit("create_room", {
+      //   room,
+      //   mode,
+      //   username: user.userName,
+      //   avatar: avatar,
+      // });
       console.log(rooms);
     }
   };
@@ -75,42 +75,42 @@ const Rooms = ({ socket }) => {
     // console.log(exist);
     // if (exist)
     // {
-    socket.emit("join_room", { room: data, username: user.userName });
+    // socket.emit("join_room", { room: data, username: user.userName });
 
     // }
   };
 
-  useEffect(() => {
-    // console.log("the mode is", mode);
-    // dispatch(getRoomsRequest());
-    dispatch(getRoomsRequest());
-    // socket.emit("get_rooms");
-    socket.on("room_joined", (data) => {
-      setRoom(data);
-      try {
-        dispatch(addRoomName(data));
-      } catch {}
-      socket.emit("getPlayers", data);
-    });
-    socket.on("room_created", (data) => {
-      setRoom(data);
-      try {
-        dispatch(addRoomName(data));
-      } catch {}
-      socket.emit("getPlayers", data);
-    });
-    socket.on("update_rooms", async (data) => {
-      dispatch(updateRooms(data.rooms));
-    });
-    socket.on("room_exists", () => {
-      console.log("room_already_exist");
-      toast("Room already exist");
-    });
-    return () => {
-      socket.off("update_rooms");
-      socket.off("room_exists");
-    };
-  }, []);
+  // useEffect(() => {
+  //   // console.log("the mode is", mode);
+  //   // dispatch(getRoomsRequest());
+  //   dispatch(getRoomsRequest());
+  //   // socket.emit("get_rooms");
+  //   socket.on("room_joined", (data) => {
+  //     setRoom(data);
+  //     try {
+  //       dispatch(addRoomName(data));
+  //     } catch {}
+  //     socket.emit("getPlayers", data);
+  //   });
+  //   socket.on("room_created", (data) => {
+  //     setRoom(data);
+  //     try {
+  //       dispatch(addRoomName(data));
+  //     } catch {}
+  //     socket.emit("getPlayers", data);
+  //   });
+  //   socket.on("update_rooms", async (data) => {
+  //     dispatch(updateRooms(data.rooms));
+  //   });
+  //   socket.on("room_exists", () => {
+  //     console.log("room_already_exist");
+  //     toast("Room already exist");
+  //   });
+  //   return () => {
+  //     socket.off("update_rooms");
+  //     socket.off("room_exists");
+  //   };
+  // }, []);
   // useEffect(() => {
   //   console.log(state);
   // }, [state]);

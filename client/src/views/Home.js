@@ -1,7 +1,5 @@
-import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import {
   StyledContainer,
   LeftSide,
@@ -15,21 +13,22 @@ import { StyledStartButton1 } from "../components/StartButton/StyledStartButton"
 import { getAvatar } from "../utils/Helpers";
 import parse from "html-react-parser";
 import { Popover, Button } from "antd";
+import { useNavigate } from "react-router";
 
-const Home = ({ socket }) => {
-  // let navigate = useNavigate();
+const Home = () => {
   const [userName, setUserName] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [avatar, setAvatar] = useState("");
-  // const []
+
+  const state = useSelector((state) => state);
 
   const addUsername = () => {
     userName.trim();
     const regex = /^[a-zA-Z0-9]{4,16}$/;
     if (regex.test(userName)) {
-      socket.emit("new_user", { username: userName, avatar: avatar });
-      // dispatch(addUser(userName));
+      dispatch(addUser({ username: userName, avatar: avatar }));
     } else {
       setErrorUsername(
         "username must be only alphanumerique between 4 and 16 characters"
@@ -38,17 +37,11 @@ const Home = ({ socket }) => {
   };
 
   useEffect(() => {
-    socket.on("user_exists", (data) => {
-      console.log("user_already_exist", userName);
-      if (data.error) toast("user already exist");
-      else dispatch(addUser(data.username));
-    });
-    return () => {
-      socket.off("user_exists");
-    };
-  }, []);
+    console.log(state);
+    if (state.playerReducer.userName) navigate("/rooms");
+  }, [state]);
+
   useEffect(() => {
-    // console.log(avatar)
     getAvatar()
       .then((avatar) => {
         setAvatar(avatar);
@@ -69,7 +62,6 @@ const Home = ({ socket }) => {
           onSubmit={(event) => {
             event.preventDefault();
             addUsername();
-            dispatch(setUserAvatar(avatar));
           }}
         >
           <Popover
@@ -98,12 +90,7 @@ const Home = ({ socket }) => {
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-          {/* <input type="submit" /> */}
-          {/* <StartButton /> */}
-          <StyledStartButton1>
-            {/* <div style={{marginTop:"-8px"}}></div> */}
-            play
-          </StyledStartButton1>
+          <StyledStartButton1>play</StyledStartButton1>
           <span style={{ color: "red" }}>{errorUsername}</span>
         </form>
       </RightSide>
