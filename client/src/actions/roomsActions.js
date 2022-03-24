@@ -1,6 +1,6 @@
 // actions.js
 import axios from "axios";
-import { updateRooms } from '../reducers/roomsSlice'
+import { updateRooms } from "../store/slices/roomsSlice";
 
 // These are our action types
 // export const GET_ROOMS = "GET_ROOMS";
@@ -14,17 +14,13 @@ import { updateRooms } from '../reducers/roomsSlice'
 // }
 
 export function getRoomsRequest() {
-        return async function (dispatch) {
-                try {
-                        const response = await axios.get(
-                                `http://localhost:3001/rooms`
-                        );
-                        // console.log(response);
-                        dispatch(
-                                updateRooms(response.data)
-                        );
-                } catch (error) {
-                        console.log(error);
-                }
-        };
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`http://localhost:3001/rooms`);
+      // console.log(response);
+      dispatch(updateRooms(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }

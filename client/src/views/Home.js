@@ -2,14 +2,19 @@ import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
-import { StyledContainer, LeftSide, RightSide, StyledAvatar  } from "./Home.Style";
-import { addUser, setUserAvatar } from '../reducers/playerSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import {StyledStartButton1} from "../components/StartButton/StyledStartButton";
-import {getAvatar} from '../utils/Helpers';
+import {
+  StyledContainer,
+  LeftSide,
+  RightSide,
+  StyledAvatar,
+} from "./Home.Style";
+import { addUser, setUserAvatar } from "../store/slices/playerSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import { StyledStartButton1 } from "../components/StartButton/StyledStartButton";
+import { getAvatar } from "../utils/Helpers";
 import parse from "html-react-parser";
-import { Popover, Button } from 'antd';
+import { Popover, Button } from "antd";
 
 const Home = ({ socket }) => {
   // let navigate = useNavigate();
@@ -25,34 +30,33 @@ const Home = ({ socket }) => {
     if (regex.test(userName)) {
       socket.emit("new_user", { username: userName, avatar: avatar });
       // dispatch(addUser(userName));
+    } else {
+      setErrorUsername(
+        "username must be only alphanumerique between 4 and 16 characters"
+      );
     }
-    else {
-      setErrorUsername("username must be only alphanumerique between 4 and 16 characters");
-    }
-  }
+  };
 
   useEffect(() => {
     socket.on("user_exists", (data) => {
       console.log("user_already_exist", userName);
-      if (data.error)
-      toast("user already exist")
-      else
-      dispatch(addUser(data.username));
+      if (data.error) toast("user already exist");
+      else dispatch(addUser(data.username));
     });
     return () => {
       socket.off("user_exists");
     };
-  }, [])
+  }, []);
   useEffect(() => {
     // console.log(avatar)
     getAvatar()
-        .then((avatar) => {
-            setAvatar(avatar);
-        })
-        .catch((err) => {
-            console.log(err.response.data);
-        });
-}, []);
+      .then((avatar) => {
+        setAvatar(avatar);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }, []);
   return (
     <StyledContainer>
       <ToastContainer />
@@ -68,20 +72,24 @@ const Home = ({ socket }) => {
             dispatch(setUserAvatar(avatar));
           }}
         >
-            <Popover  placement="left"  content={"Click here to change your avatar"}>
-             <StyledAvatar   onClick={() => {
-                                getAvatar()
-                                    .then((avatar) => {
-                                        setAvatar(avatar);
-                                    })
-                                    .catch((err) => {
-                                        console.log(err.response.data);
-                                    });
-                            }}>
-                        {avatar ? parse(avatar) : ""}
-           
-                    </StyledAvatar>
-                    </Popover>
+          <Popover
+            placement="left"
+            content={"Click here to change your avatar"}
+          >
+            <StyledAvatar
+              onClick={() => {
+                getAvatar()
+                  .then((avatar) => {
+                    setAvatar(avatar);
+                  })
+                  .catch((err) => {
+                    console.log(err.response.data);
+                  });
+              }}
+            >
+              {avatar ? parse(avatar) : ""}
+            </StyledAvatar>
+          </Popover>
           <TextField
             className="input"
             id="outlined-basic"
@@ -92,10 +100,10 @@ const Home = ({ socket }) => {
           />
           {/* <input type="submit" /> */}
           {/* <StartButton /> */}
-          <StyledStartButton1 >
-        {/* <div style={{marginTop:"-8px"}}></div> */}
-    play
-    </StyledStartButton1 >
+          <StyledStartButton1>
+            {/* <div style={{marginTop:"-8px"}}></div> */}
+            play
+          </StyledStartButton1>
           <span style={{ color: "red" }}>{errorUsername}</span>
         </form>
       </RightSide>
