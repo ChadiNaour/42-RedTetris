@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const StyledNav = styled.nav`
     width: 100%;
-    padding-top: 60px;
+    padding-top: 4rem;
     padding-inline: 60px;
-    padding-bottom: 40px;
+    padding-bottom: 6rem;
     height: 120px;
     display: flex;
     // background-color: red;

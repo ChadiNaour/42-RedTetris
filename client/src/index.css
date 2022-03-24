@@ -34,7 +34,7 @@ code {
 @font-face {
   font-family: "saira";
   src: url("../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf")
-    format("ttf");
+    format("woff");
 }
 
 @font-face {

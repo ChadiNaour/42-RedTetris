@@ -14,7 +14,7 @@ export const Theme = {
             font: "'DEBUG', sans-serif;",
             fontSize: "4rem",
             fontWeight: "bold",
-            color: "#f9253c",
+            color: "whitesmoke",
             span: "#d3eca7",
             lineHeight: "1.5",
             letterSpacing: "10px",

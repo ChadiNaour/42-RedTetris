@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
     socket.on("create_room", (data) => {
         const exist = rooms.find(room => room.name === data.room);
         const player = players.find(player => player.username === data.username);
+        // console.log(player);
         if (!exist) {
             if (data.mode === "battle")
                 rooms = [...rooms, { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1 }];

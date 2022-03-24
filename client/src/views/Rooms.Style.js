@@ -76,6 +76,7 @@ export const StyledContainer = styled.div`
     display: flex;
     width: 100%;
     flex-direction: column;
+    // background-color: inherit;
     .container {
       flex: 1;
       width: 100%;
@@ -83,12 +84,13 @@ export const StyledContainer = styled.div`
       justify-content: center;
       align-items: center;
       gap: 50px;
+      // background-color: yellow;
     }
     &--select {
       width: 15%;
       border: none;
       .ant-select-selector {
-        height: 3rem;
+        height: 3.5rem;
         background-color: ${(props) => props.theme.background.secondary};
         color: white;
         border: 1px solid ${(props) => props.theme.border.avatar};
@@ -134,6 +136,7 @@ export const StyledContainer = styled.div`
         color: white;
       }
       flex: 0 0 300px;
+      // height: 20px;
       label {
         color: white;
       }
@@ -156,15 +159,23 @@ export const JoinRoom = styled.div`
     font-size: 4em;
     padding-bottom: 0.5rem;
   }
+  .rooms-container {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // background-color: yellow;
+    svg{
+      width: 100%;
+      height: 100%;
+    }
+  },
   .container {
     width: 100%;
     flex: 1;
     // background-color: ${(props) => props.theme.background.secondary};
-    .rooms-container {
-      display: flex;
-      align-items: center;
-      align-content: center;
-    }
+ 
     header,
     .room {
       width: 100%;

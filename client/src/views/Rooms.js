@@ -9,7 +9,9 @@ import { getRoomsRequest } from '../actions/roomsActions';
 import { ToastContainer, toast } from 'react-toastify';
 import StartButton from '../components/StartButton/StartButton';
 import { AiOutlineUser } from "react-icons/ai";
-import {updatePlayers} from '../reducers/playersSlice';
+import { updatePlayers } from '../reducers/playersSlice';
+import { Empty } from 'antd';
+import Loader from "../components/Loader";
 // import { BoxesLoader } from "react-awesome-loaders";
 
 import { Badge } from "antd";
@@ -19,7 +21,7 @@ const RoomCard = ({ room, joinRoom }) => {
     <Badge.Ribbon text={room.mode} color="red">
       <StyledRoomCard onClick={() => joinRoom(room.name)}>
         <div className="name">
-          {room.name} <AiOutlineUser /> {room.playersIn}/{room.maxPlayers}
+          {room.name} <AiOutlineUser style={{width: "20px"}} /> {room.playersIn}/{room.maxPlayers}
         </div>
         {/* <div className="players">
                     <AiOutlineUser style={{ marginRight: "30px" }} /> 1 / 4
@@ -69,7 +71,7 @@ const Rooms = ({ socket }) => {
     // console.log(exist);
     // if (exist)
     // {
-    socket.emit("join_room", {room : data, username : user.userName});
+    socket.emit("join_room", { room: data, username: user.userName });
 
     // }
 
@@ -119,43 +121,60 @@ const Rooms = ({ socket }) => {
     <StyledContainer>
       <ToastContainer />
       {/* <h1 className="title">Rooms</h1> */}
-      <div className="create">
-        <h2 className="title">create room</h2>
-        <div className="container">
-          <TextField
-            className="create--input"
-            id="standard-basic"
-            label="room name"
-            variant="outlined"
-            onChange={(e) => { setRoom(e.target.value) }}
-          />
-          <Select
-            className="create--select"
-            defaultValue="mode"
-            onChange={handleChange}
-          >
-            <Option value="solo">solo</Option>
-            <Option value="battle">battle</Option>
-          </Select>
-          {/* <div> */}
-          <StartButton createRoom={createRoom} />
-          {/* <input type="submit" value="create" onClick={createRoom} /> */}
+      <div className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700" style={{ width: '60%', backgroundColor: "#333333"}}>
+        <div className="create">
+          <h2 className="title">create room</h2>
+          <div className="container">
+            <TextField
+              className="create--input"
+              id="standard-basic"
+              label="room name"
+              variant="outlined"
+              onChange={(e) => { setRoom(e.target.value) }}
+            />
+            <Select
+              className="create--select"
+              defaultValue="mode"
+              onChange={handleChange}
+            >
+              <Option value="solo">solo</Option>
+              <Option value="battle">battle</Option>
+            </Select>
+            {/* <div> */}
+            <StartButton createRoom={createRoom} />
+            {/* <input type="submit" value="create" onClick={createRoom} /> */}
+          </div>
+          {/* <div className="bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" style={{ width: '60%', height: '' }}></div> */}
         </div>
       </div>
-      <JoinRoom>
-        <h2 className="title">join room</h2>
-        <div className="rooms-container">
-          {rooms.map((room, key) => (
-            <RoomCard room={room} key={key} joinRoom={joinRoom} />
-            // <div className="room hover:bg-gray-700" key={key}>
-            //   <div className="item name">{room.name}</div>
-            //   <div className="item mode">{room.mode}</div>
-            //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
-            //   <div className="item status">status</div>
-            // </div>
-          ))}
-        </div>
-      </JoinRoom>
+      <div className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 mt-8" style={{ width: '60%', backgroundColor: "#333333" }}>
+        <JoinRoom>
+          <h2 className="title">join room</h2>
+          <div className="rooms-container">
+            {(rooms.length === 0) ?
+              <div style={{ marginTop: '30px', justifyContent: 'center', alignItems: 'center' }}>
+                {/* <div style={{backgroundColor: ''}}> */}
+
+                <Loader />
+                {/* </div> */}
+                {/* <Empty description="" image={Empty.PRESENTED_IMAGE_SIMPLE} imageStyle={{ width: "100%", backgroundColor: "",height: "100%" }} /> */}
+                <div style={{ backgroundColor: '', marginTop: "160px" }}>
+
+                  <span style={{ fontSize: "25px", color: "whitesmoke", fontFamily: "'Saira', sans-serif" }}>No rooms found</span>
+                </div>
+              </div> : ""}
+            {rooms.map((room, key) => (
+              <RoomCard room={room} key={key} joinRoom={joinRoom} />
+              // <div className="room hover:bg-gray-700" key={key}>
+              //   <div className="item name">{room.name}</div>
+              //   <div className="item mode">{room.mode}</div>
+              //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
+              //   <div className="item status">status</div>
+              // </div>
+            ))}
+          </div>
+        </JoinRoom>
+      </div>
     </StyledContainer>
   );
 };
