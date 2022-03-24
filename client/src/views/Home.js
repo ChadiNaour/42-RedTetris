@@ -38,7 +38,8 @@ const Home = () => {
 
   useEffect(() => {
     console.log(state);
-    if (state.playerReducer.userName) navigate("/rooms");
+    if (state.playerReducer.error) toast(state.playerReducer.error);
+    else if (state.playerReducer.userName) navigate("/rooms");
   }, [state]);
 
   useEffect(() => {

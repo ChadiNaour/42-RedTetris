@@ -72,11 +72,12 @@ io.on("connection", (socket) => {
       console.log("rooms are", rooms);
       console.log("players are", players);
       // io.emit("created_room", data.room);
-      socket.emit("room_created", data.room);
+      // socket.emit("room_created", data.room);
       io.emit("update_rooms", { rooms: rooms });
     } else {
       socket.emit("room_exists");
     }
+    // socket.off("create_room");
   });
 
   //join room

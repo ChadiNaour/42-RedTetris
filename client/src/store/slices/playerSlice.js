@@ -16,6 +16,7 @@ export const playerSlice = createSlice({
       // console.log("in here!");
       state.userName = action.payload.username;
       state.avatar = action.payload.avatar;
+      state.error = null;
     },
     addRoomName: (state, action) => {
       state.roomName = action.payload;

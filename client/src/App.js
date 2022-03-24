@@ -28,9 +28,15 @@ const Layout = () => {
 };
 
 const ProtectedRoute = ({ children }) => {
-  const player = useSelector((state) => state.player);
+  const player = useSelector((state) => state.playerReducer);
 
-  if (player.userName && !player.roomName) return <Outlet />;
+  if (player.userName && !player.roomName)
+    return (
+      <>
+        <NavBar user={player} />
+        <Outlet />
+      </>
+    );
   return <Navigate to="/home" />;
 };
 

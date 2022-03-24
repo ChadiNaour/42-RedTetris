@@ -3,7 +3,7 @@ import { Select } from "antd";
 import { useEffect, useState } from "react";
 import { StyledContainer, JoinRoom, StyledRoomCard } from "./Rooms.Style";
 import { useSelector, useDispatch } from "react-redux";
-import { updateRooms } from "../store/slices/roomsSlice";
+import { updateRooms, addRoomRequest } from "../store/slices/roomsSlice";
 import { addRoomName } from "../store/slices/playerSlice";
 import { getRoomsRequest } from "../actions/roomsActions";
 import { ToastContainer, toast } from "react-toastify";
@@ -62,9 +62,10 @@ const Rooms = () => {
       // socket.emit("create_room", {
       //   room,
       //   mode,
-      //   username: user.userName,
-      //   avatar: avatar,
+      // username: user.userName,
+      // avatar: avatar,
       // });
+      dispatch(addRoomRequest({ room, mode }));
       console.log(rooms);
     }
   };
@@ -80,37 +81,34 @@ const Rooms = () => {
     // }
   };
 
-  // useEffect(() => {
-  //   // console.log("the mode is", mode);
-  //   // dispatch(getRoomsRequest());
-  //   dispatch(getRoomsRequest());
-  //   // socket.emit("get_rooms");
-  //   socket.on("room_joined", (data) => {
-  //     setRoom(data);
-  //     try {
-  //       dispatch(addRoomName(data));
-  //     } catch {}
-  //     socket.emit("getPlayers", data);
-  //   });
-  //   socket.on("room_created", (data) => {
-  //     setRoom(data);
-  //     try {
-  //       dispatch(addRoomName(data));
-  //     } catch {}
-  //     socket.emit("getPlayers", data);
-  //   });
-  //   socket.on("update_rooms", async (data) => {
-  //     dispatch(updateRooms(data.rooms));
-  //   });
-  //   socket.on("room_exists", () => {
-  //     console.log("room_already_exist");
-  //     toast("Room already exist");
-  //   });
-  //   return () => {
-  //     socket.off("update_rooms");
-  //     socket.off("room_exists");
-  //   };
-  // }, []);
+  useEffect(() => {
+    // dispatch(getRoomsRequest());
+    // socket.on("room_joined", (data) => {
+    //   setRoom(data);
+    //   try {
+    //     dispatch(addRoomName(data));
+    //   } catch {}
+    //   socket.emit("getPlayers", data);
+    // });
+    // socket.on("room_created", (data) => {
+    //   setRoom(data);
+    //   try {
+    //     dispatch(addRoomName(data));
+    //   } catch {}
+    //   socket.emit("getPlayers", data);
+    // });
+    // socket.on("update_rooms", async (data) => {
+    //   dispatch(updateRooms(data.rooms));
+    // });
+    // socket.on("room_exists", () => {
+    //   console.log("room_already_exist");
+    //   toast("Room already exist");
+    // });
+    // return () => {
+    //   socket.off("update_rooms");
+    //   socket.off("room_exists");
+    // };
+  }, []);
   // useEffect(() => {
   //   console.log(state);
   // }, [state]);
@@ -184,15 +182,17 @@ const Rooms = () => {
             ) : (
               ""
             )}
-            {rooms.map((room, key) => (
-              <RoomCard room={room} key={key} joinRoom={joinRoom} />
-              // <div className="room hover:bg-gray-700" key={key}>
-              //   <div className="item name">{room.name}</div>
-              //   <div className="item mode">{room.mode}</div>
-              //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
-              //   <div className="item status">status</div>
-              // </div>
-            ))}
+            {rooms.length
+              ? rooms.map((room, key) => (
+                  <RoomCard room={room} key={key} joinRoom={joinRoom} />
+                  // <div className="room hover:bg-gray-700" key={key}>
+                  //   <div className="item name">{room.name}</div>
+                  //   <div className="item mode">{room.mode}</div>
+                  //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
+                  //   <div className="item status">status</div>
+                  // </div>
+                ))
+              : ""}
           </div>
         </JoinRoom>
       </div>
