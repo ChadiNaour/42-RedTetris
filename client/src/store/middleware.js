@@ -34,6 +34,14 @@ export const socketMiddleware = (store) => {
           username: action.payload.username,
           avatar: action.payload.avatar,
         });
+        socket.on("user_exists", (data) => {
+          if (data.error) store.dispatch(setError("user already exist"));
+          else
+            store.dispatch(
+              UserAdded({ username: data.username, avatar: data.avatar })
+            );
+          socket.off("user_exists");
+        });
       }
       if (addRoomRequest.match(action)) {
         socket.emit("create_room", {
@@ -42,22 +50,13 @@ export const socketMiddleware = (store) => {
           username: user.userName,
           avatar: user.avatar,
         });
+        socket.on("update_rooms", (data) => {
+          store.dispatch(updateRooms(data.rooms));
+          socket.off("update_rooms");
+        });
       }
       /*******/
-      socket.on("user_exists", (data) => {
-        if (data.error) store.dispatch(setError("user already exist"));
-        else
-          store.dispatch(
-            UserAdded({ username: data.username, avatar: data.avatar })
-          );
-        socket.off("user_exists");
-      });
-      socket.on("update_rooms", (data) => {
-        console.log("asdfasdfasdfasdfasdf");
-        // else console.log("asdfasdfasdfasdfasdf");
-        // store.dispatch(updateRooms(data.rooms));
-        socket.off("update_rooms");
-      });
+
       // socket.on("room_created", (data) => {
       // setRoom(data);
       // store.dispatch(addRoomName(data));
