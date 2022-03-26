@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { StyledContainer, JoinRoom, StyledRoomCard } from "./Rooms.Style";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRooms } from "../store/slices/roomsSlice";
-import { addRoomName, addRoomRequest, joinRoomRequest } from "../store/slices/playerSlice";
+import {
+  addRoomName,
+  addRoomRequest,
+  joinRoomRequest,
+} from "../store/slices/playerSlice";
 import { getRoomsRequest } from "../actions/roomsActions";
 import { ToastContainer, toast } from "react-toastify";
 import StartButton from "../components/StartButton/StartButton";
@@ -73,14 +77,13 @@ const Rooms = () => {
   };
 
   const joinRoom = (data) => {
-    console.log("the joined room",data);
+    console.log("the joined room", data);
     console.log(rooms);
-    const exist = rooms.find(room => room.name === data);
+    const exist = rooms.find((room) => room.name === data);
     console.log(exist);
     if (exist) {
       dispatch(joinRoomRequest(data));
       // socket.emit("join_room", { room: data, username: user.userName });
-
     }
   };
 
@@ -88,8 +91,8 @@ const Rooms = () => {
     dispatch(getRoomsRequest());
     console.log(user);
     if (user.roomError) {
-      console.log("jkdbgdjgbshjdbgfhjsbgdhjsbgdhsbgdsjgbdhjsgdjksngsgjbdsgkn")
-      toast(user.roomError)
+      console.log("jkdbgdjgbshjdbgfhjsbgdhjsbgdhsbgdsjgbdhjsgdjksngsgjbdsgkn");
+      toast(user.roomError);
     }
     // socket.on("room_joined", (data) => {
     //   setRoom(data);
@@ -131,16 +134,17 @@ const Rooms = () => {
         <div className="create">
           <div className="title">create room</div>
           <div className="container">
-          <input 
-                class={
-                  'create--input animate-fade appearance-none block bg-transparent text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-900 focus:border-gray-500'} 
-                  type="text"
-                  placeholder="Room name"
-                  style={{ fontFamily: 'Pixel'}}
-                  onChange={(e) => {
-                    setRoom(e.target.value);
-                  }}
-                />
+            <input
+              className={
+                "create--input animate-fade appearance-none block bg-transparent text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-900 focus:border-gray-500"
+              }
+              type="text"
+              placeholder="Room name"
+              style={{ fontFamily: "Pixel" }}
+              onChange={(e) => {
+                setRoom(e.target.value);
+              }}
+            />
             {/* <TextField
               className="create--input"
               id="standard-basic"
@@ -202,14 +206,14 @@ const Rooms = () => {
             )}
             {rooms.length
               ? rooms.map((room, key) => (
-                <RoomCard room={room} key={key} joinRoom={joinRoom} />
-                // <div className="room hover:bg-gray-700" key={key}>
-                //   <div className="item name">{room.name}</div>
-                //   <div className="item mode">{room.mode}</div>
-                //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
-                //   <div className="item status">status</div>
-                // </div>
-              ))
+                  <RoomCard room={room} key={key} joinRoom={joinRoom} />
+                  // <div className="room hover:bg-gray-700" key={key}>
+                  //   <div className="item name">{room.name}</div>
+                  //   <div className="item mode">{room.mode}</div>
+                  //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
+                  //   <div className="item status">status</div>
+                  // </div>
+                ))
               : ""}
           </div>
         </JoinRoom>
