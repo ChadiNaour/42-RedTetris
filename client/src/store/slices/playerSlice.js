@@ -40,11 +40,14 @@ export const playerSlice = createSlice({
     addRoomRequest: (state) => {
       state.roomError = null;
     },
+    joinRoomRequest: (state) => {
+      state.roomError = null;
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addUser, addRoomName, setUserAvatar, setError, UserAdded, setRoomError, addRoomRequest} =
+export const { addUser, addRoomName, setUserAvatar, setError, UserAdded, setRoomError, addRoomRequest, joinRoomRequest} =
   playerSlice.actions;
 
 export default playerSlice.reducer;

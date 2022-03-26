@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { StyledContainer, JoinRoom, StyledRoomCard } from "./Rooms.Style";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRooms } from "../store/slices/roomsSlice";
-import { addRoomName, addRoomRequest } from "../store/slices/playerSlice";
+import { addRoomName, addRoomRequest, joinRoomRequest } from "../store/slices/playerSlice";
 import { getRoomsRequest } from "../actions/roomsActions";
 import { ToastContainer, toast } from "react-toastify";
 import StartButton from "../components/StartButton/StartButton";
@@ -73,23 +73,23 @@ const Rooms = () => {
   };
 
   const joinRoom = (data) => {
-    console.log(data);
-    // const exist = rooms.find(room => room.name === data.name);
-    // console.log(exist);
-    // if (exist)
-    // {
-    // socket.emit("join_room", { room: data, username: user.userName });
+    console.log("the joined room",data);
+    console.log(rooms);
+    const exist = rooms.find(room => room.name === data);
+    console.log(exist);
+    if (exist) {
+      dispatch(joinRoomRequest(data));
+      // socket.emit("join_room", { room: data, username: user.userName });
 
-    // }
+    }
   };
 
   useEffect(() => {
     dispatch(getRoomsRequest());
     console.log(user);
-    if (user.roomError)
-    {
+    if (user.roomError) {
       console.log("jkdbgdjgbshjdbgfhjsbgdhjsbgdhsbgdsjgbdhjsgdjksngsgjbdsgkn")
-      toast (user.roomError)
+      toast(user.roomError)
     }
     // socket.on("room_joined", (data) => {
     //   setRoom(data);

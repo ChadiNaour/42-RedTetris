@@ -5,8 +5,10 @@ import {
   UserAdded,
   addRoomName,
   setRoomError,
-  addRoomRequest
+  addRoomRequest,
+  joinRoomRequest
 } from "./slices/playerSlice";
+import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
 import { io, Socket } from "socket.io-client";
 export const logger = (store) => (next) => (action) => {
@@ -32,7 +34,7 @@ export const socketMiddleware = (store) => {
     }
     if (Connected) {
 
-      //adding the user with check if its deprecated
+      //adding the user with check if its duplicated
       if (addUser.match(action)) {
         //user request
         socket.emit("new_user", {
@@ -50,7 +52,7 @@ export const socketMiddleware = (store) => {
         });
       }
 
-      //adding the room with check if its deprecated
+      //adding the room with check if its duplicated
       if (addRoomRequest.match(action)) {
         //request to create a room
         socket.emit("create_room", {
@@ -59,7 +61,7 @@ export const socketMiddleware = (store) => {
           username: user.userName,
           avatar: user.avatar,
         });
-        //listner if the room is deprecated
+        //listner if the room is duplicated
         socket.on("room_exists", () => {
           console.log("room_already_exist");
           store.dispatch(setRoomError("Room already exist"));
@@ -69,17 +71,39 @@ export const socketMiddleware = (store) => {
         socket.on("room_created", (data) => {
           console.log("the room is created", data);
           store.dispatch(addRoomName(data));
-          // socket.emit("getPlayers", data);
+          socket.emit("getPlayers", data);
           socket.off("room_created");
         });
       }
 
-      /*******/
+      //joinning to a room request
+      if (joinRoomRequest.match(action)) {
+        console.log(action.payload)
+        socket.emit("join_room", { room: action.payload, username: user.userName });
+        socket.on("room_joined", (data) => {
+          console.log(data);
+          // setRoom(data);
+          store.dispatch(addRoomName(data));
+          socket.emit("getPlayers", data);
+          socket.off("room_joined");
+        });
 
+      }
+
+      /*******************************************************/
+
+      //listner on updated rooms
       socket.on("update_rooms", (data) => {
         console.log("enetring to update the rooms", data);
         store.dispatch(updateRooms(data.rooms));
         socket.off("update_rooms");
+      });
+
+      //listner on updated players
+      socket.on("update_players", (data) => {
+        console.log("the palyers are", data);
+        store.dispatch(updatePlayers(data));
+        socket.off("update_players");
       });
     }
     next(action);
