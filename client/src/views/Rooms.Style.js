@@ -5,8 +5,8 @@ export const StyledRoomCard = styled.div`
     height: auto;
     border-radius: 15px;
     overflow: hidden;
-    position : relative;
-    position: relative;
+    // position : relative;
+    // position: relative;
     .name {
         /* color: ${(props) => props.theme.headers.h1.color}; */
         display : flex;
@@ -59,18 +59,21 @@ export const StyledRoomCard = styled.div`
 export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 2rem;
+  // padding-top: 7rem;
+  // padding-bottom: 9rem;
   align-items: center;
   .title {
     width: 50%;
+    // height: 50px;
     text-align: center;
     font-size: 6em;
-    padding: ${(props) => props.theme.headers.h1.padding};
+    // background-color: yellow;
+    // padding: 0px;
     font-family: ${(props) => props.theme.headers.h1.font};
     font-weight: ${(props) => props.theme.headers.h1.fontWeight};
     letter-spacing: ${(props) => props.theme.headers.h1.letterSpacing};
     color: ${(props) => props.theme.headers.h1.color};
-    padding-bottom: 3rem;
+    // padding-bottom: 3rem;
   }
   .create {
     display: flex;
@@ -78,6 +81,7 @@ export const StyledContainer = styled.div`
     flex-direction: column;
     // background-color: inherit;
     .container {
+      margin-top: 2rem;
       flex: 1;
       width: 100%;
       display: flex;
@@ -108,7 +112,6 @@ export const StyledContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 50px;
     .title {
       font-size: 4em;
       padding-bottom: 0.5rem;
@@ -160,9 +163,12 @@ export const JoinRoom = styled.div`
     padding-bottom: 0.5rem;
   }
   .rooms-container {
+    width: 100%;
+    // background-color: red;
     padding: 3rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: wrap;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     // background-color: yellow;

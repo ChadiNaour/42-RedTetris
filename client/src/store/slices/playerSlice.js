@@ -7,10 +7,16 @@ export const playerSlice = createSlice({
     roomName: null,
     avatar: null,
     error: null,
+    roomError: null,
   },
   reducers: {
-    addUser: (action) => {
-      return action;
+    addUser: (state, action) => {
+      state.userName = null;
+      state.roomName = null;
+      state.avatar = null;
+      state.error = null;
+      state.roomError = null;
+      // return action;
     },
     UserAdded: (state, action) => {
       // console.log("in here!");
@@ -27,11 +33,18 @@ export const playerSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    setRoomError: (state, action) => {
+      console.log("piloood",action.payload);
+      state.roomError = action.payload;
+    },
+    addRoomRequest: (state) => {
+      state.roomError = null;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addUser, addRoomName, setUserAvatar, setError, UserAdded } =
+export const { addUser, addRoomName, setUserAvatar, setError, UserAdded, setRoomError, addRoomRequest} =
   playerSlice.actions;
 
 export default playerSlice.reducer;

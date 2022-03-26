@@ -46,7 +46,8 @@ export const StyledAvatar = styled.div`
 
 export const RightSide = styled.div`
   display: inline-block;
-  width: 40%;
+  // background-color: red;
+  width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -54,15 +55,17 @@ export const RightSide = styled.div`
   justify-content: center;
   .title {
     width: 50%;
+    // background-color: blue;
     text-align: center;
-    font-size: 6em;
-    padding: ${(props) => props.theme.headers.h1.padding};
-    font-family: ${(props) => props.theme.headers.h1.font};
+    font-size: 4em;
+    // padding: ${(props) => props.theme.headers.h1.padding};
+    font-family: Pixel, Arial, Helvetica, sans-serif;
     font-weight: ${(props) => props.theme.headers.h1.fontWeight};
     letter-spacing: ${(props) => props.theme.headers.h1.letterSpacing};
-    color: ${(props) => props.theme.headers.h1.color};
+    color: #f9253c;
     padding-bottom: 2rem;
     span {
+      margin-left: 25px;
       color: white;
     }
   }

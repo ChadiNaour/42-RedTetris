@@ -4,16 +4,18 @@ import {
   setError,
   UserAdded,
   addRoomName,
+  setRoomError,
+  addRoomRequest
 } from "./slices/playerSlice";
-import { addRoomRequest, updateRooms } from "./slices/roomsSlice";
+import { updateRooms } from "./slices/roomsSlice";
 import { io, Socket } from "socket.io-client";
 export const logger = (store) => (next) => (action) => {
-  console.group(action.type);
-  console.log("state : ", store.getState());
-  console.info("dispatching", action);
+  // console.group(action.type);
+  // console.log("state : ", store.getState());
+  // console.info("dispatching", action);
   let result = next(action);
-  console.log("next state", store.getState());
-  console.groupEnd();
+  // console.log("next state", store.getState());
+  // console.groupEnd();
   return result;
 };
 
@@ -29,11 +31,15 @@ export const socketMiddleware = (store) => {
       });
     }
     if (Connected) {
+
+      //adding the user with check if its deprecated
       if (addUser.match(action)) {
+        //user request
         socket.emit("new_user", {
           username: action.payload.username,
           avatar: action.payload.avatar,
         });
+        //listner to add the user or get the error
         socket.on("user_exists", (data) => {
           if (data.error) store.dispatch(setError("user already exist"));
           else
@@ -43,27 +49,38 @@ export const socketMiddleware = (store) => {
           socket.off("user_exists");
         });
       }
+
+      //adding the room with check if its deprecated
       if (addRoomRequest.match(action)) {
+        //request to create a room
         socket.emit("create_room", {
           room: action.payload.room,
           mode: action.payload.mode,
           username: user.userName,
           avatar: user.avatar,
         });
-        socket.on("update_rooms", (data) => {
-          store.dispatch(updateRooms(data.rooms));
-          socket.off("update_rooms");
+        //listner if the room is deprecated
+        socket.on("room_exists", () => {
+          console.log("room_already_exist");
+          store.dispatch(setRoomError("Room already exist"));
+          socket.off("room_exists");
+        });
+        //listner if the room is created
+        socket.on("room_created", (data) => {
+          console.log("the room is created", data);
+          store.dispatch(addRoomName(data));
+          // socket.emit("getPlayers", data);
+          socket.off("room_created");
         });
       }
+
       /*******/
 
-      // socket.on("room_created", (data) => {
-      // setRoom(data);
-      // store.dispatch(addRoomName(data));
-      // socket.emit("getPlayers", data);
-      // console.log("asdfgaksjdfghajsdhfgajksdfghasjkd", data);
-      // socket.off("room_created");
-      // });
+      socket.on("update_rooms", (data) => {
+        console.log("enetring to update the rooms", data);
+        store.dispatch(updateRooms(data.rooms));
+        socket.off("update_rooms");
+      });
     }
     next(action);
   };

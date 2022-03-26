@@ -3,8 +3,8 @@ import { Select } from "antd";
 import { useEffect, useState } from "react";
 import { StyledContainer, JoinRoom, StyledRoomCard } from "./Rooms.Style";
 import { useSelector, useDispatch } from "react-redux";
-import { updateRooms, addRoomRequest } from "../store/slices/roomsSlice";
-import { addRoomName } from "../store/slices/playerSlice";
+import { updateRooms } from "../store/slices/roomsSlice";
+import { addRoomName, addRoomRequest } from "../store/slices/playerSlice";
 import { getRoomsRequest } from "../actions/roomsActions";
 import { ToastContainer, toast } from "react-toastify";
 import StartButton from "../components/StartButton/StartButton";
@@ -18,25 +18,27 @@ import { Badge } from "antd";
 
 const RoomCard = ({ room, joinRoom }) => {
   return (
-    <Badge.Ribbon text={room.mode} color="red">
-      <StyledRoomCard onClick={() => joinRoom(room.name)}>
-        <div className="name">
-          {room.name} <AiOutlineUser style={{ width: "20px" }} />{" "}
-          {room.playersIn}/{room.maxPlayers}
-        </div>
-        {/* <div className="players">
+    <div style={{ margin: "20px" }}>
+      <Badge.Ribbon text={room.mode} color="red">
+        <StyledRoomCard onClick={() => joinRoom(room.name)}>
+          <div className="name">
+            {room.name} <AiOutlineUser style={{ width: "20px" }} />{" "}
+            {room.playersIn}/{room.maxPlayers}
+          </div>
+          {/* <div className="players">
                     <AiOutlineUser style={{ marginRight: "30px" }} /> 1 / 4
                 </div> */}
-        <div className="cover"></div>
-        {/* <BoxesLoader
+          <div className="cover"></div>
+          {/* <BoxesLoader
                 boxColor={"#6366F1"}
                 style={{ marginBottom: "20px" }}
                 desktopSize={"128px"}
                 mobileSize={"80px"}
             /> */}
-        <div className="status">status</div>
-      </StyledRoomCard>
-    </Badge.Ribbon>
+          <div className="status">status</div>
+        </StyledRoomCard>
+      </Badge.Ribbon>
+    </div>
   );
 };
 
@@ -45,7 +47,7 @@ const { Option } = Select;
 const Rooms = () => {
   const [mode, setMode] = useState("solo");
   const [room, setRoom] = useState("");
-  const avatar = useSelector((state) => state.playerReducer.avatar);
+  // const avatar = useSelector((state) => state.playerReducer.avatar);
   // const rooms = useSelector((state) => state.roomsReducer.rooms);
   const user = useSelector((state) => state.playerReducer);
   const rooms = useSelector((state) => state.roomsReducer.rooms);
@@ -82,7 +84,13 @@ const Rooms = () => {
   };
 
   useEffect(() => {
-    // dispatch(getRoomsRequest());
+    dispatch(getRoomsRequest());
+    console.log(user);
+    if (user.roomError)
+    {
+      console.log("jkdbgdjgbshjdbgfhjsbgdhjsbgdhsbgdsjgbdhjsgdjksngsgjbdsgkn")
+      toast (user.roomError)
+    }
     // socket.on("room_joined", (data) => {
     //   setRoom(data);
     //   try {
@@ -108,7 +116,7 @@ const Rooms = () => {
     //   socket.off("update_rooms");
     //   socket.off("room_exists");
     // };
-  }, []);
+  }, [user]);
   // useEffect(() => {
   //   console.log(state);
   // }, [state]);
@@ -121,7 +129,7 @@ const Rooms = () => {
         style={{ width: "60%", backgroundColor: "#333333" }}
       >
         <div className="create">
-          <h2 className="title">create room</h2>
+          <div className="title">create room</div>
           <div className="container">
             <TextField
               className="create--input"
@@ -184,14 +192,14 @@ const Rooms = () => {
             )}
             {rooms.length
               ? rooms.map((room, key) => (
-                  <RoomCard room={room} key={key} joinRoom={joinRoom} />
-                  // <div className="room hover:bg-gray-700" key={key}>
-                  //   <div className="item name">{room.name}</div>
-                  //   <div className="item mode">{room.mode}</div>
-                  //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
-                  //   <div className="item status">status</div>
-                  // </div>
-                ))
+                <RoomCard room={room} key={key} joinRoom={joinRoom} />
+                // <div className="room hover:bg-gray-700" key={key}>
+                //   <div className="item name">{room.name}</div>
+                //   <div className="item mode">{room.mode}</div>
+                //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
+                //   <div className="item status">status</div>
+                // </div>
+              ))
               : ""}
           </div>
         </JoinRoom>

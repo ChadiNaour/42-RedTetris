@@ -17,10 +17,11 @@ export const Theme = {
             color: "whitesmoke",
             span: "#d3eca7",
             lineHeight: "1.5",
-            letterSpacing: "10px",
+            letterSpacing: "5px",
             padding: "1rem",
         },
         h2: {
+            backgroundColor: "yellow", 
             font: "'Saira', sans-serif",
             fontSize: "2rem",
             fontWeight: "regular",

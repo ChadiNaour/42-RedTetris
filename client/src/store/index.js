@@ -5,6 +5,7 @@ import playerReducer from "./slices/playerSlice";
 import playersReducer from "./slices/playersSlice";
 import connectionReducer from "./slices/connectionSlice";
 import { logger, socketMiddleware } from "./middleware";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const store = configureStore({
   reducer: {

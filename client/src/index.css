@@ -38,6 +38,12 @@ code {
 }
 
 @font-face {
+  font-family: "stranger";
+  src: url("../assets/fonts/stranger_things/Benguiat_Bold.ttf")
+    format("woff");
+}
+
+@font-face {
   font-family: "Pixel";
   src: url("../assets/fonts/Pixel-LCD-7.woff") format("woff");
 }

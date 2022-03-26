@@ -6,7 +6,6 @@ export const roomsSlice = createSlice({
     rooms: [],
   },
   reducers: {
-    addRoomRequest: () => {},
     updateRooms: (state, action) => {
       // console.log(action)
       state.rooms = action.payload;
@@ -25,6 +24,6 @@ export const roomsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { updateRooms, addRoomRequest } = roomsSlice.actions;
+export const { updateRooms } = roomsSlice.actions;
 
 export default roomsSlice.reducer;

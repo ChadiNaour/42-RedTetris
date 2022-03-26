@@ -69,10 +69,10 @@ io.on("connection", (socket) => {
       player.room = data.room;
       socket.join(data.room);
       // console.log("user with id:", socket.id, "joined room:", data.room);
-      console.log("rooms are", rooms);
-      console.log("players are", players);
+      // console.log("rooms are", rooms);
+      // console.log("players are", players);
       // io.emit("created_room", data.room);
-      // socket.emit("room_created", data.room);
+      socket.emit("room_created", data.room);
       io.emit("update_rooms", { rooms: rooms });
     } else {
       socket.emit("room_exists");
@@ -91,8 +91,8 @@ io.on("connection", (socket) => {
         socket.join(data.room);
         player.room = data.room;
         joinedRoom.playersIn += 1;
-        io.emit("update_rooms", { rooms: rooms });
         socket.emit("room_joined", data.room);
+        io.emit("update_rooms", { rooms: rooms });
       }
     }
   });

@@ -30,7 +30,7 @@ const Layout = () => {
 const ProtectedRoute = ({ children }) => {
   const player = useSelector((state) => state.playerReducer);
 
-  if (player.userName && !player.roomName)
+  if (player.userName)
     return (
       <>
         <NavBar user={player} />

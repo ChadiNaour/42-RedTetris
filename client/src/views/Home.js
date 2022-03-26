@@ -48,7 +48,7 @@ const Home = () => {
         setAvatar(avatar);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   }, []);
   return (
@@ -56,13 +56,14 @@ const Home = () => {
       <ToastContainer />
       <RightSide>
         <div className="title">
-          Red <span>Tetris</span>
+          Red<span>Tetris</span>
         </div>
         <form
           className="form"
           onSubmit={(event) => {
             event.preventDefault();
             addUsername();
+            setUserName("")
           }}
         >
           <Popover
@@ -89,7 +90,8 @@ const Home = () => {
             label="username"
             variant="outlined"
             value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => {
+              console.log("changed");setUserName(e.target.value)}}
           />
           <StyledStartButton1>play</StyledStartButton1>
           <span style={{ color: "red" }}>{errorUsername}</span>
