@@ -84,7 +84,16 @@ const Home = () => {
               {avatar ? parse(avatar) : ""}
             </StyledAvatar>
           </Popover>
-          <TextField
+          <input
+            className={'input mx-auto animate-fade appearance-none block text-white bg-transparent border border-red-500 rounded py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-red-600 focus:border-green-200'}
+            type="text"
+            placeholder="Username"
+            value={userName}
+            onChange={(e) => {
+              console.log("changed");setUserName(e.target.value)}}
+            style={{ fontFamily: 'Pixel' }}
+          />
+          {/* <TextField
             className="input"
             id="outlined-basic"
             label="username"
@@ -92,7 +101,7 @@ const Home = () => {
             value={userName}
             onChange={(e) => {
               console.log("changed");setUserName(e.target.value)}}
-          />
+          /> */}
           <StyledStartButton1>play</StyledStartButton1>
           <span style={{ color: "red" }}>{errorUsername}</span>
         </form>

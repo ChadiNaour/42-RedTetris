@@ -131,7 +131,17 @@ const Rooms = () => {
         <div className="create">
           <div className="title">create room</div>
           <div className="container">
-            <TextField
+          <input 
+                class={
+                  'create--input animate-fade appearance-none block bg-transparent text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-900 focus:border-gray-500'} 
+                  type="text"
+                  placeholder="Room name"
+                  style={{ fontFamily: 'Pixel'}}
+                  onChange={(e) => {
+                    setRoom(e.target.value);
+                  }}
+                />
+            {/* <TextField
               className="create--input"
               id="standard-basic"
               label="room name"
@@ -139,7 +149,7 @@ const Rooms = () => {
               onChange={(e) => {
                 setRoom(e.target.value);
               }}
-            />
+            /> */}
             <Select
               className="create--select"
               defaultValue="mode"
