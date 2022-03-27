@@ -86,7 +86,7 @@ const Home = () => {
           </Popover>
           <input
             className={
-              "input mx-auto animate-fade appearance-none block text-white bg-transparent border border-red-500 rounded py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-red-600 focus:border-green-200"
+              "input mx-auto animate-fade appearance-none block bg-transparent rounded py-4 px-4 mb-3 leading-tight focus:outline-none"
             }
             type="text"
             placeholder="Username"
@@ -95,7 +95,7 @@ const Home = () => {
               console.log("changed");
               setUserName(e.target.value);
             }}
-            style={{ fontFamily: "Pixel" }}
+            style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke"}}
           />
           {/* <TextField
             className="input"
@@ -107,7 +107,13 @@ const Home = () => {
               console.log("changed");setUserName(e.target.value)}}
           /> */}
           <StyledStartButton1>play</StyledStartButton1>
-          <span style={{ color: "red" }}>{errorUsername}</span>
+          <span
+            style={{
+              fontSize: "20px",
+              color: "#f9253c",
+              fontFamily: "'Saira', sans-serif",
+            }}
+          >{errorUsername}</span>
         </form>
       </RightSide>
       <LeftSide />

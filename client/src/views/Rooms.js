@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { Select } from "antd";
+// import { Select } from "antd";
 import { useEffect, useState } from "react";
 import { StyledContainer, JoinRoom, StyledRoomCard } from "./Rooms.Style";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +17,7 @@ import { updatePlayers } from "../store/slices/playersSlice";
 import { Empty } from "antd";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router";
+import Select from 'react-select';
 // import { BoxesLoader } from "react-awesome-loaders";
 
 import { Badge } from "antd";
@@ -41,39 +42,56 @@ const RoomCard = ({ room, joinRoom }) => {
 const { Option } = Select;
 
 const Rooms = () => {
-  const [mode, setMode] = useState("solo");
+  const [mode, setMode] = useState("Mode");
+  const [active, setActive] = useState(false);
   const [room, setRoom] = useState("");
+  const [roomError, setRoomError] = useState("");
   const user = useSelector((state) => state.playerReducer);
   const rooms = useSelector((state) => state.roomsReducer.rooms);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  function handleChange(value) {
+
+
+  function handleModeChange(value) {
     console.log(`selected ${value}`);
     setMode(value);
+    setActive(!active);
   }
 
   const createRoom = () => {
-    if (user.userName && room !== "") {
+    console.log("room and mode are: ===>", mode, room);
+    if (user.userName && room !== "" && mode !== "Mode") {
       dispatch(addRoomRequest({ room, mode }));
+    }
+    else {
+      setRoomError("Please Enter room name and choose mode");
     }
   };
 
   const joinRoom = (data) => {
     const exist = rooms.find((room) => room.name === data);
     if (exist) {
-      dispatch(joinRoomRequest(data));
+      if (exist.mode === "solo")
+        toast("You can't join a solo game");
+      if (exist.playersIn >= 5)
+        toast("This room is full")
+      else
+        dispatch(joinRoomRequest(data));
     }
   };
 
   useEffect(() => {
     dispatch(getRoomsRequest());
+  }, [dispatch]);
+
+  useEffect(() => {
     console.log(user);
     if (user.roomError) {
       toast(user.roomError);
     } else if (user.roomName) {
       navigate("/game");
     }
-  }, [user]);
+  }, [user, navigate]);
   return (
     <StyledContainer>
       <ToastContainer />
@@ -83,28 +101,113 @@ const Rooms = () => {
       >
         <div className="create">
           <div className="title">create room</div>
-          <div className="container">
+          <div className="w-full h-12 mt-4 flex justify-center align-center items-start">
             <input
               className={
-                "create--input animate-fade appearance-none block bg-transparent text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-900 focus:border-gray-500"
+                "create--input text-left  rounded-md h-12 px-4 focus:outline-none"
               }
               type="text"
               placeholder="Room name"
-              style={{ fontFamily: "Pixel" }}
+              style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke", backgroundColor: "#212121" }}
               onChange={(e) => {
                 setRoom(e.target.value);
               }}
             />
-            <Select
-              className="create--select"
+            <div className="h-full mx-6">
+              <button
+                style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke", backgroundColor: "#212121" }}
+                type="button"
+                className="flex h-full text-left   items-center mx-4 justify-between rounded-md"
+                onClick={() => setActive(!active)}
+              >
+                <span className="flex items-center px-4 ">
+                  <span style={{ color: mode === "Mode" ? "#9BA3AF" : "whitesmoke" }} className="w-12">{mode}</span>
+                </span>
+                <svg
+                  className="h-6 w-6 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ color: "#f9253c" }}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <ul
+                className={active ? 'relative z-10 mt-1 mx-4 shadow-lg rounded-md overflow-hidden' : 'hidden'}
+                style={{ fontFamily: "Pixel", backgroundColor: "#212121", border: "1px solid #f9253c" }}
+              >
+                <li className="lista text-white relative  py-2 pl-1 pr-2 border-b border-gray-600" onClick={() => handleModeChange("solo")} >
+                  {/* <div className="flex items-center"> */}
+                    <span className="font-normal ml-3">solo</span>
+                  {/* </div> */}
+                </li>
+                {/* <hr style={{width: '60px', marginLeft: "15px", border: "0.1px solid red"}} /> */}
+                <li className="lista text-white relative  py-2 pl-1 pr-2" onClick={() => handleModeChange("battle")}>
+                  {/* <div className="flex items-center"> */}
+                    <span className="font-normal ml-3">battle</span>
+                  {/* </div> */}
+                </li>
+              </ul>
+            </div>
+
+            {/* <button
+                className="flex w-1/12 h-full items-center px-2 mx-4 justify-between rounded-md"
+                style={{ fontFamily: "Pixel", border: "1px solid #f9253c", backgroundColor: "#212121" }}
+              >
+                <span style={{ fontFamily: "Pixel", color: "#9BA3AF" }}>Mode</span>
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{color: "#f9253c"}}
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button> */}
+
+            {/* <ul
+                className="z-2 absolute mt-2 w-full rounded bg-gray-50 ring-1 ring-gray-300"
+                x-show="open"
+              >
+                <li
+                  className="cursor-pointer select-none p-2 hover:bg-gray-200"
+                >
+                  Python
+                </li>
+              </ul> */}
+            {/* <Select
+              className="flex w-1/12 h-full items-center px-2 mx-4 justify-between rounded-md"
               defaultValue="mode"
               onChange={handleChange}
+              style={{ fontFamily: "Pixel", color: "#9BA3AF" }}
+              placeholder="mode"
             >
               <Option value="solo">solo</Option>
               <Option value="battle">battle</Option>
-            </Select>
-            <StartButton createRoom={createRoom} />
+            </Select> */}
+            <StartButton mode={mode} createRoom={createRoom} />
           </div>
+        </div>
+        <div className="flex justify-center align-center pb-4">
+          <span
+            style={{
+              fontSize: "20px",
+              color: "#f9253c",
+              fontFamily: "'Saira', sans-serif",
+            }}
+          >
+            {roomError}
+          </span>
         </div>
       </div>
       <div
@@ -140,14 +243,14 @@ const Rooms = () => {
             )}
             {rooms.length
               ? rooms.map((room, key) => (
-                  <RoomCard room={room} key={key} joinRoom={joinRoom} />
-                  // <div className="room hover:bg-gray-700" key={key}>
-                  //   <div className="item name">{room.name}</div>
-                  //   <div className="item mode">{room.mode}</div>
-                  //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
-                  //   <div className="item status">status</div>
-                  // </div>
-                ))
+                <RoomCard room={room} key={key} joinRoom={joinRoom} />
+                // <div className="room hover:bg-gray-700" key={key}>
+                //   <div className="item name">{room.name}</div>
+                //   <div className="item mode">{room.mode}</div>
+                //   <div className="item players">{room.playersIn}/{room.maxPlayers}</div>
+                //   <div className="item status">status</div>
+                // </div>
+              ))
               : ""}
           </div>
         </JoinRoom>

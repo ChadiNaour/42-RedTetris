@@ -59,7 +59,7 @@ export const StyledRoomCard = styled.div`
 export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  // padding-top: 7rem;
+  margin-top: 2%;
   // padding-bottom: 9rem;
   align-items: center;
   .title {
@@ -80,6 +80,11 @@ export const StyledContainer = styled.div`
     width: 100%;
     flex-direction: column;
     // background-color: inherit;
+    .lista {
+      &:hover  {
+        background-color: #f9253c ;
+    }
+    }
     .container {
       margin-top: 2rem;
       flex: 1;
@@ -89,24 +94,6 @@ export const StyledContainer = styled.div`
       align-items: center;
       gap: 50px;
       // background-color: yellow;
-    }
-    &--select {
-      width: 15%;
-      border: none;
-      .ant-select-selector {
-        height: 3.5rem;
-        background-color: ${(props) => props.theme.background.secondary};
-        color: white;
-        border: 1px solid ${(props) => props.theme.border.avatar};
-        .ant-select-selection-item {
-          height: 100%;
-          display: flex;
-          align-items: center;
-        }
-      }
-      .ant-select-arrow {
-        color: ${(props) => props.theme.border.avatar};
-      }
     }
     padding: 2rem;
     display: flex;

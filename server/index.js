@@ -66,7 +66,8 @@ io.on("connection", (socket) => {
         ];
       //still checking the player
       // players = [...players, { username: data.username, socketId: socket.id, room: data.room, avatar: data.avatar }];
-      player.room = data.room;
+      if (player)
+        player.room = data?.room;
       socket.join(data.room);
       // console.log("user with id:", socket.id, "joined room:", data.room);
       // console.log("rooms are", rooms);
