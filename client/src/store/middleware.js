@@ -46,27 +46,20 @@ export const socketMiddleware = (store) => {
       });
       //listner if the room is created
       socket.on("room_created", (data) => {
-        console.log("the room is created", data);
         store.dispatch(addRoomName(data));
         socket.emit("getPlayers", data);
-        // socket.off("room_created");
       });
       socket.on("room_joined", (data) => {
-        console.log(data);
         store.dispatch(addRoomName(data));
         socket.emit("getPlayers", data);
-        // socket.off("room_joined");
       });
       socket.on("update_rooms", (data) => {
-        console.log("enetring to update the rooms", data);
         store.dispatch(updateRooms(data.rooms));
         // socket.off("update_rooms");
       });
       //listner on updated players
       socket.on("update_players", (data) => {
-        console.log("the palyers are", data);
         store.dispatch(updatePlayers(data));
-        // socket.off("update_players");
       });
     }
     if (Connected) {
@@ -90,7 +83,6 @@ export const socketMiddleware = (store) => {
 
       //joinning to a room request
       if (joinRoomRequest.match(action)) {
-        console.log(action.payload);
         socket.emit("join_room", {
           room: action.payload,
           username: user.userName,

@@ -37,7 +37,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log(state);
+    // console.log(state);
     if (state.playerReducer.error) toast(state.playerReducer.error);
     else if (state.playerReducer.userName) navigate("/rooms");
   }, [state]);
@@ -63,7 +63,7 @@ const Home = () => {
           onSubmit={(event) => {
             event.preventDefault();
             addUsername();
-            setUserName("")
+            setUserName("");
           }}
         >
           <Popover
@@ -85,13 +85,17 @@ const Home = () => {
             </StyledAvatar>
           </Popover>
           <input
-            className={'input mx-auto animate-fade appearance-none block text-white bg-transparent border border-red-500 rounded py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-red-600 focus:border-green-200'}
+            className={
+              "input mx-auto animate-fade appearance-none block text-white bg-transparent border border-red-500 rounded py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-red-600 focus:border-green-200"
+            }
             type="text"
             placeholder="Username"
             value={userName}
             onChange={(e) => {
-              console.log("changed");setUserName(e.target.value)}}
-            style={{ fontFamily: 'Pixel' }}
+              console.log("changed");
+              setUserName(e.target.value);
+            }}
+            style={{ fontFamily: "Pixel" }}
           />
           {/* <TextField
             className="input"

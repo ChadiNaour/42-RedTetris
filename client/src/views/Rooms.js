@@ -16,6 +16,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { updatePlayers } from "../store/slices/playersSlice";
 import { Empty } from "antd";
 import Loader from "../components/Loader";
+import { useNavigate } from "react-router";
 // import { BoxesLoader } from "react-awesome-loaders";
 
 import { Badge } from "antd";
@@ -29,16 +30,7 @@ const RoomCard = ({ room, joinRoom }) => {
             {room.name} <AiOutlineUser style={{ width: "20px" }} />{" "}
             {room.playersIn}/{room.maxPlayers}
           </div>
-          {/* <div className="players">
-                    <AiOutlineUser style={{ marginRight: "30px" }} /> 1 / 4
-                </div> */}
           <div className="cover"></div>
-          {/* <BoxesLoader
-                boxColor={"#6366F1"}
-                style={{ marginBottom: "20px" }}
-                desktopSize={"128px"}
-                mobileSize={"80px"}
-            /> */}
           <div className="status">status</div>
         </StyledRoomCard>
       </Badge.Ribbon>
@@ -51,12 +43,10 @@ const { Option } = Select;
 const Rooms = () => {
   const [mode, setMode] = useState("solo");
   const [room, setRoom] = useState("");
-  // const avatar = useSelector((state) => state.playerReducer.avatar);
-  // const rooms = useSelector((state) => state.roomsReducer.rooms);
   const user = useSelector((state) => state.playerReducer);
   const rooms = useSelector((state) => state.roomsReducer.rooms);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { state } = useLocation();
   function handleChange(value) {
     console.log(`selected ${value}`);
     setMode(value);
@@ -64,26 +54,14 @@ const Rooms = () => {
 
   const createRoom = () => {
     if (user.userName && room !== "") {
-      // console.log(mode, room, user.userName);
-      // socket.emit("create_room", {
-      //   room,
-      //   mode,
-      // username: user.userName,
-      // avatar: avatar,
-      // });
       dispatch(addRoomRequest({ room, mode }));
-      console.log(rooms);
     }
   };
 
   const joinRoom = (data) => {
-    console.log("the joined room", data);
-    console.log(rooms);
     const exist = rooms.find((room) => room.name === data);
-    console.log(exist);
     if (exist) {
       dispatch(joinRoomRequest(data));
-      // socket.emit("join_room", { room: data, username: user.userName });
     }
   };
 
@@ -91,42 +69,14 @@ const Rooms = () => {
     dispatch(getRoomsRequest());
     console.log(user);
     if (user.roomError) {
-      console.log("jkdbgdjgbshjdbgfhjsbgdhjsbgdhsbgdsjgbdhjsgdjksngsgjbdsgkn");
       toast(user.roomError);
+    } else if (user.roomName) {
+      navigate("/game");
     }
-    // socket.on("room_joined", (data) => {
-    //   setRoom(data);
-    //   try {
-    //     dispatch(addRoomName(data));
-    //   } catch {}
-    //   socket.emit("getPlayers", data);
-    // });
-    // socket.on("room_created", (data) => {
-    //   setRoom(data);
-    //   try {
-    //     dispatch(addRoomName(data));
-    //   } catch {}
-    //   socket.emit("getPlayers", data);
-    // });
-    // socket.on("update_rooms", async (data) => {
-    //   dispatch(updateRooms(data.rooms));
-    // });
-    // socket.on("room_exists", () => {
-    //   console.log("room_already_exist");
-    //   toast("Room already exist");
-    // });
-    // return () => {
-    //   socket.off("update_rooms");
-    //   socket.off("room_exists");
-    // };
   }, [user]);
-  // useEffect(() => {
-  //   console.log(state);
-  // }, [state]);
   return (
     <StyledContainer>
       <ToastContainer />
-      {/* <h1 className="title">Rooms</h1> */}
       <div
         className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700"
         style={{ width: "60%", backgroundColor: "#333333" }}
@@ -145,15 +95,6 @@ const Rooms = () => {
                 setRoom(e.target.value);
               }}
             />
-            {/* <TextField
-              className="create--input"
-              id="standard-basic"
-              label="room name"
-              variant="outlined"
-              onChange={(e) => {
-                setRoom(e.target.value);
-              }}
-            /> */}
             <Select
               className="create--select"
               defaultValue="mode"
@@ -162,11 +103,8 @@ const Rooms = () => {
               <Option value="solo">solo</Option>
               <Option value="battle">battle</Option>
             </Select>
-            {/* <div> */}
             <StartButton createRoom={createRoom} />
-            {/* <input type="submit" value="create" onClick={createRoom} /> */}
           </div>
-          {/* <div className="bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" style={{ width: '60%', height: '' }}></div> */}
         </div>
       </div>
       <div
@@ -184,11 +122,7 @@ const Rooms = () => {
                   alignItems: "center",
                 }}
               >
-                {/* <div style={{backgroundColor: ''}}> */}
-
                 <Loader />
-                {/* </div> */}
-                {/* <Empty description="" image={Empty.PRESENTED_IMAGE_SIMPLE} imageStyle={{ width: "100%", backgroundColor: "",height: "100%" }} /> */}
                 <div style={{ backgroundColor: "", marginTop: "160px" }}>
                   <span
                     style={{
