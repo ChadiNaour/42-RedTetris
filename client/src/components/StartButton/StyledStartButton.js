@@ -38,4 +38,10 @@ export const StyledStartButton1 = styled.button `
     &:hover  {
         transform : scale(1.02);
     }
+    @media (max-width: 900px) {
+        width: 430px;
+      }
+    @media (max-width: 450px) {
+        width: 90%;
+      }
 `;

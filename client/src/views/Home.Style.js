@@ -5,11 +5,7 @@ export const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  // object-fit: contain;
   background-size: cover;
-  // background-repeat: no-repeat;
-  // background-image:
-  // linear-gradient(to right, #212121, rgba(117, 19, 93, 0.73)),url(${Tetris});
   background-image: url(${Tetris});
   background-size: cover;
   background-position: center;
@@ -18,12 +14,10 @@ export const StyledContainer = styled.div`
 export const LeftSide = styled.div`
   width: 60%;
   height: 100%;
-
-  // background-image: url(${Tetris});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  @media (max-width: 768px) {
+  @media (max-width: 1400px) {
     display: none;
   }
 `;
@@ -32,12 +26,10 @@ export const StyledAvatar = styled.div`
   cursor: pointer;
   width: 200px;
   height: 200px;
-  // background-color: ${(props) => props.theme.background.primary};
   svg {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    // background-color: ${(props) => props.theme.background.primary};
     background-size: cover;
     background-position: center;
   }
@@ -46,7 +38,6 @@ export const StyledAvatar = styled.div`
 
 export const RightSide = styled.div`
   display: inline-block;
-  // background-color: red;
   width: 50%;
   height: 100%;
   display: flex;
@@ -54,8 +45,7 @@ export const RightSide = styled.div`
   align-items: center;
   justify-content: center;
   .title {
-    width: 50%;
-    // background-color: blue;
+    width: 100%;
     text-align: center;
     font-size: 4em;
     // padding: ${(props) => props.theme.headers.h1.padding};
@@ -65,8 +55,18 @@ export const RightSide = styled.div`
     color: #f9253c;
     padding-bottom: 2rem;
     span {
-      margin-left: 25px;
-      color: white;
+      padding: 1%;
+      @media (max-width: 400px) {
+        padding: 0px;
+      }
+    }
+    @media (max-width: 630px) {
+      font-size: 3rem;
+      width: 100%;
+    }
+    @media (max-width: 350px) {
+      font-size: 2.5rem;
+      width: 100%;
     }
   }
   .form {
@@ -80,10 +80,9 @@ export const RightSide = styled.div`
       height: 3rem;
       border: none;
       cursor: pointer;
-      width: 50%;
+      width: 10%;
       padding: 1rem;
       border-radius: 10px;
-      background-color: white;
       font-size: ${(props) => props.theme.message.fontSize};
       font-family: ${(props) => props.theme.message.font};
       letter-spacing: ${(props) => props.theme.message.letterSpacing};
@@ -112,9 +111,15 @@ export const RightSide = styled.div`
       .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
         color: white;
       }
+      @media (max-width: 900px) {
+        width: 430px;
+      }
+      @media (max-width: 450px) {
+        width: 90%;
+      }
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1400px) {
     width: 100% !important;
     .title {
       width: 100% !important;

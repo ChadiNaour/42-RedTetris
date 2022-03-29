@@ -56,7 +56,7 @@ const Home = () => {
       <ToastContainer />
       <RightSide>
         <div className="title">
-          Red<span>Tetris</span>
+          <span style={{color: "#f9253c"}}>Red</span><span style={{color: "white"}}>Tetris</span>
         </div>
         <form
           className="form"
@@ -95,17 +95,8 @@ const Home = () => {
               console.log("changed");
               setUserName(e.target.value);
             }}
-            style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke"}}
+            style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke" }}
           />
-          {/* <TextField
-            className="input"
-            id="outlined-basic"
-            label="username"
-            variant="outlined"
-            value={userName}
-            onChange={(e) => {
-              console.log("changed");setUserName(e.target.value)}}
-          /> */}
           <StyledStartButton1>play</StyledStartButton1>
           <span
             style={{

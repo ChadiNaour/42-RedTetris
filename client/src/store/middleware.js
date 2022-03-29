@@ -46,10 +46,12 @@ export const socketMiddleware = (store) => {
       });
       //listner if the room is created
       socket.on("room_created", (data) => {
+        console.log("room created", data);
         store.dispatch(addRoomName(data));
         socket.emit("getPlayers", data);
       });
       socket.on("room_joined", (data) => {
+        console.log("room joined", data);
         store.dispatch(addRoomName(data));
         socket.emit("getPlayers", data);
       });

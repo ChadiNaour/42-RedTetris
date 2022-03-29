@@ -96,8 +96,8 @@ const Rooms = () => {
     <StyledContainer>
       <ToastContainer />
       <div
-        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700"
-        style={{ width: "60%", backgroundColor: "#333333" }}
+        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 w-3/4"
+        style={{ backgroundColor: "#333333" }}
       >
         <div className="create">
           <div className="title">create room</div>
@@ -142,59 +142,13 @@ const Rooms = () => {
                 style={{ fontFamily: "Pixel", backgroundColor: "#212121", border: "1px solid #f9253c" }}
               >
                 <li className="lista text-white relative  py-2 pl-1 pr-2 border-b border-gray-600" onClick={() => handleModeChange("solo")} >
-                  {/* <div className="flex items-center"> */}
-                    <span className="font-normal ml-3">solo</span>
-                  {/* </div> */}
+                  <span className="font-normal ml-3">solo</span>
                 </li>
-                {/* <hr style={{width: '60px', marginLeft: "15px", border: "0.1px solid red"}} /> */}
                 <li className="lista text-white relative  py-2 pl-1 pr-2" onClick={() => handleModeChange("battle")}>
-                  {/* <div className="flex items-center"> */}
-                    <span className="font-normal ml-3">battle</span>
-                  {/* </div> */}
+                  <span className="font-normal ml-3">battle</span>
                 </li>
               </ul>
             </div>
-
-            {/* <button
-                className="flex w-1/12 h-full items-center px-2 mx-4 justify-between rounded-md"
-                style={{ fontFamily: "Pixel", border: "1px solid #f9253c", backgroundColor: "#212121" }}
-              >
-                <span style={{ fontFamily: "Pixel", color: "#9BA3AF" }}>Mode</span>
-                <svg
-                  className="h-6 w-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{color: "#f9253c"}}
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button> */}
-
-            {/* <ul
-                className="z-2 absolute mt-2 w-full rounded bg-gray-50 ring-1 ring-gray-300"
-                x-show="open"
-              >
-                <li
-                  className="cursor-pointer select-none p-2 hover:bg-gray-200"
-                >
-                  Python
-                </li>
-              </ul> */}
-            {/* <Select
-              className="flex w-1/12 h-full items-center px-2 mx-4 justify-between rounded-md"
-              defaultValue="mode"
-              onChange={handleChange}
-              style={{ fontFamily: "Pixel", color: "#9BA3AF" }}
-              placeholder="mode"
-            >
-              <Option value="solo">solo</Option>
-              <Option value="battle">battle</Option>
-            </Select> */}
             <StartButton mode={mode} createRoom={createRoom} />
           </div>
         </div>
@@ -211,8 +165,8 @@ const Rooms = () => {
         </div>
       </div>
       <div
-        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 mt-8"
-        style={{ width: "60%", backgroundColor: "#333333" }}
+        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 mt-8 w-3/4"
+        style={{ backgroundColor: "#333333" }}
       >
         <JoinRoom>
           <h2 className="title">join room</h2>
