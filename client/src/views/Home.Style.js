@@ -45,7 +45,7 @@ export const RightSide = styled.div`
   align-items: center;
   justify-content: center;
   .title {
-    // background-color: yellow;
+    // background-color: blue;
     width: 100%;
     text-align: center;
     font-size: 4em;

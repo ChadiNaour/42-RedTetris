@@ -7,6 +7,8 @@ import {
   setRoomError,
   addRoomRequest,
   joinRoomRequest,
+  addToChat,
+  sendMessage
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
@@ -63,6 +65,12 @@ export const socketMiddleware = (store) => {
       socket.on("update_players", (data) => {
         store.dispatch(updatePlayers(data));
       });
+
+      //adding message 
+      socket.on("chat", (data) => {
+        console.log(data);
+        store.dispatch(addToChat(data));
+      });
     }
     if (Connected) {
       if (addUser.match(action)) {
@@ -87,6 +95,15 @@ export const socketMiddleware = (store) => {
       if (joinRoomRequest.match(action)) {
         socket.emit("join_room", {
           room: action.payload,
+          username: user.userName,
+        });
+      }
+
+      //sending message to room
+      if (sendMessage.match(action)) {
+        console.log("message sended",action.payload)
+        socket.emit("send_Message", {
+          message: action.payload,
           username: user.userName,
         });
       }

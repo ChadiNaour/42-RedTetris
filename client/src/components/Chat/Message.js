@@ -36,9 +36,9 @@ const StyledMessage = styled.div`
     flex-direction: column;
     .username {
       text-align: ${(props) => {
-        if (props.type !== 0) return "start";
-        return "end";
-      }};
+    if (props.type !== 0) return "start";
+    return "end";
+  }};
       font-size: 0.9rem;
       font-weight: lighter;
       color: white;
@@ -94,7 +94,7 @@ const Message = ({ username, message, index }) => {
   );
 };
 
-const Messages = () => {
+const Messages = ({ player }) => {
   const messages = [
     // { username: "rwayda", message: "fachkout ibno lbott" },
     // { username: "pikala", message: "fachkout ibno lmaslou9" },
@@ -102,13 +102,24 @@ const Messages = () => {
   ];
   return (
     <StyledMsgs>
-      {messages.map((message, index) => (
-        <Message
-          key={index}
-          index={index}
-          username={message.username}
-          message={message.message}
-        />
+      {player.chat.map((message, index) => (
+        message.type === "join" ?
+        <div className="flex justify-center align-center"> <span
+          style={{
+            fontSize: "20px",
+            color: "green",
+            fontFamily: "'Saira', sans-serif",
+          }}
+        >
+          {message.message}
+        </span>
+                        </div> :
+          <Message
+            key={index}
+            index={index}
+            username={message.username}
+            message={message.message}
+          />
       ))}
     </StyledMsgs>
   );

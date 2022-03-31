@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import styled from "styled-components";
 import UserCard from "../UserCard";
 import Messages from "./Message";
 import { AiOutlineSend } from "react-icons/ai";
+import { sendMessage } from "../../store/slices/playerSlice";
 
 const StyledChat = styled.div`
   width: 100%;
@@ -66,24 +68,33 @@ const StyledChat = styled.div`
   }
 `;
 
-const Chat = ({players}) => {
+const Chat = ({ players, player }) => {
+
+  const [message, setMessage] = useState("");
+
+  const sendMessage = () => {
+    console.log(message);
+    sendMessage(message);
+  }
   return (
     <StyledChat>
       {/* <h1>chat</h1> */}
       <div className="users">
-       {players.map((player, key) => (
-        //  console.log(player)
-         <div key={key} className="user">
-           <UserCard player={player}/>
-         </div>
+        {players.map((player, key) => (
+          //  console.log(player)
+          <div key={key} className="user">
+            <UserCard player={player} />
+          </div>
 
-       ))}
+        ))}
       </div>
       <div className="chat-box">
-        <Messages />
+        <Messages player={player} />
         <div className="input">
-          <input type="text" placeholder="write your message" />
-          <AiOutlineSend className="icone" />
+          <input type="text" placeholder="write your message" onChange={(e) => setMessage(e.target.value)} />
+          <button onClick={() => sendMessage(message)}>
+            <AiOutlineSend className="icone" />
+          </button>
         </div>
       </div>
     </StyledChat>

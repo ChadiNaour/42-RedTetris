@@ -78,7 +78,8 @@ const StyledMsgs = styled.div`
 `;
 
 const Game = ({userRoom}) => {
-  const players = useSelector(state => state.playersReducer.players)
+  const players = useSelector(state => state.playersReducer.players);
+  const player = useSelector(state => state.playerReducer);
   console.log("hado homa lplayers", players)
 
   console.log(userRoom);
@@ -94,7 +95,7 @@ const Game = ({userRoom}) => {
         <Info />
       </StyledInfo>
       <StyledMsgs>
-        <Chat players={players} />
+        <Chat players={players} player={player} />
       </StyledMsgs>
     </StyledContainer>
   );

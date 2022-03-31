@@ -74,6 +74,7 @@ io.on("connection", (socket) => {
       // console.log("players are", players);
       // io.emit("created_room", data.room);
       socket.emit("room_created", data.room);
+      io.to(data.room).emit("chat",{message:`Player ${data.username} created the room ${data.room}`, type: "join"});
       io.emit("update_rooms", { rooms: rooms });
     } else {
       socket.emit("room_exists");
@@ -93,10 +94,29 @@ io.on("connection", (socket) => {
         player.room = data.room;
         joinedRoom.playersIn += 1;
         socket.emit("room_joined", data.room);
+        io.to(data.room).emit("chat",{message:`Player ${data.username} joined the room ${data.room}`, type: "join"});
         io.emit("update_rooms", { rooms: rooms });
       }
     }
   });
+
+    //join room
+    socket.on("send_Message", (data) => {
+      console.log(data);
+      // const joinedRoom = rooms.find((room) => room.name === data.room);
+      // const player = players.find((player) => player.username === data.username);
+      // if (joinedRoom) {
+      //   console.log(joinedRoom);
+      //   if (joinedRoom.mode === "battle" && joinedRoom.playersIn < 5) {
+      //     socket.join(data.room);
+      //     player.room = data.room;
+      //     joinedRoom.playersIn += 1;
+      //     socket.emit("room_joined", data.room);
+      //     io.to(data.room).emit("chat",{message:`Player ${data.username} joined the room ${data.room}`, type: "join"});
+      //     io.emit("update_rooms", { rooms: rooms });
+      //   }
+      // }
+    });
 
   //get room players
   socket.on("getPlayers", (data) => {

@@ -187,10 +187,8 @@ const Rooms = () => {
                   alignItems: "center",
                 }}
               >
-                <div className="w-full flex justify-center align-center">
                   <Loader />
-                </div>
-                <div style={{ marginTop: "50px" }}>
+                <div style={{ marginTop: "180px" }}>
                   <span
                     style={{
                       fontSize: "25px",
