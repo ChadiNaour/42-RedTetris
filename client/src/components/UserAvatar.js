@@ -23,7 +23,7 @@ const StyledAvatar = styled.div`
 const Avatar = ({ avatar }) => {
   return (
     <StyledAvatar>
-      {avatar ? parse(avatar) : ""}
+      <img src={require("../images/Avatars/"+ avatar)} alt="Avatar" className="object-cover object-center w-full h-full" />
     </StyledAvatar>
   );
 };

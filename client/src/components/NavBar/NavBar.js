@@ -16,7 +16,7 @@ const Navbar = ({user}) => {
                 <li className="list--element">
                     <div className="profile">
                         <div className="banyola">
-                        {user.avatar ? parse(user.avatar) : ""}
+                        <img src={require("../../images/Avatars/"+ user.avatar)} alt="Avatar" className="object-cover object-center w-full h-full" />
                         </div>
                         <p className="username">{user.userName}</p>
                     </div>

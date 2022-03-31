@@ -61,10 +61,10 @@ export const StyledContainer = styled.div`
   flex-direction: column;
   margin-top: 2%;
   // padding-bottom: 9rem;
+  justify-content: center;
   align-items: center;
   .title {
-    width: 50%;
-    // height: 50px;
+    width: 100%;
     text-align: center;
     font-size: 6em;
     // background-color: yellow;
@@ -73,10 +73,8 @@ export const StyledContainer = styled.div`
     font-weight: ${(props) => props.theme.headers.h1.fontWeight};
     letter-spacing: ${(props) => props.theme.headers.h1.letterSpacing};
     color: ${(props) => props.theme.headers.h1.color};
-    // padding-bottom: 3rem;
   }
   .create {
-    // background-color: yellow;
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -152,7 +150,6 @@ export const JoinRoom = styled.div`
   }
   .rooms-container {
     width: 100%;
-    // background-color: red;
     padding: 3rem;
     display: flex;
     flex-direction: wrap;

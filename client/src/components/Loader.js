@@ -18,6 +18,7 @@ const AnimBox = (animParams) => keyframes`
 const Container = styled.div`
   --size: ${(props) => props.sizeBoxes}px;
   --duration: 800ms;
+  // background-color: black;
   height: calc(var(--size) * 2);
   width: calc(var(--size) * 3);
   position: relative;
@@ -112,8 +113,8 @@ const BoxesLoader = ({
   shadowColor = `#212121`,
   duration = 800,
   size = `64px`,
-  desktopSize = ``,
-  mobileSize = ``,
+  desktopSize = `150px`,
+  mobileSize = `120px`,
 }) => {
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1224px)" });
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });

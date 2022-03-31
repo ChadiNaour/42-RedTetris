@@ -1,16 +1,10 @@
-import axios from "axios";
-export const getAvatar = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const avatar = Math.floor(Math.random() * 50 + 1);
+const Avatars = [
+    { id: 0, name: 'Agoumi', ImagePng: "Agoumi.png" },
+    { id: 1, name: 'Binx_Bond', ImagePng: "Binx_Bond.png" },
+    { id: 2, name: 'Cosmo_Blue', ImagePng: "Cosmo_Blue.png" },
+    { id: 3, name: 'Cute_Cowboy', ImagePng: "Cute_Cowboy.png" },
+    { id: 4, name: 'Pechorin_Bloom', ImagePng: "Pechorin_Bloom.png" },
+    { id: 5, name: 'Gawri', ImagePng: "Gawri.png" },
+];
 
-            // const result = await axios.get(`https://api.adorable.io/avatars/285/${avatar}`);
-            const result = await axios.get(
-                `https://api.multiavatar.com/${avatar}`
-            );
-            resolve(result.data);
-        } catch (err) {
-            reject(err);
-        }
-    });
-};
+export default Avatars;

@@ -7,9 +7,8 @@ export const StyledNav = styled.nav`
     padding-bottom: 6rem;
     height: 120px;
     display: flex;
-    // background-color: red;
     align-items: center;
-    margin: 0 auto;
+    // margin: 0 auto;
     .list {
         width: 90%;
         height: 100%;
@@ -30,16 +29,27 @@ export const StyledNav = styled.nav`
                 &--span {
                     margin-left: 10px;
                     color: #f9253c;
+                    @media (max-width: 450px) {
+                        margin-left: 5px;
+                      }
                 }
+                @media (max-width: 450px) {
+                    font-size: 50px;
+                  }
+                  @media (max-width: 375px) {
+                    font-size: 45px;
+                  }
             }
+            @media (max-width: 450px) {
+                font-size: 1rem;
+              }
             .profile {
-                // background-color: red;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
                 height: 60px;
-                padding: 0 1.5rem 0 0.2rem;
+                // padding: 0 1.5rem 0 0.2rem;
                 border-radius: 50px;
                 .banyola {
                     position: relative;
@@ -50,20 +60,30 @@ export const StyledNav = styled.nav`
                     border: solid #f9253c 3px;
                     justify-content: center;
                     align-items: center;
-                    .letter {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        font-size: 4rem;
-                        color: #f9253c;
-                    }
+                    @media (max-width: 450px) {
+                        width: 48px;
+                        height: 48px;
+                      }
+                      
                 }
                 .username {
                     color: whitesmoke;
                     font-size: 2.6rem;
+                    @media (max-width: 450px) {
+                        font-size: 2.2rem;
+                      }
                 }
+                @media (max-width: 450px) {
+                    gap: 5px;
+                  }
             }
         }
     }
+    @media (max-width: 450px) {
+        margin: 0;
+        padding: 0;
+        // background-color: white;
+        // height: 80px;
+      }
+    
 `;

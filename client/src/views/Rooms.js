@@ -96,15 +96,15 @@ const Rooms = () => {
     <StyledContainer>
       <ToastContainer />
       <div
-        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 w-3/4"
+        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 xl:w-2/3 w-11/12 lg:w-3/4"
         style={{ backgroundColor: "#333333" }}
       >
         <div className="create">
           <div className="title">create room</div>
-          <div className="w-full h-12 mt-4 flex justify-center align-center items-start">
+          <div className="w-full mt-4 flex flex-col sm:flex-row justify-center align-center h-aut md:h-12 md:w-4/12">
             <input
               className={
-                "create--input text-left  rounded-md h-12 px-4 focus:outline-none"
+                "text-left rounded-md h-12 pl-4 my-2 xl:m-0 focus:outline-none"
               }
               type="text"
               placeholder="Room name"
@@ -113,11 +113,11 @@ const Rooms = () => {
                 setRoom(e.target.value);
               }}
             />
-            <div className="h-full mx-6">
+            <div className="h-12 w-full my-2 mx-0 md:mx-6 xl:my-0">
               <button
                 style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke", backgroundColor: "#212121" }}
                 type="button"
-                className="flex h-full text-left   items-center mx-4 justify-between rounded-md"
+                className="flex h-full w-full text-left items-center justify-between rounded-md"
                 onClick={() => setActive(!active)}
               >
                 <span className="flex items-center px-4 ">
@@ -138,7 +138,7 @@ const Rooms = () => {
                 </svg>
               </button>
               <ul
-                className={active ? 'relative z-10 mt-1 mx-4 shadow-lg rounded-md overflow-hidden' : 'hidden'}
+                className={active ? 'relative z-10 mt-1 w-full shadow-lg rounded-md overflow-hidden' : 'hidden'}
                 style={{ fontFamily: "Pixel", backgroundColor: "#212121", border: "1px solid #f9253c" }}
               >
                 <li className="lista text-white relative  py-2 pl-1 pr-2 border-b border-gray-600" onClick={() => handleModeChange("solo")} >
@@ -149,7 +149,10 @@ const Rooms = () => {
                 </li>
               </ul>
             </div>
-            <StartButton mode={mode} createRoom={createRoom} />
+            <div className="h-12 my-2 w-full  xl:m-0">
+
+              <StartButton mode={mode} createRoom={createRoom} />
+            </div>
           </div>
         </div>
         <div className="flex justify-center align-center pb-4">
@@ -164,8 +167,9 @@ const Rooms = () => {
           </span>
         </div>
       </div>
+      {/* join room */}
       <div
-        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 mt-8 w-3/4"
+        className="rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 mt-8 xl:w-2/3 w-11/12 lg:w-3/4"
         style={{ backgroundColor: "#333333" }}
       >
         <JoinRoom>
@@ -174,13 +178,19 @@ const Rooms = () => {
             {rooms.length === 0 ? (
               <div
                 style={{
+                  // backgroundColor: "green",
                   marginTop: "30px",
+                  // width: "100%",
+                  // display: "flex",
+                  // flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <Loader />
-                <div style={{ backgroundColor: "", marginTop: "160px" }}>
+                <div className="w-full flex justify-center align-center">
+                  <Loader />
+                </div>
+                <div style={{ marginTop: "50px" }}>
                   <span
                     style={{
                       fontSize: "25px",
