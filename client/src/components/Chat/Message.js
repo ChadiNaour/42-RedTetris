@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import UserCard from "../UserCard";
 
 const StyledMsgs = styled.div`
   width: 100%;
@@ -79,15 +80,15 @@ const StyledMessage = styled.div`
   }
 `;
 
-const Message = ({ username, message, index }) => {
+const Message = ({ sender, message, index , player}) => {
   // console.log(username, message, index);
   return (
-    <StyledMessage type={index % 2 === 0 ? 1 : 0}>
+    <StyledMessage type={(player.userName === sender.username) ? 1 : 0}>
       <div className="avatar">
-        <div className="cercle">TS</div>
+          <UserCard player={sender} wala={1} />
       </div>
       <div className="content">
-        <div className="username">{username}</div>
+        <div className="username">{sender.username}</div>
         <div className="message">{message}</div>
       </div>
     </StyledMessage>
@@ -104,7 +105,7 @@ const Messages = ({ player }) => {
     <StyledMsgs>
       {player.chat.map((message, index) => (
         message.type === "join" ?
-        <div className="flex justify-center align-center"> <span
+        <div className="flex justify-center align-center" key={index}> <span
           style={{
             fontSize: "20px",
             color: "green",
@@ -115,9 +116,10 @@ const Messages = ({ player }) => {
         </span>
                         </div> :
           <Message
+            player={player}
             key={index}
             index={index}
-            username={message.username}
+            sender={message.sender}
             message={message.message}
           />
       ))}

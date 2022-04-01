@@ -22,6 +22,7 @@ const UserCard = ({player}) => {
   return (
     <StyledUserCard>
       <Avatar avatar= {player.avatar}/>
+
       <h3>{player.username}</h3>
     </StyledUserCard>
   );

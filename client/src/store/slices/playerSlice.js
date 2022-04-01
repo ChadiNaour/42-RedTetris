@@ -48,7 +48,7 @@ export const playerSlice = createSlice({
       state.chat = [...state.chat, action.payload];
     },
     sendMessage: (state) => {
-
+      state.chat = [...state.chat];
     }
   },
 });

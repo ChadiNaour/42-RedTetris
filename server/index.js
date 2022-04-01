@@ -105,6 +105,7 @@ io.on("connection", (socket) => {
       console.log(data);
       // const joinedRoom = rooms.find((room) => room.name === data.room);
       // const player = players.find((player) => player.username === data.username);
+      const player = players.find((player) => player.username === data.username);
       // if (joinedRoom) {
       //   console.log(joinedRoom);
       //   if (joinedRoom.mode === "battle" && joinedRoom.playersIn < 5) {
@@ -112,7 +113,7 @@ io.on("connection", (socket) => {
       //     player.room = data.room;
       //     joinedRoom.playersIn += 1;
       //     socket.emit("room_joined", data.room);
-      //     io.to(data.room).emit("chat",{message:`Player ${data.username} joined the room ${data.room}`, type: "join"});
+      io.to(data.room).emit("chat",{sender: player, message: data.message, type: "message"});
       //     io.emit("update_rooms", { rooms: rooms });
       //   }
       // }

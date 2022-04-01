@@ -101,10 +101,11 @@ export const socketMiddleware = (store) => {
 
       //sending message to room
       if (sendMessage.match(action)) {
-        console.log("message sended",action.payload)
+        console.log("message sended",action.payload);
         socket.emit("send_Message", {
           message: action.payload,
           username: user.userName,
+          room: user.roomName,
         });
       }
     }

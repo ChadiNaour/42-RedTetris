@@ -4,6 +4,7 @@ import UserCard from "../UserCard";
 import Messages from "./Message";
 import { AiOutlineSend } from "react-icons/ai";
 import { sendMessage } from "../../store/slices/playerSlice";
+import { useDispatch } from "react-redux";
 
 const StyledChat = styled.div`
   width: 100%;
@@ -71,10 +72,11 @@ const StyledChat = styled.div`
 const Chat = ({ players, player }) => {
 
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
 
-  const sendMessage = () => {
+  const sendUserMessage = () => {
     console.log(message);
-    sendMessage(message);
+    dispatch(sendMessage(message));
   }
   return (
     <StyledChat>
@@ -92,7 +94,7 @@ const Chat = ({ players, player }) => {
         <Messages player={player} />
         <div className="input">
           <input type="text" placeholder="write your message" onChange={(e) => setMessage(e.target.value)} />
-          <button onClick={() => sendMessage(message)}>
+          <button onClick={() => sendUserMessage(message)}>
             <AiOutlineSend className="icone" />
           </button>
         </div>
