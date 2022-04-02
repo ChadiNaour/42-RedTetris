@@ -3,8 +3,10 @@ import UserCard from "../UserCard";
 import Avatar from "../UserAvatar";
 
 const StyledMsgs = styled.div`
+  // background-color: red;
   width: 100%;
   height: 100%;
+  padding-top: 15px;
   /* padding: 1rem rem 0 1rem; */
   border-radius: 10px;
   display: flex;
@@ -31,7 +33,8 @@ const StyledMessage = styled.div`
   gap: 1rem;
 
   .content {
-    min-height: 60px;
+    min-height: 50px;
+    max-width: 400px;
     /* padding: 1rem; */
     display: flex;
     gap: 0.5rem;
@@ -53,6 +56,8 @@ const StyledMessage = styled.div`
       padding: 1rem;
       border-radius: 10px;
       background-color: white;
+      max-width: 400px;
+      word-wrap:break-word;
       /* margin-top: 20px; */
       font-size: ${(props) => props.theme.message.fontSize};
       font-family: ${(props) => props.theme.message.font};
@@ -98,11 +103,13 @@ const Message = ({ sender, message, index, player }) => {
 };
 
 const Messages = ({ player }) => {
-  const messages = [
-    // { username: "rwayda", message: "fachkout ibno lbott" },
-    // { username: "pikala", message: "fachkout ibno lmaslou9" },
-    // { username: "telfaza", message: "fachkout ibno lmandour" },
-  ];
+  var colors = ['#FFFA4D', '#00ff00', '#5EE6EB', '#F24A72', '#EEEEEE'];
+  var random_color = colors[Math.floor(Math.random() * colors.length)];
+
+  const generate_color = (index) => {
+    return (colors[index])
+  }
+
   return (
     <StyledMsgs>
       {player.chat.map((message, index) =>
@@ -112,7 +119,7 @@ const Messages = ({ player }) => {
             <span
               style={{
                 fontSize: "20px",
-                color: "green",
+                color: generate_color(index),
                 fontFamily: "'Saira', sans-serif",
               }}
             >

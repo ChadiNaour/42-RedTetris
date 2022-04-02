@@ -29,7 +29,7 @@ const Home = () => {
   const [errorUsername, setErrorUsername] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  var [avatar, setAvatar] = useState(Avatars[0]);
+  var [avatar, setAvatar] = useState(Avatars[Math.floor(Math.random() * 10)]);
 
   const state = useSelector((state) => state);
 

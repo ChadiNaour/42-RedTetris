@@ -38,7 +38,7 @@ const StyledChat = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 2rem 0 0 0;
+    // padding: 2rem 0 0 0;
     .input {
       width: 100%;
       height: 60px;
@@ -71,11 +71,17 @@ const StyledChat = styled.div`
 
 const Chat = ({ players, player }) => {
   const [message, setMessage] = useState("");
+  const [messageError, setMessageError] = useState(null);
   const dispatch = useDispatch();
 
   const sendUserMessage = () => {
-    console.log(message);
-    dispatch(sendMessage(message));
+    const regex = /^.{1,10}$/;
+    if (regex.test(message)) {
+      console.log(message);
+      dispatch(sendMessage(message));
+    }
+    else
+      setMessageError("message cannot be more than 10 chars");
   };
   return (
     <StyledChat>
@@ -100,6 +106,13 @@ const Chat = ({ players, player }) => {
             <AiOutlineSend className="icone" />
           </button>
         </div>
+        <span
+          style={{
+            fontSize: "15px",
+            marginLeft: "5px",
+            color: "#f9253c",
+            fontFamily: "'Saira', sans-serif",
+          }}>{messageError}</span>
       </div>
     </StyledChat>
   );
