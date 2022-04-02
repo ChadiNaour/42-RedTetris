@@ -4,9 +4,11 @@ import Avatar from "../UserAvatar";
 
 const StyledMsgs = styled.div`
   // background-color: red;
-  width: 100%;
-  height: 100%;
+  // height: 100px;
+  overflow: visible;
+  height: 800px;
   padding-top: 15px;
+  max-height: 800px;
   /* padding: 1rem rem 0 1rem; */
   border-radius: 10px;
   display: flex;

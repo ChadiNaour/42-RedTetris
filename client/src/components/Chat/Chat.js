@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 const StyledChat = styled.div`
   width: 100%;
   height: 100%;
+  overflow: visible;
+  max-height: 800px;
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.theme.background.secondary};
@@ -36,7 +38,10 @@ const StyledChat = styled.div`
     flex: 1;
     background-color: black;
     width: 100%;
+    height: 100%;
+    max-height: 800px;
     display: flex;
+    overflow:visible;
     flex-direction: column;
     // padding: 2rem 0 0 0;
     .input {
@@ -79,6 +84,7 @@ const Chat = ({ players, player }) => {
     if (regex.test(message)) {
       console.log(message);
       dispatch(sendMessage(message));
+      setMessage("");
     }
     else
       setMessageError("message cannot be more than 10 chars");
@@ -99,6 +105,7 @@ const Chat = ({ players, player }) => {
         <div className="input">
           <input
             type="text"
+            value={message}
             placeholder="write your message"
             onChange={(e) => setMessage(e.target.value)}
           />
