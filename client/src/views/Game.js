@@ -4,8 +4,7 @@ import Info from "../components/Info/Info";
 import Chat from "../components/Chat/Chat.js";
 import OtherStages from "../components/OtherStages/OtherStages";
 import Tetris from "../components/Tetris/Tetris";
-import { useSelector , useDispatch} from 'react-redux'
-
+import { useSelector, useDispatch } from "react-redux";
 
 const StyledContainer = styled.div`
   /* width: 100%; */
@@ -77,12 +76,11 @@ const StyledMsgs = styled.div`
   grid-area: msgs;
 `;
 
-const Game = ({userRoom}) => {
-  const players = useSelector(state => state.playersReducer.players);
-  const player = useSelector(state => state.playerReducer);
-  console.log("hado homa lplayers", players)
+const Game = () => {
+  const players = useSelector((state) => state.playersReducer.players);
+  const player = useSelector((state) => state.playerReducer);
+  console.log("hado homa lplayers", players);
 
-  console.log(userRoom);
   return (
     <StyledContainer>
       <StyledOtherStages>

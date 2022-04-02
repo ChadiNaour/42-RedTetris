@@ -8,11 +8,12 @@ import {
   addRoomRequest,
   joinRoomRequest,
   addToChat,
-  sendMessage
+  sendMessage,
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
 import { io, Socket } from "socket.io-client";
+import { getRoomsRequest } from "../actions/roomsActions";
 export const logger = (store) => (next) => (action) => {
   // console.group(action.type);
   // console.log("state : ", store.getState());
@@ -32,6 +33,7 @@ export const socketMiddleware = (store) => {
       socket = io("http://localhost:3001");
       socket.on("connect", () => {
         store.dispatch(isConnected());
+        store.dispatch(getRoomsRequest());
       });
       socket.on("user_exists", (data) => {
         if (data.error) store.dispatch(setError("user already exist"));
@@ -66,7 +68,7 @@ export const socketMiddleware = (store) => {
         store.dispatch(updatePlayers(data));
       });
 
-      //adding message 
+      //adding message
       socket.on("chat", (data) => {
         console.log(data);
         store.dispatch(addToChat(data));
@@ -101,7 +103,7 @@ export const socketMiddleware = (store) => {
 
       //sending message to room
       if (sendMessage.match(action)) {
-        console.log("message sended",action.payload);
+        console.log("message sended", action.payload);
         socket.emit("send_Message", {
           message: action.payload,
           username: user.userName,

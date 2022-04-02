@@ -18,7 +18,12 @@ import {
   useLocation,
   useNavigate,
 } from "react-router";
-import { addRoomRequest } from "./store/slices/playerSlice";
+import {
+  addRoomRequest,
+  addUser,
+  joinRoomRequest,
+} from "./store/slices/playerSlice";
+import { getRoomsRequest } from "./actions/roomsActions";
 
 const StyledApp = styled.div`
   width: 100vw;
@@ -53,32 +58,43 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const state = useSelector((state) => state);
-  const [url, setUrl] = useState({});
+  const rooms = useSelector((state) => state.roomsReducer.rooms);
+  // const [url, setUrl] = useState({});
   useEffect(() => {
     dispatch(startConnecting());
-    if (location.hash && location.hash.includes("[")) {
-      let room;
-      let firstIndex = location.hash.indexOf("[");
-      room = location.hash.substring(1, firstIndex);
-      let username = location.hash.substring(
-        firstIndex + 1,
-        location.hash.indexOf("]", firstIndex)
-      );
-      if ((username, room)) {
-        setUrl({ room, username });
-        console.log(room, username);
-      }
-      // if (player && room) {
-      // }
-      // console.log(location.hash);
-    }
-  }, [dispatch, location]);
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (state.playerReducer.roomNamae) navigate("/game");
-    // if (state.connection.connected && url.room && url.username)
-    // dispatch(addRoomRequest({ ...url }));
-  }, [state, url, dispatch]);
+  // useEffect(() => {
+  // if (state.playerReducer.roomName) navigate("/game");
+  // if (state.connection.connected) {
+  // if (!state.playerReducer.userName && !state.playerReducer.roomName)
+  // if (location.hash && location.hash.includes("[")) {
+  // let room;
+  // let firstIndex = location.hash.indexOf("[");
+  // room = location.hash.substring(1, firstIndex);
+  // let username = location.hash.substring(
+  // firstIndex + 1,
+  // location.hash.indexOf("]", firstIndex)
+  // );
+  // if ((username, room)) {
+  // dispatch(
+  // addUser({
+  // username,
+  // avatar: "Agoumi.png",
+  // })
+  // );
+  // const exist = rooms.find((r) => r.name === room);
+  // console.log("valise", exist);
+  // if (exist) {
+  // dispatch(joinRoomRequest({ room }));
+  // } else {
+  // dispatch(addRoomRequest({ room, mode: "battle" }));
+  // }
+  // }
+  // }
+  // else navigate("game");
+  // }
+  // }, [state, dispatch, navigate]);
   return (
     <ThemeProvider theme={Theme}>
       <Routes>

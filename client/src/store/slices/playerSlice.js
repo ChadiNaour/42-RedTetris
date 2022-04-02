@@ -35,7 +35,7 @@ export const playerSlice = createSlice({
       state.error = action.payload;
     },
     setRoomError: (state, action) => {
-      console.log("piloood",action.payload);
+      console.log("piloood", action.payload);
       state.roomError = action.payload;
     },
     addRoomRequest: (state) => {
@@ -44,17 +44,28 @@ export const playerSlice = createSlice({
     joinRoomRequest: (state) => {
       state.roomError = null;
     },
-    addToChat : (state, action) => {
+    addToChat: (state, action) => {
       state.chat = [...state.chat, action.payload];
     },
     sendMessage: (state) => {
       state.chat = [...state.chat];
-    }
+    },
+    creatRoomFromUrl: (action) => {},
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addUser, addRoomName, setUserAvatar, setError, UserAdded, setRoomError, addRoomRequest, joinRoomRequest, addToChat, sendMessage} =
-  playerSlice.actions;
+export const {
+  addUser,
+  addRoomName,
+  setUserAvatar,
+  setError,
+  UserAdded,
+  setRoomError,
+  addRoomRequest,
+  joinRoomRequest,
+  addToChat,
+  sendMessage,
+} = playerSlice.actions;
 
 export default playerSlice.reducer;
