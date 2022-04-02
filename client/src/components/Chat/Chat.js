@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import styled from "styled-components";
 import UserCard from "../UserCard";
 import Messages from "./Message";
@@ -70,14 +70,13 @@ const StyledChat = styled.div`
 `;
 
 const Chat = ({ players, player }) => {
-
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
 
   const sendUserMessage = () => {
     console.log(message);
     dispatch(sendMessage(message));
-  }
+  };
   return (
     <StyledChat>
       {/* <h1>chat</h1> */}
@@ -87,13 +86,16 @@ const Chat = ({ players, player }) => {
           <div key={key} className="user">
             <UserCard player={player} />
           </div>
-
         ))}
       </div>
       <div className="chat-box">
         <Messages player={player} />
         <div className="input">
-          <input type="text" placeholder="write your message" onChange={(e) => setMessage(e.target.value)} />
+          <input
+            type="text"
+            placeholder="write your message"
+            onChange={(e) => setMessage(e.target.value)}
+          />
           <button onClick={() => sendUserMessage(message)}>
             <AiOutlineSend className="icone" />
           </button>

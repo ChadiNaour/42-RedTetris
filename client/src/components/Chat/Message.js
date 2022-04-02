@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import UserCard from "../UserCard";
+import Avatar from "../UserAvatar";
 
 const StyledMsgs = styled.div`
   width: 100%;
@@ -37,9 +38,9 @@ const StyledMessage = styled.div`
     flex-direction: column;
     .username {
       text-align: ${(props) => {
-    if (props.type !== 0) return "start";
-    return "end";
-  }};
+        if (props.type !== 0) return "start";
+        return "end";
+      }};
       font-size: 0.9rem;
       font-weight: lighter;
       color: white;
@@ -80,12 +81,13 @@ const StyledMessage = styled.div`
   }
 `;
 
-const Message = ({ sender, message, index , player}) => {
+const Message = ({ sender, message, index, player }) => {
   // console.log(username, message, index);
   return (
-    <StyledMessage type={(player.userName === sender.username) ? 1 : 0}>
+    <StyledMessage type={player.userName === sender.username ? 1 : 0}>
       <div className="avatar">
-          <UserCard player={sender} wala={1} />
+        <Avatar avatar={sender.avatar} />
+        {/* <UserCard player={sender} wala={1} /> */}
       </div>
       <div className="content">
         <div className="username">{sender.username}</div>
@@ -103,18 +105,21 @@ const Messages = ({ player }) => {
   ];
   return (
     <StyledMsgs>
-      {player.chat.map((message, index) => (
-        message.type === "join" ?
-        <div className="flex justify-center align-center" key={index}> <span
-          style={{
-            fontSize: "20px",
-            color: "green",
-            fontFamily: "'Saira', sans-serif",
-          }}
-        >
-          {message.message}
-        </span>
-                        </div> :
+      {player.chat.map((message, index) =>
+        message.type === "join" ? (
+          <div className="flex justify-center align-center" key={index}>
+            {" "}
+            <span
+              style={{
+                fontSize: "20px",
+                color: "green",
+                fontFamily: "'Saira', sans-serif",
+              }}
+            >
+              {message.message}
+            </span>
+          </div>
+        ) : (
           <Message
             player={player}
             key={index}
@@ -122,7 +127,8 @@ const Messages = ({ player }) => {
             sender={message.sender}
             message={message.message}
           />
-      ))}
+        )
+      )}
     </StyledMsgs>
   );
 };

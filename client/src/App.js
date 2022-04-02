@@ -10,7 +10,15 @@ import NoMatch from "./components/NoMatch";
 import Game from "./views/Game";
 import Home from "./views/Home";
 import { startConnecting, isConnected } from "./store/slices/connectionSlice";
-import { Outlet, Route, Routes, Navigate } from "react-router";
+import {
+  Outlet,
+  Route,
+  Routes,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router";
+import { addRoomRequest } from "./store/slices/playerSlice";
 
 const StyledApp = styled.div`
   width: 100vw;
@@ -42,10 +50,35 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = useSelector((state) => state);
+  const [url, setUrl] = useState({});
   useEffect(() => {
     dispatch(startConnecting());
-  }, [dispatch]);
+    if (location.hash && location.hash.includes("[")) {
+      let room;
+      let firstIndex = location.hash.indexOf("[");
+      room = location.hash.substring(1, firstIndex);
+      let username = location.hash.substring(
+        firstIndex + 1,
+        location.hash.indexOf("]", firstIndex)
+      );
+      if ((username, room)) {
+        setUrl({ room, username });
+        console.log(room, username);
+      }
+      // if (player && room) {
+      // }
+      // console.log(location.hash);
+    }
+  }, [dispatch, location]);
 
+  useEffect(() => {
+    if (state.playerReducer.roomNamae) navigate("/game");
+    // if (state.connection.connected && url.room && url.username)
+    // dispatch(addRoomRequest({ ...url }));
+  }, [state, url, dispatch]);
   return (
     <ThemeProvider theme={Theme}>
       <Routes>
