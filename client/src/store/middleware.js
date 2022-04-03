@@ -33,7 +33,7 @@ export const socketMiddleware = (store) => {
       socket = io("http://localhost:3001");
       socket.on("connect", () => {
         store.dispatch(isConnected());
-        store.dispatch(getRoomsRequest());
+        // store.dispatch(getRoomsRequest());
       });
       socket.on("user_exists", (data) => {
         if (data.error) store.dispatch(setError("user already exist"));
@@ -73,6 +73,33 @@ export const socketMiddleware = (store) => {
         console.log(data);
         store.dispatch(addToChat(data));
       });
+      socket.on("emit-disconnect", () => {
+        socket.off("user_exists");
+        socket.off("room_exists");
+        socket.off("room_created");
+        socket.off("room_joined");
+        socket.off("update_rooms");
+        socket.off("update_players");
+      });
+      if (action.payload.hash) {
+        console.log(action.payload.hash);
+        let room;
+        let firstIndex = action.payload.hash.indexOf("[");
+        room = action.payload.hash.substring(1, firstIndex);
+        let username = action.payload.hash.substring(
+          firstIndex + 1,
+          action.payload.hash.indexOf("]", firstIndex)
+        );
+        socket.emit("new_user", {
+          username: username,
+          avatar: "Agoumi.png",
+        });
+        socket.emit("join_room", {
+          room: room,
+          username: username,
+          hash: true,
+        });
+      }
     }
     if (Connected) {
       if (addUser.match(action)) {

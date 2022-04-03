@@ -59,42 +59,21 @@ function App() {
   const navigate = useNavigate();
   const state = useSelector((state) => state);
   const rooms = useSelector((state) => state.roomsReducer.rooms);
-  // const [url, setUrl] = useState({});
-  useEffect(() => {
-    dispatch(startConnecting());
-  }, [dispatch]);
 
-  // useEffect(() => {
-  // if (state.playerReducer.roomName) navigate("/game");
-  // if (state.connection.connected) {
-  // if (!state.playerReducer.userName && !state.playerReducer.roomName)
-  // if (location.hash && location.hash.includes("[")) {
-  // let room;
-  // let firstIndex = location.hash.indexOf("[");
-  // room = location.hash.substring(1, firstIndex);
-  // let username = location.hash.substring(
-  // firstIndex + 1,
-  // location.hash.indexOf("]", firstIndex)
-  // );
-  // if ((username, room)) {
-  // dispatch(
-  // addUser({
-  // username,
-  // avatar: "Agoumi.png",
-  // })
-  // );
-  // const exist = rooms.find((r) => r.name === room);
-  // console.log("valise", exist);
-  // if (exist) {
-  // dispatch(joinRoomRequest({ room }));
-  // } else {
-  // dispatch(addRoomRequest({ room, mode: "battle" }));
-  // }
-  // }
-  // }
-  // else navigate("game");
-  // }
-  // }, [state, dispatch, navigate]);
+  const [load, setLoad] = useState(true);
+  const [url, setUrl] = useState({});
+
+  useEffect(() => {
+    dispatch(startConnecting({ hash: location.hash }));
+  }, []);
+
+  useEffect(() => {
+    if (state.playerReducer.userName && state.playerReducer.roomName)
+      navigate("/game");
+  }, [state]);
+
+  useEffect(() => {}, [load, state]);
+
   return (
     <ThemeProvider theme={Theme}>
       <Routes>
@@ -103,7 +82,7 @@ function App() {
           <Route index path="home" element={<Home />} />
           <Route element={<ProtectedRoute />}>
             <Route path="rooms" element={<Rooms />} />
-            <Route path="game" element={<Game />} />
+            <Route path="*" element={<Game />} />
           </Route>
           <Route path="*" element={<NoMatch />} />
         </Route>

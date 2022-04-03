@@ -102,6 +102,18 @@ io.on("connection", (socket) => {
         });
         io.emit("update_rooms", { rooms: rooms });
       }
+    } else if (data.hash && data.room) {
+      socket.join(data.room);
+      // console.log("user with id:", socket.id, "joined room:", data.room);
+      // console.log("rooms are", rooms);
+      // console.log("players are", players);
+      // io.emit("created_room", data.room);
+      socket.emit("room_created", data.room);
+      io.to(data.room).emit("chat", {
+        message: `Player ${data.username} created the room ${data.room}`,
+        type: "join",
+      });
+      io.emit("update_rooms", { rooms: rooms });
     }
   });
 
@@ -157,6 +169,7 @@ io.on("connection", (socket) => {
 
   //disconnect
   socket.on("disconnect", () => {
+    socket.emit("emit-disconnect");
     console.log("User disconnected =>", socket.id);
   });
 });
