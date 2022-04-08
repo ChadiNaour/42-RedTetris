@@ -3,12 +3,10 @@ import UserCard from "../UserCard";
 import Avatar from "../UserAvatar";
 
 const StyledMsgs = styled.div`
-  // background-color: red;
-  // height: 100px;
-  overflow: visible;
-  height: 800px;
-  padding-top: 15px;
-  max-height: 800px;
+  width: 100%;
+  height: 100%;
+  max-height: 555px;
+  overflow-y: scroll;
   /* padding: 1rem rem 0 1rem; */
   border-radius: 10px;
   display: flex;
@@ -35,17 +33,16 @@ const StyledMessage = styled.div`
   gap: 1rem;
 
   .content {
-    min-height: 50px;
-    max-width: 400px;
+    min-height: 60px;
     /* padding: 1rem; */
     display: flex;
     gap: 0.5rem;
     flex-direction: column;
     .username {
       text-align: ${(props) => {
-        if (props.type !== 0) return "start";
-        return "end";
-      }};
+    if (props.type !== 0) return "start";
+    return "end";
+  }};
       font-size: 0.9rem;
       font-weight: lighter;
       color: white;
@@ -58,8 +55,6 @@ const StyledMessage = styled.div`
       padding: 1rem;
       border-radius: 10px;
       background-color: white;
-      max-width: 400px;
-      word-wrap:break-word;
       /* margin-top: 20px; */
       font-size: ${(props) => props.theme.message.fontSize};
       font-family: ${(props) => props.theme.message.font};

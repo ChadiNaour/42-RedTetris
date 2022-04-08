@@ -9,8 +9,6 @@ import { useDispatch } from "react-redux";
 const StyledChat = styled.div`
   width: 100%;
   height: 100%;
-  overflow: visible;
-  max-height: 800px;
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.theme.background.secondary};
@@ -36,14 +34,12 @@ const StyledChat = styled.div`
   }
   .chat-box {
     flex: 1;
-    background-color: black;
+    background-color: red;
     width: 100%;
-    height: 100%;
-    max-height: 800px;
+    // max-height: 595px;
     display: flex;
-    overflow:visible;
     flex-direction: column;
-    // padding: 2rem 0 0 0;
+    padding: 2rem 0 0 0;
     .input {
       width: 100%;
       height: 60px;

@@ -73,7 +73,6 @@ const StyledInfo = styled.div`
 `;
 const StyledMsgs = styled.div`
   background: green;
-  max-height: 800px;
   grid-area: msgs;
 `;
 
