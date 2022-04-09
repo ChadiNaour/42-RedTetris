@@ -6,8 +6,10 @@ const StyledMsgs = styled.div`
   width: 100%;
   height: 100%;
   max-height: 555px;
-  overflow-y: scroll;
-  /* padding: 1rem rem 0 1rem; */
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   border-radius: 10px;
   display: flex;
   flex-direction: column;

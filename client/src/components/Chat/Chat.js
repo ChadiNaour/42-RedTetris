@@ -34,8 +34,9 @@ const StyledChat = styled.div`
   }
   .chat-box {
     flex: 1;
-    background-color: red;
+    background-color: black;
     width: 100%;
+    overflow: hidden;
     // max-height: 595px;
     display: flex;
     flex-direction: column;
@@ -81,6 +82,7 @@ const Chat = ({ players, player }) => {
       console.log(message);
       dispatch(sendMessage(message));
       setMessage("");
+      setMessageError("");
     }
     else
       setMessageError("message cannot be more than 10 chars");
@@ -98,6 +100,14 @@ const Chat = ({ players, player }) => {
       </div>
       <div className="chat-box">
         <Messages player={player} />
+        <span
+          style={{
+            fontSize: "15px",
+            marginLeft: "5px",
+            color: "#f9253c",
+            marginBottom: "3px",
+            fontFamily: "'Saira', sans-serif",
+          }}>{messageError}</span>
         <div className="input">
           <input
             type="text"
@@ -109,13 +119,6 @@ const Chat = ({ players, player }) => {
             <AiOutlineSend className="icone" />
           </button>
         </div>
-        <span
-          style={{
-            fontSize: "15px",
-            marginLeft: "5px",
-            color: "#f9253c",
-            fontFamily: "'Saira', sans-serif",
-          }}>{messageError}</span>
       </div>
     </StyledChat>
   );
