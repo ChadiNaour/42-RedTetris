@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import UserCard from "../UserCard";
 import Avatar from "../UserAvatar";
+import { useRef, useEffect } from "react";
 
 const StyledMsgs = styled.div`
   width: 100%;
@@ -104,6 +105,15 @@ const Message = ({ sender, message, index, player }) => {
 const Messages = ({ player }) => {
   var colors = ['#FFFA4D', '#00ff00', '#5EE6EB', '#F24A72', '#EEEEEE'];
   var random_color = colors[Math.floor(Math.random() * colors.length)];
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [player.chat]);
 
   const generate_color = (index) => {
     return (colors[index])
@@ -135,6 +145,7 @@ const Messages = ({ player }) => {
           />
         )
       )}
+      <div ref={messagesEndRef} />
     </StyledMsgs>
   );
 };

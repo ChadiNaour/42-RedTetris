@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import UserCard from "../UserCard";
 import Messages from "./Message";
@@ -94,12 +94,12 @@ const Chat = ({ players, player }) => {
         {players.map((player, key) => (
           //  console.log(player)
           <div key={key} className="user">
-            <UserCard player={player} />
+            <UserCard player={player}/>
           </div>
         ))}
       </div>
       <div className="chat-box">
-        <Messages player={player} />
+        <Messages player={player}/>
         <span
           style={{
             fontSize: "15px",
