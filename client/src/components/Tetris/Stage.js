@@ -1,10 +1,11 @@
 import { StyledStage, RowStyle, Col } from "./Stage.Style";
+import {TETROMINOS} from '../../utils/tetrominos';
 
 const Row = ({ row, rowIdx, stage }) => {
   return (
     <RowStyle>
       {row.map((col, colIdx) => {
-        return <Col key={colIdx} fill={col[0] ? 1 : 0} />;
+        return <Col key={colIdx} type={col[0]} color={TETROMINOS[col[0]].color} />;
       })}
     </RowStyle>
   );

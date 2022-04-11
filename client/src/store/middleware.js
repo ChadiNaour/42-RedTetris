@@ -70,7 +70,7 @@ export const socketMiddleware = (store) => {
 
       //adding message
       socket.on("chat", (data) => {
-        console.log(data);
+        console.log("emited from back data",data);
         store.dispatch(addToChat(data));
       });
       socket.on("emit-disconnect", () => {
