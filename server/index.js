@@ -22,13 +22,13 @@ app.get("/rooms", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("User connected =>", socket.id);
+  //console.log("User connected =>", socket.id);
 
   //new user
   socket.on("new_user", (data) => {
-    // console.log(data);
+    // //console.log(data);
     const exist = players.find((player) => player.username === data.username);
-    // console.log(exist);
+    // //console.log(exist);
     if (!exist) {
       players = [
         ...players,
@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
   socket.on("create_room", (data) => {
     const exist = rooms.find((room) => room.name === data.room);
     const player = players.find((player) => player.username === data.username);
-    // console.log(player);
+    // //console.log(player);
     if (!exist) {
       if (data.mode === "battle")
         rooms = [
@@ -68,9 +68,9 @@ io.on("connection", (socket) => {
       // players = [...players, { username: data.username, socketId: socket.id, room: data.room, avatar: data.avatar }];
       if (player) player.room = data?.room;
       socket.join(data.room);
-      // console.log("user with id:", socket.id, "joined room:", data.room);
-      // console.log("rooms are", rooms);
-      // console.log("players are", players);
+      // //console.log("user with id:", socket.id, "joined room:", data.room);
+      // //console.log("rooms are", rooms);
+      // //console.log("players are", players);
       // io.emit("created_room", data.room);
       socket.emit("room_created", data.room);
       io.to(data.room).emit("chat", {
@@ -86,11 +86,11 @@ io.on("connection", (socket) => {
 
   //join room
   socket.on("join_room", (data) => {
-    console.log(data);
+    //console.log(data);
     const joinedRoom = rooms.find((room) => room.name === data.room);
     const player = players.find((player) => player.username === data.username);
     if (joinedRoom) {
-      console.log(joinedRoom);
+      //console.log(joinedRoom);
       if (joinedRoom.mode === "battle" && joinedRoom.playersIn < 5) {
         socket.join(data.room);
         player.room = data?.room;
@@ -104,9 +104,9 @@ io.on("connection", (socket) => {
       }
     } else if (data.hash && data.room) {
       socket.join(data.room);
-      // console.log("user with id:", socket.id, "joined room:", data.room);
-      // console.log("rooms are", rooms);
-      // console.log("players are", players);
+      // //console.log("user with id:", socket.id, "joined room:", data.room);
+      // //console.log("rooms are", rooms);
+      // //console.log("players are", players);
       // io.emit("created_room", data.room);
       socket.emit("room_created", data.room);
       io.to(data.room).emit("chat", {
@@ -119,12 +119,12 @@ io.on("connection", (socket) => {
 
   //join room
   socket.on("send_Message", (data) => {
-    console.log(data);
+    //console.log(data);
     // const joinedRoom = rooms.find((room) => room.name === data.room);
     // const player = players.find((player) => player.username === data.username);
     const player = players.find((player) => player.username === data.username);
     // if (joinedRoom) {
-    //   console.log(joinedRoom);
+    //   //console.log(joinedRoom);
     //   if (joinedRoom.mode === "battle" && joinedRoom.playersIn < 5) {
     //     socket.join(data.room);
     //     player.room = data.room;
@@ -144,10 +144,10 @@ io.on("connection", (socket) => {
   socket.on("getPlayers", (data) => {
     var temp = [];
     var roomPlayers = [];
-    // console.log("in here")
-    // console.log(data);
+    // //console.log("in here")
+    // //console.log(data);
     const clients = io.sockets.adapter.rooms.get(data);
-    console.log("clients in room are ===>", clients);
+    //console.log("clients in room are ===>", clients);
     if (clients) {
       for (const clientId of clients) {
         temp.push(clientId);
@@ -160,20 +160,20 @@ io.on("connection", (socket) => {
         }
       }
     }
-    console.log("roomPlayers", roomPlayers);
+    //console.log("roomPlayers", roomPlayers);
     io.to(data).emit("update_players", roomPlayers);
     // var clients = io.sockets.clients();
     // var clients = io.sockets.clients(data.room);
-    // console.log(players);
+    // //console.log(players);
   });
 
   //disconnect
   socket.on("disconnect", () => {
     socket.emit("emit-disconnect");
-    console.log("User disconnected =>", socket.id);
+    //console.log("User disconnected =>", socket.id);
   });
 });
 
 server.listen(3001, () => {
-  console.log("server running on 3001");
+  //console.log("server running on 3001");
 });

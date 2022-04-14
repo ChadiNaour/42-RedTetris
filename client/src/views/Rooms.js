@@ -53,13 +53,13 @@ const Rooms = () => {
 
 
   function handleModeChange(value) {
-    console.log(`selected ${value}`);
+    //console.log(`selected ${value}`);
     setMode(value);
     setActive(!active);
   }
 
   const createRoom = () => {
-    console.log("room and mode are: ===>", mode, room);
+    //console.log("room and mode are: ===>", mode, room);
     if (user.userName && room !== "" && mode !== "Mode") {
       dispatch(addRoomRequest({ room, mode }));
     }
@@ -85,7 +85,7 @@ const Rooms = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(user);
+    //console.log(user);
     if (user.roomError) {
       toast(user.roomError);
     } else if (user.roomName) {

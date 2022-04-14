@@ -17,10 +17,10 @@ export function getRoomsRequest() {
   return async function (dispatch) {
     try {
       const response = await axios.get(`http://localhost:3001/rooms`);
-      // console.log(response);
+      // //console.log(response);
       dispatch(updateRooms(response.data));
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 }

@@ -79,12 +79,12 @@ const StyledMsgs = styled.div`
 const Game = () => {
   const players = useSelector((state) => state.playersReducer.players);
   const player = useSelector((state) => state.playerReducer);
-  console.log("hado homa lplayers", players);
+  //console.log("hado homa lplayers", players);
 
   return (
     <StyledContainer>
       <StyledOtherStages>
-        <OtherStages />
+        {/* <OtherStages /> */}
       </StyledOtherStages>
       <StyledStage>
         <Tetris />

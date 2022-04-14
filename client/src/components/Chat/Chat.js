@@ -79,7 +79,7 @@ const Chat = ({ players, player }) => {
   const sendUserMessage = () => {
     const regex = /^.{1,10}$/;
     if (regex.test(message)) {
-      console.log(message);
+      //console.log(message);
       dispatch(sendMessage(message));
       setMessage("");
       setMessageError("");
@@ -92,7 +92,7 @@ const Chat = ({ players, player }) => {
       {/* <h1>chat</h1> */}
       <div className="users">
         {players.map((player, key) => (
-          //  console.log(player)
+          //  //console.log(player)
           <div key={key} className="user">
             <UserCard player={player}/>
           </div>

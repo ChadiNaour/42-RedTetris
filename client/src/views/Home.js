@@ -92,7 +92,7 @@ const Home = () => {
             placeholder="Username"
             value={userName}
             onChange={(e) => {
-              console.log("changed");
+              //console.log("changed");
               setUserName(e.target.value);
             }}
             style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke" }}

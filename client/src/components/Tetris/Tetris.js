@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Stage from "./Stage";
+import { useInterval } from "../../hooks/useInterval";
 import { usePlayer } from "../../hooks/usePlayer";
 import { useStage } from "../../hooks/useStage";
 import { createStage, checkCollision } from "../../utils/gameHelpers";
@@ -30,14 +31,14 @@ const Tetris = () => {
     setStage(createStage());
     resetPlayer();
     setGameOver(false);
-    // console.log("bskch");
+    // //console.log("bskch");
   };
   const drop = () => {
     if (!checkCollision(player, stage, { x: 0, y: 1 }))
       updatePlayerPos({ x: 0, y: 1, collided: false });
     else {
       if (player.pos.y < 1) {
-        console.log("GameOver!!!!!");
+        //console.log("GameOver!!!!!");
         setGameOver(true);
         setDropTime(null);
       }
@@ -67,6 +68,12 @@ const Tetris = () => {
         playerRotate(stage, 1);
     }
   };
+
+  useInterval(() => {
+    drop();
+  }, dropTime);
+
+  console.log("the stage is", stage)
 
   return (
     <Styled onKeyDown={(e) => move(e)}>

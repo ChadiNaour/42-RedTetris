@@ -87,7 +87,7 @@ const StyledMessage = styled.div`
 `;
 
 const Message = ({ sender, message, index, player }) => {
-  // console.log(username, message, index);
+  // //console.log(username, message, index);
   return (
     <StyledMessage type={player.userName === sender.username ? 1 : 0}>
       <div className="avatar">

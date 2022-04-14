@@ -16,10 +16,10 @@ import { io, Socket } from "socket.io-client";
 import { getRoomsRequest } from "../actions/roomsActions";
 export const logger = (store) => (next) => (action) => {
   // console.group(action.type);
-  // console.log("state : ", store.getState());
+  // //console.log("state : ", store.getState());
   // console.info("dispatching", action);
   let result = next(action);
-  // console.log("next state", store.getState());
+  // //console.log("next state", store.getState());
   // console.groupEnd();
   return result;
 };
@@ -44,18 +44,18 @@ export const socketMiddleware = (store) => {
         // socket.off("user_exists");
       });
       socket.on("room_exists", () => {
-        console.log("room_already_exist");
+        //console.log("room_already_exist");
         store.dispatch(setRoomError("Room already exist"));
         // socket.off("room_exists");
       });
       //listner if the room is created
       socket.on("room_created", (data) => {
-        console.log("room created", data);
+        //console.log("room created", data);
         store.dispatch(addRoomName(data));
         socket.emit("getPlayers", data);
       });
       socket.on("room_joined", (data) => {
-        console.log("room joined", data);
+        //console.log("room joined", data);
         store.dispatch(addRoomName(data));
         socket.emit("getPlayers", data);
       });
@@ -70,7 +70,7 @@ export const socketMiddleware = (store) => {
 
       //adding message
       socket.on("chat", (data) => {
-        console.log("emited from back data",data);
+        //console.log("emited from back data",data);
         store.dispatch(addToChat(data));
       });
       socket.on("emit-disconnect", () => {
@@ -82,7 +82,7 @@ export const socketMiddleware = (store) => {
         socket.off("update_players");
       });
       if (action.payload.hash) {
-        console.log(action.payload.hash);
+        //console.log(action.payload.hash);
         let room;
         let firstIndex = action.payload.hash.indexOf("[");
         room = action.payload.hash.substring(1, firstIndex);
@@ -130,7 +130,7 @@ export const socketMiddleware = (store) => {
 
       //sending message to room
       if (sendMessage.match(action)) {
-        console.log("message sended", action.payload);
+        //console.log("message sended", action.payload);
         socket.emit("send_Message", {
           message: action.payload,
           username: user.userName,

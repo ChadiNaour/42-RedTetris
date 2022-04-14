@@ -10,8 +10,8 @@ export const usePlayer = () => {
   });
 
   const updatePlayerPos = ({ x, y, collided }) => {
-    // console.log("the x is", x);
-    // console.log("the y is", y);
+    // //console.log("the x is", x);
+    // //console.log("the y is", y);
     setPlayer((prev) => ({
       ...prev,
       pos: { x: prev.pos.x + x, y: prev.pos.y + y },

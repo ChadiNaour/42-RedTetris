@@ -20,7 +20,7 @@ export const playerSlice = createSlice({
       // return action;
     },
     UserAdded: (state, action) => {
-      // console.log("in here!");
+      // //console.log("in here!");
       state.userName = action.payload.username;
       state.avatar = action.payload.avatar;
       state.error = null;
@@ -35,7 +35,7 @@ export const playerSlice = createSlice({
       state.error = action.payload;
     },
     setRoomError: (state, action) => {
-      console.log("piloood", action.payload);
+      //console.log("piloood", action.payload);
       state.roomError = action.payload;
     },
     addRoomRequest: (state) => {

@@ -50,7 +50,7 @@ function App() {
   };
 
   const getRoomplayers = (userRoom) => {
-    console.log("the useroooom is", userRoom);
+    //console.log("the useroooom is", userRoom);
     if (userRoom) {
       socket.emit("getPlayers", userRoom.name);
     }
@@ -58,20 +58,20 @@ function App() {
 
   useEffect(() => {
     socket.on("update_players", (data) => {
-      console.log("the palyers are", data);
+      //console.log("the palyers are", data);
       dispatch(updatePlayers(data));
     });
     if (user.roomName && rooms.length > 0) {
       // setUserRoom(rooms.find(room => room.name === user.roomName));
       setRoomUser(user.roomName);
-      // console.log("the userRoom is : ", userRoom);
+      // //console.log("the userRoom is : ", userRoom);
       // getRoomplayers(userRoom);
       // if (userRoom)
       // {
-      // console.log("in the if")
+      // //console.log("in the if")
       // }
     }
-    // console.log("the user name is", userRoom);
+    // //console.log("the user name is", userRoom);
   }, [rooms]);
 
   return (
