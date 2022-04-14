@@ -29,6 +29,7 @@ const Tetris = () => {
   };
   const startGame = () => {
     setStage(createStage());
+    setDropTime(1000);
     resetPlayer();
     setGameOver(false);
     // //console.log("bskch");
@@ -45,7 +46,18 @@ const Tetris = () => {
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
+  
+  const keyUp = ({keyCode}) => {
+    if (!gameOver)
+    {
+      if (keyCode === 40){
+        setDropTime(1000);
+      }
+    }
+  };
+
   const dropPlayer = () => {
+    setDropTime(null);
     drop();
   };
   useEffect(() => {
@@ -76,7 +88,7 @@ const Tetris = () => {
   console.log("the stage is", stage)
 
   return (
-    <Styled onKeyDown={(e) => move(e)}>
+    <Styled onKeyDown={(e) => move(e)}  onKeyUp={keyUp}>
       <Stage stage={stage} />
     </Styled>
   );
