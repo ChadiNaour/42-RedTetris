@@ -37,22 +37,24 @@ const Tetris = () => {
   const startGame = () => {
     //reset everyting
     setStage(createStage());
-    setDropTime(1000);
+    // setDropTime(1000);
     resetPlayer();
-    setGameOver(false);
     setScore(0);
-    setRows(0);
     setLevel(0);
+    setRows(0);
+    setGameOver(false);
     // //console.log("bskch");
   };
 
 
   const drop = () => {
+    // console.log("rows are : ",rows)
+    // console.log("rows cleared are : ",rowsCleared);
     //increase level when player has cleared 10 rows
     if (rows > (level + 1) * 10){
-      setLevel(prev => prev + 1);
+      setLevel(level + 1);
       //also increase speed
-      setDropTime(1000 / (level + 1) + 200);
+      // setDropTime(1000 / (level + 1) + 200);
 
     }
     if (!checkCollision(player, stage, { x: 0, y: 1 }))
@@ -70,14 +72,14 @@ const Tetris = () => {
   const keyUp = ({keyCode}) => {
     if (!gameOver)
     {
-      if (keyCode === 40){
-        setDropTime(1000 / (level + 1) + 200);
-      }
+      // if (keyCode === 40){
+      //   setDropTime(1000 / (level + 1) + 200);
+      // }
     }
   };
 
   const dropPlayer = () => {
-    setDropTime(null);
+    // setDropTime(null);
     drop();
   };
   useEffect(() => {
@@ -105,13 +107,14 @@ const Tetris = () => {
     drop();
   }, dropTime);
 
-  console.log("the stage is", stage)
+  // console.log("the stage is", stage)
 
   return (
     <Styled onKeyDown={(e) => move(e)}  onKeyUp={keyUp}>
       <>score: {score} </><br />
       <>level: {level}</><br />
       <>rows: {rows}</><br />
+      <button style={{backgroundColor: "red", paddingInline: "10px"}} onClick={startGame}>start</button>
       <Stage stage={stage} />
     </Styled>
   );

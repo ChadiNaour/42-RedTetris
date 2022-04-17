@@ -1,25 +1,25 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export const useGameStatus = rowsCleared => {
-    const [score, setScore] = useState(0);
-    const [rows, setRows] = useState(0);
-    const [level, setLevel] = useState(0);
+  const [score, setScore] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [level, setLevel] = useState(0);
 
-    const linePoints = [40, 100, 300, 1200];
+  const linePoints = [40, 100, 300, 1200];
 
-    const calcScore = useCallback(() => {
-        //if we have score and
-        if (rowsCleared > 0) {
-            //this is the oiginal score calculation of tetris game
-            setScore(prev => prev + linePoints[rowsCleared - 1] * (level + 1));
-            setRows(prev => prev + rowsCleared);
-        }
+  const calcScore = useCallback(() => {
+    // We have score
+    if (rowsCleared > 0) {
+      console.log("rows cleared are:", rowsCleared)
+      // This is how original Tetris score is calculated
+      setScore(score + linePoints[rowsCleared - 1] * (level + 1));
+      setRows(rows + rowsCleared);
+    }
+  }, [level, linePoints, rowsCleared]);
 
-    }, [level, linePoints, rowsCleared]);
+  useEffect(() => {
+    calcScore();
+  }, [calcScore, rowsCleared, score]);
 
-    useEffect(() => {
-        calcScore();
-    }, [calcScore, rowsCleared, score]);
-
-    return [score, setScore, rows, setRows, level, setLevel];
-}
+  return [score, setScore, rows, setRows, level, setLevel];
+};

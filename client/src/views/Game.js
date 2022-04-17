@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
   background-color: ${(props) => props.theme.background.primary};
   grid-template-columns: 500px 500px 500px;
   grid-template-rows: 350px 350px 350px;
-  padding: 1rem;
+  // padding: 1rem;
   gap: 1rem;
   justify-content: center;
   grid-template-areas:
@@ -83,15 +83,15 @@ const Game = () => {
 
   return (
     <StyledContainer>
-      <StyledOtherStages>
-        {/* <OtherStages /> */}
-      </StyledOtherStages>
+      {/* <StyledOtherStages>
+        <OtherStages />
+      </StyledOtherStages> */}
       <StyledStage>
         <Tetris />
       </StyledStage>
-      <StyledInfo>
+      {/* <StyledInfo>
         <Info />
-      </StyledInfo>
+      </StyledInfo> */}
       <StyledMsgs>
         <Chat players={players} player={player} />
       </StyledMsgs>
