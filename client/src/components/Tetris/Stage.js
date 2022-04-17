@@ -1,21 +1,28 @@
 import { StyledStage, RowStyle, Col } from "./Stage.Style";
 import {TETROMINOS} from '../../utils/tetrominos';
+import React from 'react';
 
 const Row = ({ row, rowIdx, stage }) => {
   return (
     <RowStyle>
       {row.map((col, colIdx) => {
-        return <Col key={colIdx} type={col[0]} color={TETROMINOS[col[0]].color} />;
+        return <Cell colIdx={colIdx} col={col} />;
       })}
     </RowStyle>
   );
 };
 
+const Cell = React.memo(({ colIdx, col }) => {
+  return (
+    <Col key={colIdx} type={col[0]} color={TETROMINOS[col[0]].color} />
+  );
+});
+
 const Stage = ({ stage }) => {
   return (
     <StyledStage>
-      {stage.map((row, rowIdx) => (
-        <Row key={rowIdx} stage={stage} row={row} rowIdx={rowIdx} />
+      {stage.map(row => (
+        <Row stage={stage} row={row} />
       ))}
     </StyledStage>
   );
