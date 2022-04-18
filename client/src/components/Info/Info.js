@@ -84,16 +84,16 @@ const GameDetails = styled.div`
   }
 `;
 
-const Info = () => {
+const Info = ({score, level, rows}) => {
   const array = new Array(36).fill(0);
   return (
     <StyledInfo>
       <GameDetails>
         <h1>Details</h1>
         <div className="content">
-          <p >score : 50</p>
-          <p>level : 10</p>
-          <p>mode : select</p>
+          <p>rows : {rows}</p>
+          <p>level : {level}</p>
+          <p >score : {score}</p>
         </div>
       </GameDetails>
       <NextTetromino>

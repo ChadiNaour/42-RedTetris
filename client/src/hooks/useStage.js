@@ -3,6 +3,7 @@ import { createStage } from '../utils/gameHelpers';
 
 export const useStage = (player, resetPlayer) => {
   const [stage, setStage] = useState(createStage());
+  const [nextStage, setNextStage] = useState(createStage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
 
   useEffect(() => {
