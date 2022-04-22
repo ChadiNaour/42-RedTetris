@@ -122,6 +122,14 @@ const Game = () => {
     setGameOver(false);
   };
 
+
+  const startgame = (e) => {
+    if (e.key === "Enter") {
+        startGame();
+        // socket.emit("startgame", { room: props.data.roomName });
+    }
+  }
+
   const drop = () => {
     // Increase level when player has cleared 10 rows
     if (rows > (level + 1) * 10) {
@@ -175,11 +183,11 @@ const Game = () => {
 
   return (
     <StyledContainer>
-      {/* <StyledOtherStages>
-        <OtherStages />
-      </StyledOtherStages> */}
+      <StyledOtherStages>
+        {/* <OtherStages /> */}
+      </StyledOtherStages>
       <StyledStage>
-        <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} />
+        <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} startgame={startgame} />
       </StyledStage>
       <StyledInfo>
         <Info score={score} level={level} rows={rows} />

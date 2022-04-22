@@ -20,12 +20,12 @@ export const Col = styled.div`
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  background: rgba(${props => props.color}, 0.8);
+  background: rgba(${props => props.color});
   border: ${props => (props.type === 0 ? `1px solid ${props.theme.border.stage}` : '1px solid')};
-  border-bottom-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 0.1);
-  border-right-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 1);
-  border-top-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 1);
-  border-left-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 0.3 );
+  // border-bottom-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 0.1);
+  // border-right-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 1);
+  // border-top-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 1);
+  // border-left-color: rgba(${props => (props.type === 0 ? props.theme.border.stage : props.color)}, 0.3 );
 `;
 
 

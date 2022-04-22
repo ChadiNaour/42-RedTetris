@@ -13,11 +13,11 @@ const Styled = styled.button`
   }
 `;
 
-const Tetris = ({ move, keyUp, startGame, stage }) => {
+const Tetris = ({ move, keyUp, startGame, stage, startgame }) => {
 
   return (
-    <Styled onKeyDown={(e) => move(e)} onKeyUp={keyUp}>
-      <button style={{ backgroundColor: "red", paddingInline: "10px" }} onClick={startGame}>start</button>
+    <Styled onKeyDown={(e) => move(e)} onKeyUp={keyUp} onKeyPress={startgame}>
+      {/* <button style={{ backgroundColor: "red", paddingInline: "10px" }} onClick={startGame}>start</button> */}
       <Stage stage={stage} />
     </Styled>
   );

@@ -6,7 +6,7 @@ const Row = ({ row, rowIdx, stage }) => {
   return (
     <RowStyle>
       {row.map((col, colIdx) => {
-        return <Cell colIdx={colIdx} col={col} />;
+        return <Cell key={colIdx} colIdx={colIdx} col={col} />;
       })}
     </RowStyle>
   );
@@ -21,8 +21,8 @@ const Cell = React.memo(({ colIdx, col }) => {
 const Stage = ({ stage }) => {
   return (
     <StyledStage>
-      {stage.map(row => (
-        <Row stage={stage} row={row} />
+      {stage.map((row, key) => (
+        <Row key={key} stage={stage} row={row} />
       ))}
     </StyledStage>
   );

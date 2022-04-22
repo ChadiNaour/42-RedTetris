@@ -67,12 +67,38 @@ export const usePlayer = () => {
     }));
   };
 
-  const resetPlayer = useCallback(() => {
-    setPlayer({
+  const resetPlayer = useCallback((stage) => {
+    let tetris = {
       pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
       tetromino: randomTetromino().shape,
       collided: false,
-    });
+    };
+    if (stage) {
+      if (!checkCollision(tetris, stage, { x: 0, y: 0 })) {
+        setPlayer({
+          pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
+          tetromino: tetris.tetromino,
+          collided: false,
+        });
+      }
+      else {
+        if (stage[0][3][0] === 0 && stage[0][4][0] === 0 && stage[0][5][0] === 0 && stage[0][6][0] === 0) {
+          setPlayer({
+            pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
+            tetromino: [tetris.tetromino[0][0] === "I" ? tetris.tetromino[0] : tetris.tetromino[1]],
+            collided: false,
+          });
+        }
+        console.log("gaaaame oooooveeeeeeer")
+      }
+    }
+    else {
+      setPlayer({
+        pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
+        tetromino: tetris.tetromino,
+        collided: false,
+      });
+    }
     // setNextPiece({
     //   pos: { x: 0, y: 0 },
     //   tetromino: TETROMINOS[1].shape,
