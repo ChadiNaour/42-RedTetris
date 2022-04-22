@@ -85,22 +85,34 @@ const StyledMsgs = styled.div`
 const Game = () => {
   const players = useSelector((state) => state.playersReducer.players);
   const UserPlayer = useSelector((state) => state.playerReducer);
-  const [gameOver, setGameOver] = useState(false);
   const [dropTime, setDropTime] = useState(null);
-  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+  const [gameOver, setGameOver] = useState(false);
+
+  const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
-  const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
+  const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
+    rowsCleared
+  );
 
+  // console.log('re-render');
 
-
-  const movePlayer = (dir) => {
-    if (!checkCollision(player, stage, { x: dir, y: 0 }))
+  const movePlayer = dir => {
+    if (!checkCollision(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0 });
+    }
   };
 
+  const keyUp = ({ keyCode }) => {
+    if (!gameOver) {
+      // Activate the interval again when user releases down arrow.
+      if (keyCode === 40) {
+        // setDropTime(1000 / (level + 1));
+      }
+    }
+  };
 
   const startGame = () => {
-    //reset everyting
+    // Reset everything
     setStage(createStage());
     // setDropTime(1000);
     resetPlayer();
@@ -108,71 +120,57 @@ const Game = () => {
     setLevel(0);
     setRows(0);
     setGameOver(false);
-    // //console.log("bskch");
   };
 
-
   const drop = () => {
-    // console.log("rows are : ",rows)
-    // console.log("rows cleared are : ",rowsCleared);
-    //increase level when player has cleared 10 rows
-    if (rows > (level + 1) * 10){
-      setLevel(level + 1);
-      //also increase speed
+    // Increase level when player has cleared 10 rows
+    if (rows > (level + 1) * 10) {
+      setLevel(prev => prev + 1);
+      // Also increase speed
       // setDropTime(1000 / (level + 1) + 200);
-
     }
-    if (!checkCollision(player, stage, { x: 0, y: 1 }))
+
+    if (!checkCollision(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
-    else {
+    } else {
+      // Game over!
       if (player.pos.y < 1) {
-        //console.log("GameOver!!!!!");
+        console.log('GAME OVER!!!');
         setGameOver(true);
-        setDropTime(null);
+        // setDropTime(null);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
-  
-  const keyUp = ({keyCode}) => {
-    if (!gameOver)
-    {
-      // if (keyCode === 40){
-      //   setDropTime(1000 / (level + 1) + 200);
-      // }
-    }
-  };
 
   const dropPlayer = () => {
+    // We don't need to run the interval when we use the arrow down to
+    // move the tetromino downwards. So deactivate it for now.
     // setDropTime(null);
     drop();
   };
-  useEffect(() => {
-    startGame();
-  }, []);
+
+  // This one starts the game
+  // Custom hook by Dan Abramov
+  // useInterval(() => {
+  //   drop();
+  // }, dropTime);
 
   const move = ({ keyCode }) => {
     if (!gameOver) {
-      if (keyCode === 37)
-        //left key
+      if (keyCode === 37) {
         movePlayer(-1);
-      else if (keyCode === 39)
-        //right key
+      } else if (keyCode === 39) {
         movePlayer(1);
-      else if (keyCode === 40)
-        //down key
-        dropPlayer(1);
-      else if (keyCode === 38)
-        //up key
+      } else if (keyCode === 40) {
+        dropPlayer();
+      } else if (keyCode === 38) {
         playerRotate(stage, 1);
+      }
     }
   };
 
-  useInterval(() => {
-    drop();
-  }, dropTime);
-
-  // console.log("the stage is", stage)
+  console.log("next piece", nextPiece)
   //console.log("hado homa lplayers", players);
 
   return (
@@ -184,7 +182,7 @@ const Game = () => {
         <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} />
       </StyledStage>
       <StyledInfo>
-        <Info score={score} level={level} rows={rows}/>
+        <Info score={score} level={level} rows={rows} />
       </StyledInfo>
       <StyledMsgs>
         <Chat players={players} player={UserPlayer} />
