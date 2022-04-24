@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { createStage, STAGE_HEIGHT, checkCollision } from '../utils/gameHelpers';
 
-export const useStage = (player, resetPlayer) => {
+export const useStage = (player, resetPlayer, nextPiece) => {
   const [stage, setStage] = useState(createStage());
+  const [nextStage, setNextStage] = useState(createStage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
 
   useEffect(() => {
@@ -54,9 +55,21 @@ export const useStage = (player, resetPlayer) => {
           }
         });
       });
+
+            // Then draw the next tetromino
+            nextPiece.tetromino.forEach((row, y) => {
+              row.forEach((value, x) => {
+                if (value !== 0) {
+                  nextStage[y][x] = [value, `${nextPiece.collided ? "merged" : "clear"}`];
+                }
+              });
+            });
+
+
       // Then check if we got some score if collided
       if (player.collided) {
         resetPlayer(newStage);
+        setNextStage(createStage(4, 4));
         return sweepRows(newStage);
       }
       return newStage;
@@ -67,7 +80,8 @@ export const useStage = (player, resetPlayer) => {
   }, [
     player,
     resetPlayer,
+    nextStage
   ]);
 
-  return [stage, setStage, rowsCleared];
+  return [stage, setStage, rowsCleared, nextStage];
 };

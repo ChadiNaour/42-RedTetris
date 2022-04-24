@@ -11,6 +11,7 @@ import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useGameStatus } from "../hooks/useGameStatus";
 import { createStage, checkCollision } from "../utils/gameHelpers";
+import { getTetrominos } from '../utils/tetrominos'
 
 const StyledContainer = styled.div`
   /* width: 100%; */
@@ -83,13 +84,14 @@ const StyledMsgs = styled.div`
 `;
 
 const Game = () => {
+  let [tetrominos, setTetrominos] = useState(getTetrominos());
   const players = useSelector((state) => state.playersReducer.players);
   const UserPlayer = useSelector((state) => state.playerReducer);
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece] = usePlayer();
-  const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
+  const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece] = usePlayer(tetrominos);
+  const [stage, setStage, rowsCleared, nextStage] = useStage(player, resetPlayer, nextPiece);
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
   );
@@ -111,22 +113,36 @@ const Game = () => {
     }
   };
 
+  // useEffect(() => {
+  //   if (tetrominos?.length > 0 && !gameOver) {
+  //     console.log("tetros are here", tetrominos);
+  //     startGame();
+  //   }
+  //   return () => { };
+  // }, [tetrominos]);
+
   const startGame = () => {
-    // Reset everything
-    setStage(createStage());
-    // setDropTime(1000);
-    resetPlayer();
-    setScore(0);
-    setLevel(0);
-    setRows(0);
-    setGameOver(false);
+    if (tetrominos?.length > 0 && !gameOver) {
+      // Reset everything
+      setStage(createStage());
+      // setNextStage(createStage(4, 4));
+      // setDropTime(1000);
+      resetPlayer();
+      setScore(0);
+      setLevel(0);
+      setRows(0);
+      setGameOver(false);
+    }
   };
 
 
   const startgame = (e) => {
     if (e.key === "Enter") {
-        startGame();
-        // socket.emit("startgame", { room: props.data.roomName });
+      console.log("go get tetros")
+      // setTetrominos(getTetrominos());
+      console.log("tetros are", tetrominos)
+      startGame();
+      // socket.emit("startgame", { room: props.data.roomName });
     }
   }
 
@@ -178,7 +194,7 @@ const Game = () => {
     }
   };
 
-  console.log("next piece", nextPiece)
+  // console.log("next piece", nextPiece)
   //console.log("hado homa lplayers", players);
 
   return (
@@ -187,7 +203,7 @@ const Game = () => {
         {/* <OtherStages /> */}
       </StyledOtherStages>
       <StyledStage>
-        <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} startgame={startgame} />
+        <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} startgame={startgame} gameOver={gameOver} />
       </StyledStage>
       <StyledInfo>
         <Info score={score} level={level} rows={rows} />

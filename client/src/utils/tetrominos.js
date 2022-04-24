@@ -79,14 +79,38 @@ export const TETROMINOS = {
   },
 };
 
+// Generate random tetrimino
 export const randomTetromino = () => {
-  // //console.log("in here")
   const tetrominos = "IJLOSTZ";
-  const randTetromino =
-    tetrominos[Math.floor(Math.random() * tetrominos.length)];
-  // //console.log(randTetromino);
-  // //console.log(randTetromino.shape);
-  // //console.log(randTetromino.color);
-
+  const randTetromino = tetrominos[Math.floor(Math.random() * tetrominos.length)];
   return TETROMINOS[randTetromino];
+};
+
+
+export const randomTetromino1 = () => {
+  let randomTetrimino = Math.floor(Math.random() * 7);
+  switch (randomTetrimino) {
+    case 0:
+      return "I";
+    case 1:
+      return "J";
+    case 2:
+      return "L";
+    case 3:
+      return "O";
+    case 4:
+      return "S";
+    case 5:
+      return "T";
+    case 6:
+      return "Z";
+  }
+};
+
+export const getTetrominos = () => {
+  let tetriminos = [];
+  for (let i = 0; i < 20; i++) {
+    tetriminos.push(randomTetromino1());
+  }
+  return tetriminos;
 };
