@@ -56,14 +56,14 @@ export const useStage = (player, resetPlayer, nextPiece) => {
         });
       });
 
-            // Then draw the next tetromino
-            nextPiece.tetromino.forEach((row, y) => {
-              row.forEach((value, x) => {
-                if (value !== 0) {
-                  nextStage[y][x] = [value, `${nextPiece.collided ? "merged" : "clear"}`];
-                }
-              });
-            });
+      // Then draw the next tetromino
+      nextPiece.tetromino.forEach((row, y) => {
+        row.forEach((value, x) => {
+          if (value !== 0) {
+            nextStage[y][x] = [value, `${nextPiece.collided ? "merged" : "clear"}`];
+          }
+        });
+      });
 
 
       // Then check if we got some score if collided
@@ -83,5 +83,5 @@ export const useStage = (player, resetPlayer, nextPiece) => {
     nextStage
   ]);
 
-  return [stage, setStage, rowsCleared, nextStage];
+  return [stage, setStage, rowsCleared, nextStage, setNextStage];
 };

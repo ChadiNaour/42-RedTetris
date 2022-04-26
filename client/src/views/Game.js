@@ -91,7 +91,7 @@ const Game = () => {
   const [gameOver, setGameOver] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece] = usePlayer(tetrominos);
-  const [stage, setStage, rowsCleared, nextStage] = useStage(player, resetPlayer, nextPiece);
+  const [stage, setStage, rowsCleared, nextStage, setNextStage] = useStage(player, resetPlayer, nextPiece);
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
   );
@@ -125,7 +125,7 @@ const Game = () => {
     if (tetrominos?.length > 0 && !gameOver) {
       // Reset everything
       setStage(createStage());
-      // setNextStage(createStage(4, 4));
+      setNextStage(createStage(4, 4));
       // setDropTime(1000);
       resetPlayer();
       setScore(0);
@@ -138,9 +138,9 @@ const Game = () => {
 
   const startgame = (e) => {
     if (e.key === "Enter") {
-      console.log("go get tetros")
+      // console.log("go get tetros")
       // setTetrominos(getTetrominos());
-      console.log("tetros are", tetrominos)
+      // console.log("tetros are", tetrominos)
       startGame();
       // socket.emit("startgame", { room: props.data.roomName });
     }
@@ -173,6 +173,8 @@ const Game = () => {
     // setDropTime(null);
     drop();
   };
+  
+  console.log(nextPiece, nextStage);
 
   // This one starts the game
   // Custom hook by Dan Abramov
@@ -206,7 +208,7 @@ const Game = () => {
         <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} startgame={startgame} gameOver={gameOver} />
       </StyledStage>
       <StyledInfo>
-        <Info score={score} level={level} rows={rows} />
+        <Info score={score} level={level} rows={rows} nextStage={nextStage} />
       </StyledInfo>
       <StyledMsgs>
         <Chat players={players} player={UserPlayer} />

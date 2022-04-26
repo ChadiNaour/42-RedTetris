@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Stage from "../Tetris/Stage";
+import NextCell from './NextCell'
 
 const StyledInfo = styled.div`
   width: 100%;
@@ -84,7 +86,24 @@ const GameDetails = styled.div`
   }
 `;
 
-const Info = ({score, level, rows}) => {
+export const StyledNext = styled.div`
+  display: grid;
+  grid-template-columns: repeat(${props => props.width}, 1fr);
+  grid-template-rows: repeat(
+    ${props => props.height},
+    calc(18vh / ${props => props.width})
+  );
+  // grid-gap: 1px ;
+  height: 18vh;
+  width: 21vh;
+  // background-color: rgba(0, 0, 0, 0.3);
+  // border: 3px solid white;
+  // border-radius: 3px 0px 0px 3px;
+  // position: relative;
+  margin-left: 60px;
+`;
+
+const Info = ({ score, level, rows, nextStage }) => {
   const array = new Array(36).fill(0);
   return (
     <StyledInfo>
@@ -99,12 +118,16 @@ const Info = ({score, level, rows}) => {
       <NextTetromino>
         <h1>Next</h1>
         <div className="content">
-          <div className="tetromino"></div>
+          <StyledNext width={nextStage[0].length} height={nextStage.length} >
+            {nextStage.map(row => row.map((cell, x) => <NextCell key={x} type={cell[0]} />))}
+          </StyledNext>
+
+          {/* <div className="tetromino"></div>
           <div className="background">
             {array.map((_, index) => (
               <div className="item" key={index}></div>
             ))}
-          </div>
+          </div> */}
         </div>
       </NextTetromino>
     </StyledInfo>
