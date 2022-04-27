@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { checkCollision, STAGE_WIDTH } from "../utils/gameHelpers";
-import { TETROMINOS, randomTetromino } from "../utils/tetrominos";
+import { TETROMINOS, NEXT_TETROMINOS, randomTetromino } from "../utils/tetrominos";
 
 export const usePlayer = (tetrominos) => {
   // if (tetrominos.length > 0) {
@@ -12,7 +12,7 @@ export const usePlayer = (tetrominos) => {
   });
   const [nextPiece, setNextPiece] = useState({
     pos: { x: 0, y: 0 },
-    tetromino: TETROMINOS[0].shape,
+    tetromino: NEXT_TETROMINOS[0].shape,
     collided: false,
   });
 
@@ -104,7 +104,7 @@ export const usePlayer = (tetrominos) => {
 
     setNextPiece({
       pos: { x: 0, y: 0 },
-      tetromino: TETROMINOS[tetrominos[1]].shape,
+      tetromino: NEXT_TETROMINOS[tetrominos[1]].shape,
       collided: false,
     });
     tetrominos.shift();

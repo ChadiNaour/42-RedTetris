@@ -14,6 +14,7 @@ const NextTetromino = styled.div`
   flex: 3;
   display: flex;
   flex-direction: column;
+  // background-color: yellow;
   h1 {
     width: 100%;
     text-align: center;
@@ -31,19 +32,19 @@ const NextTetromino = styled.div`
      */
     position: relative;
     .background {
-      position: absolute;
-      top: 0;
-      left: 0;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      // background-color: yellow;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
       height: 100%;
-      display: grid;
       background-color: black;
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-template-rows: repeat(6, 1fr);
-      .item {
-        border: 1px solid #b33030;
-      }
+      border-top: 1px solid #b33030;
+      border-right: 1px solid #b33030;
+      border-bottom: 1px solid #b33030;
     }
   }
 `;
@@ -52,6 +53,7 @@ const GameDetails = styled.div`
   flex: 2;
   display: flex;
   flex-direction: column;
+  // background-color: blue;
   h1 {
     width: 100%;
     text-align: center;
@@ -88,23 +90,19 @@ const GameDetails = styled.div`
 
 export const StyledNext = styled.div`
   display: grid;
-  grid-template-columns: repeat(${props => props.width}, 1fr);
+  // background-color: red;
+  grid-template-columns: repeat(${props => props.width}, 48px);
   grid-template-rows: repeat(
     ${props => props.height},
-    calc(18vh / ${props => props.width})
+    calc(14.5vh / ${props => props.width})
   );
-  // grid-gap: 1px ;
-  height: 18vh;
-  width: 21vh;
-  // background-color: rgba(0, 0, 0, 0.3);
-  // border: 3px solid white;
-  // border-radius: 3px 0px 0px 3px;
-  // position: relative;
-  margin-left: 60px;
+  height: 185px;
+  width: 180px;
+  // margin-bottom: -70px;
+  // margin-left: 0px;
 `;
 
 const Info = ({ score, level, rows, nextStage }) => {
-  const array = new Array(36).fill(0);
   return (
     <StyledInfo>
       <GameDetails>
@@ -118,16 +116,12 @@ const Info = ({ score, level, rows, nextStage }) => {
       <NextTetromino>
         <h1>Next</h1>
         <div className="content">
+          {/* <div className="tetromino"></div> */}
+          <div className="background">
           <StyledNext width={nextStage[0].length} height={nextStage.length} >
             {nextStage.map(row => row.map((cell, x) => <NextCell key={x} type={cell[0]} />))}
           </StyledNext>
-
-          {/* <div className="tetromino"></div>
-          <div className="background">
-            {array.map((_, index) => (
-              <div className="item" key={index}></div>
-            ))}
-          </div> */}
+          </div>
         </div>
       </NextTetromino>
     </StyledInfo>
