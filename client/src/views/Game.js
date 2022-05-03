@@ -91,7 +91,7 @@ const Game = () => {
   const [gameOver, setGameOver] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece] = usePlayer(tetrominos);
-  const [stage, setStage, rowsCleared, nextStage, setNextStage] = useStage(player, resetPlayer, nextPiece);
+  const [stage, setStage, rowsCleared, nextStage, setNextStage] = useStage(player, resetPlayer, nextPiece, gameOver);
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
   );
@@ -156,13 +156,14 @@ const Game = () => {
 
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
-    } else {
-      // Game over!
-      if (player.pos.y < 1) {
-        console.log('GAME OVER!!!');
-        setGameOver(true);
-        // setDropTime(null);
-      }
+    }
+    else {
+      // // Game over!
+      // if (player.pos.y < 1) {
+      //   console.log('GAME OVER!!!');
+      //   setGameOver(true);
+      //   // setDropTime(null);
+      // }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
@@ -174,7 +175,7 @@ const Game = () => {
     drop();
   };
   
-  console.log(nextPiece, nextStage);
+  // console.log(nextPiece, nextStage);
 
   // This one starts the game
   // Custom hook by Dan Abramov

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createStage, STAGE_HEIGHT, checkCollision } from '../utils/gameHelpers';
 
-export const useStage = (player, resetPlayer, nextPiece) => {
+export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
   const [stage, setStage] = useState(createStage());
   const [nextStage, setNextStage] = useState(createStage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
@@ -45,6 +45,7 @@ export const useStage = (player, resetPlayer, nextPiece) => {
       }
 
       // Then draw the tetromino
+      console.log("player and next to draw", player.tetromino, nextPiece.tetromino)
       player.tetromino.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value !== 0) {
@@ -67,7 +68,8 @@ export const useStage = (player, resetPlayer, nextPiece) => {
 
 
       // Then check if we got some score if collided
-      if (player.collided) {
+      if (player.collided && !gameOver) {
+        console.log("call to reset from stage")
         resetPlayer(newStage);
         setNextStage(createStage(4, 4));
         return sweepRows(newStage);
@@ -76,9 +78,12 @@ export const useStage = (player, resetPlayer, nextPiece) => {
     };
 
     // Here are the updates
-    setStage(prev => updateStage(prev));
+    setStage(updateStage(stage));
   }, [
-    player,
+    player.collided,
+    player.pos.x,
+    player.pos.y,
+    player.tetromino,
     resetPlayer,
     nextStage
   ]);

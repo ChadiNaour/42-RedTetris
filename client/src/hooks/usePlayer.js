@@ -69,7 +69,7 @@ export const usePlayer = (tetrominos) => {
   };
 
   const resetPlayer = useCallback((stage) => {
-    console.log("reseting player", tetrominos);
+    console.log("reseting player", tetrominos, TETROMINOS[tetrominos[0]].shape, NEXT_TETROMINOS[tetrominos[1]].shape);
     let tetris = {
       pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
       tetromino: TETROMINOS[tetrominos[0]].shape,
@@ -107,6 +107,7 @@ export const usePlayer = (tetrominos) => {
       tetromino: NEXT_TETROMINOS[tetrominos[1]].shape,
       collided: false,
     });
+    // console.log("after setting the new ones",player, nextPiece)
     tetrominos.shift();
     // if (tetriminos.length === 15) {
     //   setConcatTetriminos(true);
