@@ -90,7 +90,7 @@ const Game = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece] = usePlayer(tetrominos);
+  const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece, concatTetriminos, setConcatTetriminos] = usePlayer(tetrominos);
   const [stage, setStage, rowsCleared, nextStage, setNextStage] = useStage(player, resetPlayer, nextPiece, gameOver);
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
@@ -108,10 +108,20 @@ const Game = () => {
     if (!gameOver) {
       // Activate the interval again when user releases down arrow.
       if (keyCode === 40) {
-        // setDropTime(1000 / (level + 1));
+        setDropTime(1000 / (level + 1));
       }
     }
   };
+
+    // Get Tetriminos for the second time
+    useEffect(() => {
+      if (concatTetriminos) {
+        let newTetriminos = getTetrominos();
+        setTetrominos(tetrominos.concat(newTetriminos));
+        // socket.emit("newTetriminos", { room: props.data.roomName });
+        setConcatTetriminos(false);
+      }
+    }, [concatTetriminos]);
 
   // useEffect(() => {
   //   if (tetrominos?.length > 0 && !gameOver) {
@@ -126,7 +136,7 @@ const Game = () => {
       // Reset everything
       setStage(createStage());
       setNextStage(createStage(4, 4));
-      // setDropTime(1000);
+      setDropTime(1000);
       resetPlayer();
       setScore(0);
       setLevel(0);
@@ -151,7 +161,7 @@ const Game = () => {
     if (rows > (level + 1) * 10) {
       setLevel(prev => prev + 1);
       // Also increase speed
-      // setDropTime(1000 / (level + 1) + 200);
+      setDropTime(1000 / (level + 1) + 200);
     }
 
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
@@ -162,26 +172,34 @@ const Game = () => {
       // if (player.pos.y < 1) {
       //   console.log('GAME OVER!!!');
       //   setGameOver(true);
-      //   // setDropTime(null);
+        setDropTime(null);
       // }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
 
+  // Hard Drop the tetrimino
+  const hardDrop = () => {
+    // audio.play();
+    let tmp = 0;
+    while (!checkCollision(player, stage, { x: 0, y: tmp })) tmp += 1;
+    updatePlayerPos({ x: 0, y: tmp - 1, collided: false });
+  };
+
   const dropPlayer = () => {
     // We don't need to run the interval when we use the arrow down to
     // move the tetromino downwards. So deactivate it for now.
-    // setDropTime(null);
+    setDropTime(null);
     drop();
   };
-  
+
   // console.log(nextPiece, nextStage);
 
   // This one starts the game
   // Custom hook by Dan Abramov
-  // useInterval(() => {
-  //   drop();
-  // }, dropTime);
+  useInterval(() => {
+    drop();
+  }, dropTime);
 
   const move = ({ keyCode }) => {
     if (!gameOver) {
@@ -193,6 +211,8 @@ const Game = () => {
         dropPlayer();
       } else if (keyCode === 38) {
         playerRotate(stage, 1);
+      } else if (keyCode === 32) {
+        hardDrop();
       }
     }
   };

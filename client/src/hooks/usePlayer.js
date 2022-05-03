@@ -3,6 +3,7 @@ import { checkCollision, STAGE_WIDTH } from "../utils/gameHelpers";
 import { TETROMINOS, NEXT_TETROMINOS, randomTetromino } from "../utils/tetrominos";
 
 export const usePlayer = (tetrominos) => {
+  const [concatTetriminos, setConcatTetriminos] = useState(false);
   // if (tetrominos.length > 0) {
   // console.log("in usePlayer", tetrominos)
   const [player, setPlayer] = useState({
@@ -109,6 +110,9 @@ export const usePlayer = (tetrominos) => {
     });
     // console.log("after setting the new ones",player, nextPiece)
     tetrominos.shift();
+    if (tetrominos.length === 15) {
+      setConcatTetriminos(true);
+    }
     // if (tetriminos.length === 15) {
     //   setConcatTetriminos(true);
     // }
@@ -120,5 +124,5 @@ export const usePlayer = (tetrominos) => {
   }, [tetrominos]);
   // }
 
-  return [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece];
+  return [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece, concatTetriminos, setConcatTetriminos];
 };
