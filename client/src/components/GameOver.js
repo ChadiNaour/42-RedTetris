@@ -1,0 +1,115 @@
+import React from "react";
+import url from "../images/GameOver.png";
+import url1 from "../images/WinCup.gif";
+import styled from "styled-components";
+
+export const StyledOverlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333333;
+  z-index: 2;
+  outline: 4px solid #333333;
+  opacity: 0.9;
+`
+
+export const StyledOverlayText = styled.div`
+  position: absolute;
+//   background-color: red;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  font-family: "Saira", sans-serif;
+  flex-direction: column;
+  padding: 1px;
+  font-size: 25px;
+  align-items: center;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  h1 {
+    color: white;
+    font-family: "Saira", sans-serif;
+    font-size: xx-large;
+    text-shadow: none;
+    text-align: center;
+    font-weight: bolder;
+    padding: 50px 0px 50px;
+    letter-spacing: 3px;
+  }
+  p {
+
+  }
+  @media screen and (max-width: 768px) {
+    h1 {
+      color: white;
+      font-family: "Saira", sans-serif;
+      font-size: xx-large;
+      text-shadow: none;
+      text-align: center;
+      font-weight: bolder;
+      padding: 50px 0px 50px;
+      letter-spacing: 3px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    h1 {
+      color: white;
+      font-family: "Saira", sans-serif;
+      font-size: xx-large;
+      text-shadow: none;
+      text-align: center;
+      font-weight: bolder;
+      padding: 50px 0px 50px;
+      letter-spacing: 3px;
+      font-size: large;
+    }
+  }
+`
+
+export default function GameOver({ gameOver, start, setStart }) {
+  return (
+    <StyledOverlay>
+      <StyledOverlayText>
+        {gameOver ? <img data-testid="gameOver-Lost-img" style={{ width: "200px" }} src={url} /> : "" }
+        {/* ) : (
+          <img data-testid="gameOver-Won-img" style={{ width: "200px" }} src={url1} />
+        )} */}
+        {gameOver ? <div><h1>{"You lost"}</h1>
+        <p>
+          {
+        "Press Enter to restart the game Wait for host player to restart the game"}
+        </p></div> : "" }
+        {/* {!start ? */}
+        { !start && !gameOver ? <div className="overlay-content">
+            <div className= "my-4">
+              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white", marginRight: "10px"}}>up</kbd>
+              <span>piece&nbsp; rotation</span>
+            </div>
+            <div className= "my-4">
+              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>down</kbd>
+              <span>move&nbsp; piece&nbsp; down</span>
+            </div>
+            <div className= "my-4">
+              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>left</kbd>
+              <span>move &nbsp;piece &nbsp;left</span>
+            </div>
+            <div className= "my-4">
+              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>right</kbd>
+              <span>move &nbsp;piece&nbsp; right</span>
+            </div>
+            <div className= "my-4">
+              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>space</kbd>
+              <span>hard &nbsp;drop</span>
+            </div>
+            <h1>Press &nbsp;enter &nbsp;to &nbsp;start</h1>
+          </div> : ""}
+      </StyledOverlayText>
+    </StyledOverlay>
+  );
+}

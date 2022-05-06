@@ -12,6 +12,7 @@ import { useStage } from "../hooks/useStage";
 import { useGameStatus } from "../hooks/useGameStatus";
 import { createStage, checkCollision } from "../utils/gameHelpers";
 import { getTetrominos } from '../utils/tetrominos'
+import GameOver from '../components/GameOver'
 
 const StyledContainer = styled.div`
   /* width: 100%; */
@@ -85,6 +86,7 @@ const StyledMsgs = styled.div`
 
 const Game = () => {
   let [tetrominos, setTetrominos] = useState(getTetrominos());
+  const [start, setStart] = useState(false);
   const players = useSelector((state) => state.playersReducer.players);
   const UserPlayer = useSelector((state) => state.playerReducer);
   const [dropTime, setDropTime] = useState(null);
@@ -113,15 +115,15 @@ const Game = () => {
     }
   };
 
-    // Get Tetriminos for the second time
-    useEffect(() => {
-      if (concatTetriminos) {
-        let newTetriminos = getTetrominos();
-        setTetrominos(tetrominos.concat(newTetriminos));
-        // socket.emit("newTetriminos", { room: props.data.roomName });
-        setConcatTetriminos(false);
-      }
-    }, [concatTetriminos]);
+  // Get Tetriminos for the second time
+  useEffect(() => {
+    if (concatTetriminos) {
+      let newTetriminos = getTetrominos();
+      setTetrominos(tetrominos.concat(newTetriminos));
+      // socket.emit("newTetriminos", { room: props.data.roomName });
+      setConcatTetriminos(false);
+    }
+  }, [concatTetriminos]);
 
   // useEffect(() => {
   //   if (tetrominos?.length > 0 && !gameOver) {
@@ -132,8 +134,10 @@ const Game = () => {
   // }, [tetrominos]);
 
   const startGame = () => {
-    if (tetrominos?.length > 0 && !gameOver) {
+    if (tetrominos?.length > 0) {
       // Reset everything
+      // set
+      setStart(true);
       setStage(createStage());
       setNextStage(createStage(4, 4));
       setDropTime(1000);
@@ -148,7 +152,7 @@ const Game = () => {
 
   const startgame = (e) => {
     if (e.key === "Enter") {
-      // console.log("go get tetros")
+      console.log("Pressing enter")
       // setTetrominos(getTetrominos());
       // console.log("tetros are", tetrominos)
       startGame();
@@ -159,7 +163,7 @@ const Game = () => {
   const drop = () => {
     // Increase level when player has cleared 10 rows
     if (rows > (level + 1) * 10) {
-      setLevel(prev => prev + 1);
+      setLevel(level + 1);
       // Also increase speed
       setDropTime(1000 / (level + 1) + 200);
     }
@@ -169,11 +173,12 @@ const Game = () => {
     }
     else {
       // // Game over!
-      // if (player.pos.y < 1) {
-      //   console.log('GAME OVER!!!');
-      //   setGameOver(true);
+      if (player.pos.y < 1) {
+        console.log('GAME OVER!!!');
+        setGameOver(true);
         setDropTime(null);
-      // }
+        setStart(false)
+      }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
@@ -185,6 +190,7 @@ const Game = () => {
     while (!checkCollision(player, stage, { x: 0, y: tmp })) tmp += 1;
     updatePlayerPos({ x: 0, y: tmp - 1, collided: false });
   };
+  console.log("jksnkldsmv", dropTime)
 
   const dropPlayer = () => {
     // We don't need to run the interval when we use the arrow down to
@@ -226,7 +232,8 @@ const Game = () => {
         {/* <OtherStages /> */}
       </StyledOtherStages>
       <StyledStage>
-        <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} startgame={startgame} gameOver={gameOver} />
+        {/* <GameOver /> */}
+        <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} startgame={startgame} gameOver={gameOver} start={start} setStart={setStart} />
       </StyledStage>
       <StyledInfo>
         <Info score={score} level={level} rows={rows} nextStage={nextStage} />

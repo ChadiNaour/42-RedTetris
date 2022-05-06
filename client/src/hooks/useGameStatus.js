@@ -11,10 +11,10 @@ export const useGameStatus = rowsCleared => {
     // We have score
     if (rowsCleared > 0) {
       // This is how original Tetris score is calculated
-      setScore(prev => prev + linePoints[rowsCleared - 1] * (level + 1));
+      setScore(score + linePoints[rowsCleared - 1] * (level + 1));
       console.log("rows", rows)
       console.log("rowsCleared", rowsCleared)
-      setRows(prev => (prev + rowsCleared));
+      setRows(rows + rowsCleared);
     }
   }, [level, linePoints, rowsCleared]);
 

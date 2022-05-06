@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import Stage from "./Stage";
+import GameOver from "../GameOver"
 
 const Styled = styled.button`
+position: relative;
   width: 100%;
   height: 100%;
   background: transparent;
@@ -13,10 +15,11 @@ const Styled = styled.button`
   }
 `;
 
-const Tetris = ({ move, keyUp, startGame, stage, startgame , gameOver}) => {
+const Tetris = ({ move, keyUp, startGame, stage, startgame, gameOver, start, setStart }) => {
 
   return (
     <Styled onKeyDown={(e) => move(e)} onKeyUp={keyUp} onKeyPress={startgame}>
+      {!start ? <GameOver gameOver={gameOver} start={start} setStart={setStart} /> : ""}
       {/* <button style={{ backgroundColor: "red", paddingInline: "10px" }} onClick={startGame}>start</button> */}
       <Stage stage={stage} />
       {/* <div className="overlay">

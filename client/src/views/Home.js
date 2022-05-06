@@ -86,7 +86,7 @@ const Home = () => {
           </div>
           <input
             className={
-              "input mx-auto animate-fade appearance-none block bg-transparent rounded py-4 px-4 mb-3 leading-tight focus:outline-none"
+              "input mx-auto bg-transparent rounded py-4 px-4 mb-3 focus:outline-none"
             }
             type="text"
             placeholder="Username"
