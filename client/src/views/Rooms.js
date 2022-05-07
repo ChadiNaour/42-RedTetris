@@ -104,7 +104,7 @@ const Rooms = () => {
           <div className="w-full mt-4 flex flex-col sm:flex-row justify-center align-center h-aut md:h-12 md:w-4/12">
             <input
               className={
-                "text-left rounded-md h-12 pl-4 my-2 xl:m-0 focus:outline-none"
+                "input text-left rounded-md h-12 pl-4 my-2 xl:m-0 focus:outline-none"
               }
               type="text"
               placeholder="Room name"

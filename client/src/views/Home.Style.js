@@ -97,6 +97,9 @@ export const RightSide = styled.div`
       }
     }
     .input {
+      &::placeholder {
+        line-height : 50px;
+      }
       width: 500px;
       color: white;
       label {

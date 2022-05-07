@@ -78,7 +78,6 @@ export const StyledContainer = styled.div`
     display: flex;
     width: 100%;
     flex-direction: column;
-    // background-color: inherit;
     .lista {
       &:hover  {
         background-color: #f9253c ;
@@ -132,6 +131,10 @@ export const StyledContainer = styled.div`
       .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
         border-color: #b33030;
       }
+    }
+    .input {
+      &::placeholder {
+        line-height : 50px;
     }
   }
 `;

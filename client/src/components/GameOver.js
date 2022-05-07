@@ -19,7 +19,7 @@ export const StyledOverlay = styled.div`
 
 export const StyledOverlayText = styled.div`
   position: absolute;
-//   background-color: red;
+  // background-color: red;
   width: 80%;
   top: 50%;
   left: 50%;
@@ -76,39 +76,39 @@ export default function GameOver({ gameOver, start, setStart }) {
   return (
     <StyledOverlay>
       <StyledOverlayText>
-        {gameOver ? <img data-testid="gameOver-Lost-img" style={{ width: "200px" }} src={url} /> : "" }
+        {gameOver ? <img data-testid="gameOver-Lost-img" style={{ width: "200px" }} src={url} /> : ""}
         {/* ) : (
           <img data-testid="gameOver-Won-img" style={{ width: "200px" }} src={url1} />
         )} */}
         {gameOver ? <div><h1>{"You lost"}</h1>
-        <p>
-          {
-        "Press Enter to restart the game Wait for host player to restart the game"}
-        </p></div> : "" }
+          <p>
+            {
+              "Press Enter to restart the game Wait for host player to restart the game"}
+          </p></div> : ""}
         {/* {!start ? */}
-        { !start && !gameOver ? <div className="overlay-content">
-            <div className= "my-4">
-              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white", marginRight: "10px"}}>up</kbd>
-              <span>piece&nbsp; rotation</span>
-            </div>
-            <div className= "my-4">
-              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>down</kbd>
-              <span>move&nbsp; piece&nbsp; down</span>
-            </div>
-            <div className= "my-4">
-              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>left</kbd>
-              <span>move &nbsp;piece &nbsp;left</span>
-            </div>
-            <div className= "my-4">
-              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>right</kbd>
-              <span>move &nbsp;piece&nbsp; right</span>
-            </div>
-            <div className= "my-4">
-              <kbd style={{fontSize: "2vh", borderRadius: "3px", padding: "4px", border: "3px solid white" , marginRight: "10px"}}>space</kbd>
-              <span>hard &nbsp;drop</span>
-            </div>
-            <h1>Press &nbsp;enter &nbsp;to &nbsp;start</h1>
-          </div> : ""}
+        {!start && !gameOver ? <div className="overlay-content">
+          <div className="my-4 flex flex-row justify-between">
+            <kbd style={{ fontSize: "1.7vh", borderRadius: "5px", border: "2px solid white", paddingInline: "5px" }}>up</kbd>
+            <span>piece&nbsp; rotation</span>
+          </div>
+          <div className="my-4 flex flex-row justify-between">
+            <kbd style={{ fontSize: "1.7vh", borderRadius: "5px", border: "2px solid white", paddingInline: "5px" }}>down</kbd>
+            <span>move&nbsp; piece&nbsp; down</span>
+          </div>
+          <div className="my-4 flex flex-row justify-between">
+            <kbd style={{ fontSize: "1.7vh", borderRadius: "5px", border: "2px solid white", paddingInline: "5px" }}>left</kbd>
+            <span>move &nbsp;piece &nbsp;left</span>
+          </div>
+          <div className="my-4 flex flex-row justify-between">
+            <kbd style={{ fontSize: "1.7vh", borderRadius: "5px", border: "2px solid white", paddingInline: "5px" }}>right</kbd>
+            <span>move &nbsp;piece&nbsp; right</span>
+          </div>
+          <div className="my-4 flex flex-row justify-between">
+            <kbd style={{ fontSize: "1.7vh", borderRadius: "5px", border: "2px solid white", paddingInline: "5px" }}>space</kbd>
+            <span>hard &nbsp;drop</span>
+          </div>
+          <h1>Press &nbsp;enter &nbsp;to &nbsp;start</h1>
+        </div> : ""}
       </StyledOverlayText>
     </StyledOverlay>
   );
