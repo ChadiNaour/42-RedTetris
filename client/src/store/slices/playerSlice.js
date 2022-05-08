@@ -9,6 +9,7 @@ export const playerSlice = createSlice({
     error: null,
     roomError: null,
     chat: [],
+    admin: null
   },
   reducers: {
     addUser: (state, action) => {

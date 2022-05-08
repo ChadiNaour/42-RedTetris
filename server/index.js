@@ -5,9 +5,11 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 
 const server = http.createServer(app);
+const Tetrimios = require("./classes/tetrominos");
 
 let rooms = [];
 let players = [];
+let tetrominos = new Tetrimios();
 
 const io = new Server(server, {
   cors: {
@@ -37,6 +39,7 @@ io.on("connection", (socket) => {
           socketId: socket.id,
           avatar: data.avatar,
           room: "",
+          admin : null
         },
       ];
       socket.emit("user_exists", {
@@ -49,24 +52,30 @@ io.on("connection", (socket) => {
   });
 
   //create new room
-  socket.on("create_room", (data) => {
+  socket.on("create_room", async (data) => {
     const exist = rooms.find((room) => room.name === data.room);
-    const player = players.find((player) => player.username === data.username);
+    const player = players.find((player) => player.username === data.username && player.socketId === socket.id);
+    const tetriminos = await tetrominos.getTetriminos();
     // //console.log(player);
     if (!exist) {
       if (data.mode === "battle")
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1 },
+          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1, tetrominos: tetriminos },
         ];
       else
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1 },
+          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1, tetrominos: tetriminos },
         ];
       //still checking the player
       // players = [...players, { username: data.username, socketId: socket.id, room: data.room, avatar: data.avatar }];
-      if (player) player.room = data?.room;
+      if (player)
+      {
+        player.room = data?.room;
+        player.admin = true;
+      }
+        
       socket.join(data.room);
       // //console.log("user with id:", socket.id, "joined room:", data.room);
       // //console.log("rooms are", rooms);
@@ -94,6 +103,7 @@ io.on("connection", (socket) => {
       if (joinedRoom.mode === "battle" && joinedRoom.playersIn < 5) {
         socket.join(data.room);
         player.room = data?.room;
+        player.admin = false;
         joinedRoom.playersIn += 1;
         socket.emit("room_joined", data.room);
         io.to(data.room).emit("chat", {
@@ -160,7 +170,7 @@ io.on("connection", (socket) => {
         }
       }
     }
-    //console.log("roomPlayers", roomPlayers);
+    console.log("roomPlayers", roomPlayers);
     io.to(data).emit("update_players", roomPlayers);
     // var clients = io.sockets.clients();
     // var clients = io.sockets.clients(data.room);

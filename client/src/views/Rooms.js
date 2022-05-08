@@ -101,10 +101,10 @@ const Rooms = () => {
       >
         <div className="create">
           <div className="title">create room</div>
-          <div className="w-full mt-4 flex flex-col sm:flex-row justify-center align-center h-aut md:h-12 md:w-4/12">
+          <div className="w-full mt-4 flex flex-col sm:flex-row justify-center align-center md:h-12 md:w-4/12">
             <input
               className={
-                "input text-left rounded-md h-12 pl-4 my-2 xl:m-0 focus:outline-none"
+                "input mx-auto bg-transparent rounded py-4 px-4 mb-3 h-full focus:outline-none"
               }
               type="text"
               placeholder="Room name"

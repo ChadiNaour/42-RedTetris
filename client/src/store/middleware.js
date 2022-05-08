@@ -39,7 +39,7 @@ export const socketMiddleware = (store) => {
         if (data.error) store.dispatch(setError("user already exist"));
         else
           store.dispatch(
-            UserAdded({ username: data.username, avatar: data.avatar })
+            UserAdded(data)
           );
         // socket.off("user_exists");
       });
