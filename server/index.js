@@ -6,10 +6,12 @@ const { Server } = require("socket.io");
 
 const server = http.createServer(app);
 const Tetrimios = require("./classes/tetrominos");
+const Game = require("./classes/Game");
 
 let rooms = [];
 let players = [];
 let tetrominos = new Tetrimios();
+let game = new Game();
 
 const io = new Server(server, {
   cors: {
@@ -61,12 +63,12 @@ io.on("connection", (socket) => {
       if (data.mode === "battle")
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1 },
+          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1, state: false },
         ];
       else
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1 },
+          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1, state: false },
         ];
       //still checking the player
       // players = [...players, { username: data.username, socketId: socket.id, room: data.room, avatar: data.avatar }];
@@ -180,7 +182,18 @@ io.on("connection", (socket) => {
   socket.on("startgame", (data) => {
     console.log(data);
     const room = rooms.find((room) => room.name === data);
-    console.log(room)
+    console.log(room);
+    game.getUser(io, socket.id, room, players).then(async (user) => {
+      console.log(user);
+      if (user.admin) {
+        const tetros = await tetrominos.getTetriminos();
+        game.startGame(io, room, tetros);
+        io.emit("update_rooms", {rooms : rooms});
+      }
+       else {
+        io.to(socket.id).emit("wait_for_admin");
+      }
+    });
   });
 
   //disconnect

@@ -72,7 +72,7 @@ export const StyledOverlayText = styled.div`
   }
 `
 
-export default function GameOver({ gameOver, start, setStart }) {
+export default function GameOver({ gameOver, start, setStart , UserPlayer}) {
   return (
     <StyledOverlay>
       <StyledOverlayText>
@@ -107,7 +107,7 @@ export default function GameOver({ gameOver, start, setStart }) {
             <kbd style={{ fontSize: "1.7vh", borderRadius: "5px", border: "2px solid white", paddingInline: "5px" }}>space</kbd>
             <span>hard &nbsp;drop</span>
           </div>
-          <h1>Press &nbsp;enter &nbsp;to &nbsp;start</h1>
+         {UserPlayer.admin ? <h1>Press &nbsp;enter &nbsp;to &nbsp;start</h1> : <h1>Wait &nbsp;for &nbsp;admin &nbsp;to &nbsp;Start</h1>}
         </div> : ""}
       </StyledOverlayText>
     </StyledOverlay>

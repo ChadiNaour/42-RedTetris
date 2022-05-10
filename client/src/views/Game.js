@@ -11,9 +11,10 @@ import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useGameStatus } from "../hooks/useGameStatus";
 import { createStage, checkCollision } from "../utils/gameHelpers";
-import {startTheGame} from '../store/slices/playerSlice';
+import { startTheGameRequest } from '../store/slices/playerSlice';
 import { getTetrominos } from '../utils/tetrominos'
 import GameOver from '../components/GameOver'
+import { ToastContainer, toast } from "react-toastify";
 
 const StyledContainer = styled.div`
   /* width: 100%; */
@@ -128,10 +129,10 @@ const Game = () => {
   //   }
   // }, [concatTetriminos]);
 
-    //Emit the stage
-    useEffect(() => {
-      // socket.emit("Stage", { stage, roomName: props.data.roomName, username });
-    }, [stage]);
+  //Emit the stage
+  useEffect(() => {
+    // socket.emit("Stage", { stage, roomName: props.data.roomName, username });
+  }, [stage]);
 
   // useEffect(() => {
   //   if (tetrominos?.length > 0 && !gameOver) {
@@ -161,8 +162,12 @@ const Game = () => {
   const startgame = (e) => {
     if (e.key === "Enter") {
       console.log("Pressing enter");
-      console.log("room", UserPlayer.roomName)
-      dispatch(startTheGame(UserPlayer.roomName))
+      // console.log("room", UserPlayer.roomName)
+      if (UserPlayer.admin)
+        dispatch(startTheGameRequest(UserPlayer.roomName))
+      else
+        toast("Wait for admin to start the Game");
+
       // setTetrominos(getTetrominos());
       // console.log("tetros are", tetrominos)
       // startGame();
@@ -238,12 +243,13 @@ const Game = () => {
 
   return (
     <StyledContainer onKeyPress={startgame}>
+      <ToastContainer />
       <StyledOtherStages>
         {/* <OtherStages /> */}
       </StyledOtherStages>
       <StyledStage>
         {/* <GameOver /> */}
-        <Tetris move={move} keyUp={keyUp}  stage={stage}  gameOver={gameOver} start={start} setStart={setStart} />
+        <Tetris UserPlayer={UserPlayer} move={move} keyUp={keyUp} stage={stage} gameOver={gameOver} start={start} setStart={setStart} />
       </StyledStage>
       <StyledInfo>
         <Info score={score} level={level} rows={rows} nextStage={nextStage} />

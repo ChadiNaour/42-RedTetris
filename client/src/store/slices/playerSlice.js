@@ -4,12 +4,16 @@ export const playerSlice = createSlice({
   name: "playerReducer",
   initialState: {
     userName: null,
-    roomName: null,
-    avatar: null,
     error: null,
+    roomName: null,
     roomError: null,
+    avatar: null,
     chat: [],
-    admin: null
+    admin: null,
+    adminError : null,
+    gameEnd: null,
+    gameOver: null,
+    tetros: [],
   },
   reducers: {
     addUser: (state, action) => {
@@ -36,7 +40,6 @@ export const playerSlice = createSlice({
       state.error = action.payload;
     },
     setRoomError: (state, action) => {
-      //console.log("piloood", action.payload);
       state.roomError = action.payload;
     },
     addRoomRequest: (state) => {
@@ -58,9 +61,22 @@ export const playerSlice = createSlice({
       else
         state.admin = false;
     },
-    startTheGame: (action) => {
+    startTheGameRequest: (state) => {
+      state.gameEnd = null;
+      state.gameOver = null;
+      state.adminError = null;
+      state.tetros = [];
 
-    }
+    },
+    startTheGame: (state, action) => {
+      state.gameEnd = false;
+      state.gameOver = false;
+      state.tetros = action.payload;
+      state.adminError = null;
+    },
+    setAdminError: (state, action) => {
+      state.adminError = true;
+    },
   },
 });
 
@@ -77,7 +93,9 @@ export const {
   addToChat,
   sendMessage,
   setAdmin,
-  startTheGame
+  startTheGameRequest,
+  startTheGame,
+  setAdminError
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

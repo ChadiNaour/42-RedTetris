@@ -10,12 +10,16 @@ import {
   addToChat,
   sendMessage,
   setAdmin,
-  startTheGame
+  startTheGameRequest,
+  startTheGame,
+  setAdminError
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
 import { io, Socket } from "socket.io-client";
 import { getRoomsRequest } from "../actions/roomsActions";
+import { toast } from "react-toastify";
+
 export const logger = (store) => (next) => (action) => {
   // console.group(action.type);
   // //console.log("state : ", store.getState());
@@ -77,6 +81,17 @@ export const socketMiddleware = (store) => {
         //console.log("emited from back data",data);
         store.dispatch(addToChat(data));
       });
+
+      //starting the game
+      socket.on("startGame", (data) => {
+        store.dispatch(startTheGame(data));
+      });
+      socket.on("wait_for_admin", () => {
+        store.dispatch(setAdminError());
+        //console.log("emited from back data",data);
+        // store.dispatch(addToChat(data));
+      });
+      // wait_for_admin
       socket.on("emit-disconnect", () => {
         socket.off("user_exists");
         socket.off("room_exists");
@@ -84,6 +99,8 @@ export const socketMiddleware = (store) => {
         socket.off("room_joined");
         socket.off("update_rooms");
         socket.off("update_players");
+        socket.off("startGame");
+        socket.off("wait_for_admin");
       });
       if (action.payload.hash) {
         //console.log(action.payload.hash);
@@ -143,15 +160,14 @@ export const socketMiddleware = (store) => {
       }
 
       //adding the room with check if its duplicated
-      if (startTheGame.match(action)) {
-        console.log(action.payload);
-        socket.emit("startgame",  action.payload);
-      //   socket.emit("create_room", {
-      //     room: action.payload.room,
-      //     mode: action.payload.mode,
-      //     username: user.userName,
-      //     avatar: user.avatar,
-      //   });
+      if (startTheGameRequest.match(action)) {
+        socket.emit("startgame", action.payload);
+        //   socket.emit("create_room", {
+        //     room: action.payload.room,
+        //     mode: action.payload.mode,
+        //     username: user.userName,
+        //     avatar: user.avatar,
+        //   });
       }
     }
     next(action);
