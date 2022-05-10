@@ -176,6 +176,13 @@ io.on("connection", (socket) => {
     // //console.log(players);
   });
 
+  //start the game
+  socket.on("startgame", (data) => {
+    console.log(data);
+    const room = rooms.find((room) => room.name === data);
+    console.log(room)
+  });
+
   //disconnect
   socket.on("disconnect", () => {
     socket.emit("emit-disconnect");

@@ -9,7 +9,8 @@ import {
   joinRoomRequest,
   addToChat,
   sendMessage,
-  setAdmin
+  setAdmin,
+  startTheGame
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
@@ -139,6 +140,18 @@ export const socketMiddleware = (store) => {
           username: user.userName,
           room: user.roomName,
         });
+      }
+
+      //adding the room with check if its duplicated
+      if (startTheGame.match(action)) {
+        console.log(action.payload);
+        socket.emit("startgame",  action.payload);
+      //   socket.emit("create_room", {
+      //     room: action.payload.room,
+      //     mode: action.payload.mode,
+      //     username: user.userName,
+      //     avatar: user.avatar,
+      //   });
       }
     }
     next(action);

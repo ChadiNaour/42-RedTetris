@@ -11,6 +11,7 @@ import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useGameStatus } from "../hooks/useGameStatus";
 import { createStage, checkCollision } from "../utils/gameHelpers";
+import {startTheGame} from '../store/slices/playerSlice';
 import { getTetrominos } from '../utils/tetrominos'
 import GameOver from '../components/GameOver'
 
@@ -85,7 +86,9 @@ const StyledMsgs = styled.div`
 `;
 
 const Game = () => {
-  let [tetrominos, setTetrominos] = useState(getTetrominos());
+  const dispatch = useDispatch();
+  // let [tetrominos, setTetrominos] = useSelector((state) => state.playerReducer.tetrominos);
+  let [tetrominos, setTetrominos] = useState(getTetrominos())
   const [start, setStart] = useState(false);
   const players = useSelector((state) => state.playersReducer.players);
   const UserPlayer = useSelector((state) => state.playerReducer);
@@ -116,14 +119,14 @@ const Game = () => {
   };
 
   // Get Tetriminos for the second time
-  useEffect(() => {
-    if (concatTetriminos) {
-      let newTetriminos = getTetrominos();
-      setTetrominos(tetrominos.concat(newTetriminos));
-      // socket.emit("newTetriminos", { room: props.data.roomName });
-      setConcatTetriminos(false);
-    }
-  }, [concatTetriminos]);
+  // useEffect(() => {
+  //   if (concatTetriminos) {
+  //     let newTetriminos = getTetrominos();
+  //     setTetrominos(tetrominos.concat(newTetriminos));
+  //     // socket.emit("newTetriminos", { room: props.data.roomName });
+  //     setConcatTetriminos(false);
+  //   }
+  // }, [concatTetriminos]);
 
     //Emit the stage
     useEffect(() => {
@@ -157,10 +160,12 @@ const Game = () => {
 
   const startgame = (e) => {
     if (e.key === "Enter") {
-      console.log("Pressing enter")
+      console.log("Pressing enter");
+      console.log("room", UserPlayer.roomName)
+      dispatch(startTheGame(UserPlayer.roomName))
       // setTetrominos(getTetrominos());
       // console.log("tetros are", tetrominos)
-      startGame();
+      // startGame();
       // socket.emit("startgame", { room: props.data.roomName });
     }
   }
@@ -232,13 +237,13 @@ const Game = () => {
   //console.log("hado homa lplayers", players);
 
   return (
-    <StyledContainer>
+    <StyledContainer onKeyPress={startgame}>
       <StyledOtherStages>
         {/* <OtherStages /> */}
       </StyledOtherStages>
       <StyledStage>
         {/* <GameOver /> */}
-        <Tetris move={move} keyUp={keyUp} startGame={startGame} stage={stage} startgame={startgame} gameOver={gameOver} start={start} setStart={setStart} />
+        <Tetris move={move} keyUp={keyUp}  stage={stage}  gameOver={gameOver} start={start} setStart={setStart} />
       </StyledStage>
       <StyledInfo>
         <Info score={score} level={level} rows={rows} nextStage={nextStage} />

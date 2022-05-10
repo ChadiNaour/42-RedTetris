@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const playerSlice = createSlice({
-  name: "playersReducer",
+  name: "playerReducer",
   initialState: {
     userName: null,
     roomName: null,
@@ -58,6 +58,9 @@ export const playerSlice = createSlice({
       else
         state.admin = false;
     },
+    startTheGame: (action) => {
+
+    }
   },
 });
 
@@ -73,7 +76,8 @@ export const {
   joinRoomRequest,
   addToChat,
   sendMessage,
-  setAdmin
+  setAdmin,
+  startTheGame
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

@@ -15,10 +15,10 @@ position: relative;
   }
 `;
 
-const Tetris = ({ move, keyUp, startGame, stage, startgame, gameOver, start, setStart }) => {
+const Tetris = ({ move, keyUp, stage, gameOver, start, setStart }) => {
 
   return (
-    <Styled onKeyDown={(e) => move(e)} onKeyUp={keyUp} onKeyPress={startgame}>
+    <Styled onKeyDown={(e) => move(e)} onKeyUp={keyUp}>
       {!start ? <GameOver gameOver={gameOver} start={start} setStart={setStart} /> : ""}
       {/* <button style={{ backgroundColor: "red", paddingInline: "10px" }} onClick={startGame}>start</button> */}
       <Stage stage={stage} />
