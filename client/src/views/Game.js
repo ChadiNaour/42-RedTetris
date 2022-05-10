@@ -125,6 +125,11 @@ const Game = () => {
     }
   }, [concatTetriminos]);
 
+    //Emit the stage
+    useEffect(() => {
+      // socket.emit("Stage", { stage, roomName: props.data.roomName, username });
+    }, [stage]);
+
   // useEffect(() => {
   //   if (tetrominos?.length > 0 && !gameOver) {
   //     console.log("tetros are here", tetrominos);

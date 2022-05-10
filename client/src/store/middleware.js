@@ -9,6 +9,7 @@ import {
   joinRoomRequest,
   addToChat,
   sendMessage,
+  setAdmin
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
@@ -50,13 +51,15 @@ export const socketMiddleware = (store) => {
       });
       //listner if the room is created
       socket.on("room_created", (data) => {
-        //console.log("room created", data);
+        console.log("room created", data);
         store.dispatch(addRoomName(data));
+        store.dispatch(setAdmin(1));
         socket.emit("getPlayers", data);
       });
       socket.on("room_joined", (data) => {
         //console.log("room joined", data);
         store.dispatch(addRoomName(data));
+        store.dispatch(setAdmin(0));
         socket.emit("getPlayers", data);
       });
       socket.on("update_rooms", (data) => {

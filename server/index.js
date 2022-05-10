@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
           socketId: socket.id,
           avatar: data.avatar,
           room: "",
-          admin : null
+          admin: null
         },
       ];
       socket.emit("user_exists", {
@@ -55,27 +55,26 @@ io.on("connection", (socket) => {
   socket.on("create_room", async (data) => {
     const exist = rooms.find((room) => room.name === data.room);
     const player = players.find((player) => player.username === data.username && player.socketId === socket.id);
-    const tetriminos = await tetrominos.getTetriminos();
+    // const tetriminos = await tetrominos.getTetriminos();
     // //console.log(player);
     if (!exist) {
       if (data.mode === "battle")
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1, tetrominos: tetriminos },
+          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1 },
         ];
       else
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1, tetrominos: tetriminos },
+          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1 },
         ];
       //still checking the player
       // players = [...players, { username: data.username, socketId: socket.id, room: data.room, avatar: data.avatar }];
-      if (player)
-      {
+      if (player) {
         player.room = data?.room;
         player.admin = true;
       }
-        
+
       socket.join(data.room);
       // //console.log("user with id:", socket.id, "joined room:", data.room);
       // //console.log("rooms are", rooms);

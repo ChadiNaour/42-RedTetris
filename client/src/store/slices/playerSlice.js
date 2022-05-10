@@ -51,7 +51,13 @@ export const playerSlice = createSlice({
     sendMessage: (state) => {
       state.chat = [...state.chat];
     },
-    creatRoomFromUrl: (action) => {},
+    creatRoomFromUrl: (action) => { },
+    setAdmin: (state, action) => {
+      if (action.payload === 1)
+        state.admin = true;
+      else
+        state.admin = false;
+    },
   },
 });
 
@@ -67,6 +73,7 @@ export const {
   joinRoomRequest,
   addToChat,
   sendMessage,
+  setAdmin
 } = playerSlice.actions;
 
 export default playerSlice.reducer;
