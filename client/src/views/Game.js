@@ -11,7 +11,7 @@ import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useGameStatus } from "../hooks/useGameStatus";
 import { createStage, checkCollision } from "../utils/gameHelpers";
-import { startTheGameRequest } from '../store/slices/playerSlice';
+import { startTheGameRequest, newTetrosRequest } from '../store/slices/playerSlice';
 import { getTetrominos } from '../utils/tetrominos'
 import GameOver from '../components/GameOver'
 import { ToastContainer, toast } from "react-toastify";
@@ -89,14 +89,17 @@ const StyledMsgs = styled.div`
 const Game = () => {
   const dispatch = useDispatch();
   // let [tetrominos, setTetrominos] = useSelector((state) => state.playerReducer.tetrominos);
-  let [tetrominos, setTetrominos] = useState(getTetrominos())
+  let tetrominos = useSelector((state) => state.playerReducer.tetros);
   const [start, setStart] = useState(false);
   const players = useSelector((state) => state.playersReducer.players);
   const UserPlayer = useSelector((state) => state.playerReducer);
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [getTetrimino, setgetTetrimino] = useState(false);
+  const [gameStart, setGameStart] = useState(false);
+  const [firstDrop, setfirstDrop] = useState(1);
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece, concatTetriminos, setConcatTetriminos] = usePlayer(tetrominos);
+  const [player, updatePlayerPos, resetPlayer, playerRotate, nextPiece, concatTetriminos, setConcatTetriminos] = usePlayer(tetrominos, setStart, setDropTime, setGameOver, setgetTetrimino);
   const [stage, setStage, rowsCleared, nextStage, setNextStage] = useStage(player, resetPlayer, nextPiece, gameOver);
   const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
@@ -120,53 +123,90 @@ const Game = () => {
   };
 
   // Get Tetriminos for the second time
-  // useEffect(() => {
-  //   if (concatTetriminos) {
-  //     let newTetriminos = getTetrominos();
-  //     setTetrominos(tetrominos.concat(newTetriminos));
-  //     // socket.emit("newTetriminos", { room: props.data.roomName });
-  //     setConcatTetriminos(false);
-  //   }
-  // }, [concatTetriminos]);
+  useEffect(() => {
+    if (concatTetriminos) {
+      dispatch(newTetrosRequest(UserPlayer.roomName));
+      // socket.emit("newTetriminos", UserPlayer.roomName);
+      setConcatTetriminos(false);
+    }
+  }, [concatTetriminos]);
 
   //Emit the stage
+
+  //start the game
   useEffect(() => {
-    // socket.emit("Stage", { stage, roomName: props.data.roomName, username });
-  }, [stage]);
-
-  // useEffect(() => {
-  //   if (tetrominos?.length > 0 && !gameOver) {
-  //     console.log("tetros are here", tetrominos);
-  //     startGame();
-  //   }
-  //   return () => { };
-  // }, [tetrominos]);
-
-  const startGame = () => {
-    if (tetrominos?.length > 0) {
-      // Reset everything
-      // set
-      setStart(true);
-      setStage(createStage());
-      setNextStage(createStage(4, 4));
-      setDropTime(1000);
-      resetPlayer();
-      setScore(0);
-      setLevel(0);
-      setRows(0);
+    if (gameStart) {
+      // console.log("staaaaaart")
+      if (gameOver || UserPlayer.gameEnd &&  tetrominos.length > 0) {
+        // Reset everything
+        setStart(true);
+        setStage(createStage());
+        setNextStage(createStage(4, 4));
+        resetPlayer();
+        setGameOver(false);
+        setScore(0);
+        setLevel(0);
+        setRows(0);
+        setDropTime(1000);
+      }
+      if (firstDrop === 1) {
+        resetPlayer(stage);
+        setfirstDrop(2);
+        setScore(0);
+        setLevel(0);
+        setRows(0);
+      }
+      // setStart(false);
       setGameOver(false);
+      setGameStart(false);
+      setDropTime(1000 / (level + 1) + 200);
     }
-  };
+  }, [gameStart]);
+
+  // get tetros
+  useEffect(() => {
+    // console.log("tetros",tetrominos);
+    // console.log("length",tetrominos.length);
+    if (tetrominos.length > 0 && !UserPlayer.gameOver) {
+      // console.log("tetros are here")
+      setGameStart(true);
+      setStart(true);
+      setgetTetrimino(true);
+    }
+    return () => { };
+  }, [tetrominos]);
+
+  // const startGame = () => {
+  //   if (tetrominos?.length > 0) {
+  //     // Reset everything
+  //     // set
+  //     setStart(true);
+  //     setStage(createStage());
+  //     setNextStage(createStage(4, 4));
+  //     setDropTime(1000);
+  //     resetPlayer();
+  //     setScore(0);
+  //     setLevel(0);
+  //     setRows(0);
+  //     setGameOver(false);
+  //   }
+  // };
 
 
   const startgame = (e) => {
     if (e.key === "Enter") {
-      console.log("Pressing enter");
+      // console.log("Pressing enter");
       // console.log("room", UserPlayer.roomName)
-      if (UserPlayer.admin)
-        dispatch(startTheGameRequest(UserPlayer.roomName))
-      else
-        toast("Wait for admin to start the Game");
+      if (!getTetrimino) {
+        // console.log("send request")
+        if (UserPlayer.admin)
+        {
+          // console.log("request sent")
+          dispatch(startTheGameRequest(UserPlayer.roomName))
+        }
+        else
+          toast("Wait for admin to start the Game");
+      }
 
       // setTetrominos(getTetrominos());
       // console.log("tetros are", tetrominos)
@@ -205,7 +245,7 @@ const Game = () => {
     while (!checkCollision(player, stage, { x: 0, y: tmp })) tmp += 1;
     updatePlayerPos({ x: 0, y: tmp - 1, collided: false });
   };
-  console.log("jksnkldsmv", dropTime)
+  // console.log("jksnkldsmv", dropTime)
 
   const dropPlayer = () => {
     // We don't need to run the interval when we use the arrow down to

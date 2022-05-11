@@ -27,6 +27,13 @@ class GamesRoom {
 			}
 		});
 	};
+	
+	//send new tetros to concat
+	newTetriminos = (io, room, Tetrimios) => {
+		return new Promise((resolve, reject) => {
+			io.to(room).emit("newTetriminos", Tetrimios);
+		});
+	};
 
 
 }

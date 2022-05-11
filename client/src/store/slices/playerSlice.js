@@ -10,7 +10,7 @@ export const playerSlice = createSlice({
     avatar: null,
     chat: [],
     admin: null,
-    adminError : null,
+    adminError: null,
     gameEnd: null,
     gameOver: null,
     tetros: [],
@@ -77,6 +77,16 @@ export const playerSlice = createSlice({
     setAdminError: (state, action) => {
       state.adminError = true;
     },
+    ShiftTetros: (state) => {
+      state.tetros.shift();
+    },
+    newTetrosRequest: (state) => { },
+    concatTetros: (state, action) => {
+      console.log(action.payload);
+      let newTetros = [];
+      state.tetros = newTetros.concat(state.tetros, action.payload)
+      // state.tetros.concat(state.tetros, action.payload);
+    },
   },
 });
 
@@ -95,7 +105,10 @@ export const {
   setAdmin,
   startTheGameRequest,
   startTheGame,
-  setAdminError
+  setAdminError,
+  ShiftTetros,
+  newTetrosRequest,
+  concatTetros
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

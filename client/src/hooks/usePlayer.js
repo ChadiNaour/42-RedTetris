@@ -1,9 +1,12 @@
 import { useCallback, useState } from "react";
 import { checkCollision, STAGE_WIDTH } from "../utils/gameHelpers";
 import { TETROMINOS, NEXT_TETROMINOS, randomTetromino } from "../utils/tetrominos";
+import { ShiftTetros } from "../store/slices/playerSlice"
+import { useDispatch } from "react-redux";
 
-export const usePlayer = (tetrominos) => {
+export const usePlayer = (tetrominos, setStart, setDropTime, setGameOver, setgetTetrimino) => {
   const [concatTetriminos, setConcatTetriminos] = useState(false);
+  const dispatch = useDispatch();
   // if (tetrominos.length > 0) {
   // console.log("in usePlayer", tetrominos)
   const [player, setPlayer] = useState({
@@ -70,7 +73,7 @@ export const usePlayer = (tetrominos) => {
   };
 
   const resetPlayer = useCallback((stage) => {
-    console.log("reseting player", tetrominos, TETROMINOS[tetrominos[0]].shape, NEXT_TETROMINOS[tetrominos[1]].shape);
+    // console.log("reseting player", tetrominos, TETROMINOS[tetrominos[0]].shape, NEXT_TETROMINOS[tetrominos[1]].shape);
     let tetris = {
       pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
       tetromino: TETROMINOS[tetrominos[0]].shape,
@@ -92,7 +95,11 @@ export const usePlayer = (tetrominos) => {
             collided: false,
           });
         }
-        console.log("gaaaame oooooveeeeeeer")
+        console.log("gaaaame oooooveeeeeeer");
+        setGameOver(true);
+        setStart(true);
+        setDropTime(null);
+        setgetTetrimino(false);
       }
     }
     else {
@@ -109,7 +116,8 @@ export const usePlayer = (tetrominos) => {
       collided: false,
     });
     // console.log("after setting the new ones",player, nextPiece)
-    tetrominos.shift();
+    dispatch(ShiftTetros());
+    // tetrominos.shift();
     if (tetrominos.length === 15) {
       setConcatTetriminos(true);
     }

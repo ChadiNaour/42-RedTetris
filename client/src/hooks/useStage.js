@@ -11,7 +11,7 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
     const sweepRows = newStage =>
       newStage.reduce((ack, row) => {
         if (row.findIndex(cell => cell[0] === 0) === -1) {
-          console.log("hhhhhhhhh", rowsCleared);
+          // console.log("hhhhhhhhh", rowsCleared);
           setRowsCleared(rowsCleared + 1);
           ack.unshift(new Array(newStage[0].length).fill([0, 'clear']));
           return ack;
@@ -45,7 +45,7 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
       }
 
       // Then draw the tetromino
-      console.log("player and next to draw", player.tetromino, nextPiece.tetromino)
+      // console.log("player and next to draw", player.tetromino, nextPiece.tetromino)
       player.tetromino.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value !== 0) {
@@ -69,7 +69,7 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
 
       // Then check if we got some score if collided
       if (player.collided && !gameOver) {
-        console.log("call to reset from stage")
+        // console.log("call to reset from stage")
         resetPlayer(newStage);
         setNextStage(createStage(4, 4));
         return sweepRows(newStage);

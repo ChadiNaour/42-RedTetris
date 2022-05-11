@@ -196,6 +196,13 @@ io.on("connection", (socket) => {
     });
   });
 
+  //new tetros
+  socket.on("newTetriminos", async (data) => {
+    const tetriminos = await tetrominos.getTetriminos();
+    console.log(data, tetriminos)
+    game.newTetriminos(io, data, tetriminos);
+  });
+
   //disconnect
   socket.on("disconnect", () => {
     socket.emit("emit-disconnect");

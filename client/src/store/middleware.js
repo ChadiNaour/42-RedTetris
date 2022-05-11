@@ -12,7 +12,9 @@ import {
   setAdmin,
   startTheGameRequest,
   startTheGame,
-  setAdminError
+  setAdminError,
+  newTetrosRequest,
+  concatTetros
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
@@ -91,6 +93,12 @@ export const socketMiddleware = (store) => {
         //console.log("emited from back data",data);
         // store.dispatch(addToChat(data));
       });
+      socket.on("newTetriminos", (data) => {
+        console.log("new tetros",data);
+        store.dispatch(concatTetros(data));
+        //console.log("emited from back data",data);
+        // store.dispatch(addToChat(data));
+      });
       // wait_for_admin
       socket.on("emit-disconnect", () => {
         socket.off("user_exists");
@@ -101,6 +109,7 @@ export const socketMiddleware = (store) => {
         socket.off("update_players");
         socket.off("startGame");
         socket.off("wait_for_admin");
+        socket.off("newTetriminos")
       });
       if (action.payload.hash) {
         //console.log(action.payload.hash);
@@ -162,6 +171,16 @@ export const socketMiddleware = (store) => {
       //adding the room with check if its duplicated
       if (startTheGameRequest.match(action)) {
         socket.emit("startgame", action.payload);
+        //   socket.emit("create_room", {
+        //     room: action.payload.room,
+        //     mode: action.payload.mode,
+        //     username: user.userName,
+        //     avatar: user.avatar,
+        //   });
+      }
+      if (newTetrosRequest.match(action)) {
+        console.log(action.payload);
+        socket.emit("newTetriminos", action.payload);
         //   socket.emit("create_room", {
         //     room: action.payload.room,
         //     mode: action.payload.mode,
