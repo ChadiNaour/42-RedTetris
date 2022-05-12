@@ -101,38 +101,27 @@ export const StyledContainer = styled.div`
       font-size: 4em;
       padding-bottom: 0.5rem;
     }
-    input[type="submit"] {
-      padding: 0.8rem 2rem;
-      border: none;
-      cursor: pointer;
-      border-radius: 2px;
-      background-color: white;
-      font-size: 0.8rem;
-      font-family: ${(props) => props.theme.message.font};
-      letter-spacing: ${(props) => props.theme.message.letterSpacing};
-      color: ${(props) => props.theme.message.color};
-      background: ${(props) => props.theme.message.background};
-      border: 1px solid ${(props) => props.theme.border.avatar};
-      outline: none;
-      &:focus {
-        outline: none;
-        border: none;
-      }
-    }
-    &--input {
-      .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
-        color: white;
-      }
-      flex: 0 0 300px;
-      // height: 20px;
-      label {
-        color: white;
-      }
-      .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-        border-color: #b33030;
-      }
+    // input[type="submit"] {
+    //   // padding: 0.8rem 2rem;
+    //   border: none;
+    //   cursor: pointer;
+    //   border-radius: 2px;
+    //   background-color: white;
+    //   // font-size: 0.8rem;
+    //   font-family: ${(props) => props.theme.message.font};
+    //   letter-spacing: ${(props) => props.theme.message.letterSpacing};
+    //   color: ${(props) => props.theme.message.color};
+    //   background: ${(props) => props.theme.message.background};
+    //   border: 1px solid ${(props) => props.theme.border.avatar};
+    //   outline: none;
+    //   &:focus {
+    //     outline: none;
+    //     border: none;
+    //   }
+    // }
     }
     .input {
+      // line-height : 100px;
       &::placeholder {
         line-height : 50px;
     }

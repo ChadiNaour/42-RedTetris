@@ -12,6 +12,7 @@ import { useStage } from "../hooks/useStage";
 import { useGameStatus } from "../hooks/useGameStatus";
 import { createStage, checkCollision } from "../utils/gameHelpers";
 import { startTheGameRequest, newTetrosRequest } from '../store/slices/playerSlice';
+import {sendStage} from "../store/slices/playerSlice"
 import { getTetrominos } from '../utils/tetrominos'
 import GameOver from '../components/GameOver'
 import { ToastContainer, toast } from "react-toastify";
@@ -105,7 +106,13 @@ const Game = () => {
     rowsCleared
   );
 
-  // console.log('re-render');
+  //Emit the stage
+  useEffect(() => {
+    // console.log(stage);
+    dispatch(sendStage(stage));
+    // socket.emit("Stage", { stage, roomName: props.data.roomName, username });
+  }, [stage]);
+
 
   const movePlayer = dir => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
@@ -136,8 +143,10 @@ const Game = () => {
   //start the game
   useEffect(() => {
     if (gameStart) {
+      // if (!UserPlayer.admin)
+          dispatch(sendStage(stage));
       // console.log("staaaaaart")
-      if (gameOver || UserPlayer.gameEnd &&  tetrominos.length > 0) {
+      if (gameOver || UserPlayer.gameEnd && tetrominos.length > 0) {
         // Reset everything
         setStart(true);
         setStage(createStage());
@@ -199,8 +208,7 @@ const Game = () => {
       // console.log("room", UserPlayer.roomName)
       if (!getTetrimino) {
         // console.log("send request")
-        if (UserPlayer.admin)
-        {
+        if (UserPlayer.admin) {
           // console.log("request sent")
           dispatch(startTheGameRequest(UserPlayer.roomName))
         }
@@ -228,12 +236,12 @@ const Game = () => {
     }
     else {
       // // Game over!
-      if (player.pos.y < 1) {
-        console.log('GAME OVER!!!');
-        setGameOver(true);
-        setDropTime(null);
-        setStart(false)
-      }
+      // if (player.pos.y < 1) {
+      //   console.log('GAME OVER!!!');
+      //   setGameOver(true);
+      //   setDropTime(null);
+      //   setStart(false)
+      // }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
@@ -285,7 +293,7 @@ const Game = () => {
     <StyledContainer onKeyPress={startgame}>
       <ToastContainer />
       <StyledOtherStages>
-        {/* <OtherStages /> */}
+        <OtherStages stages={UserPlayer.stages} />
       </StyledOtherStages>
       <StyledStage>
         {/* <GameOver /> */}

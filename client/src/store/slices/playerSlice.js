@@ -9,6 +9,7 @@ export const playerSlice = createSlice({
     roomError: null,
     avatar: null,
     chat: [],
+    stages: [],
     admin: null,
     adminError: null,
     gameEnd: null,
@@ -87,6 +88,24 @@ export const playerSlice = createSlice({
       state.tetros = newTetros.concat(state.tetros, action.payload)
       // state.tetros.concat(state.tetros, action.payload);
     },
+    sendStage: (action) => {},
+    setStage: (state, action) => {
+      // console.log("in adding action",action.payload)
+      if (!state.stages.length)
+      {
+        state.stages.push(action.payload);
+      }
+      else
+      {
+        let Stg = state.stages.filter((stg) => stg.username === action.payload.username);
+        if (Stg[0]?.username) Stg[0].stage = action.payload.stage;
+        else {
+          state.stages.push(action.payload);
+          // socket.emit("checkStages", { Stages, stage, room: roomname });
+        }
+      }
+    },
+    getStages: (action) => {},
   },
 });
 
@@ -108,7 +127,10 @@ export const {
   setAdminError,
   ShiftTetros,
   newTetrosRequest,
-  concatTetros
+  concatTetros,
+  sendStage,
+  setStage,
+  getStages
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

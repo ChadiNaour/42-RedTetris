@@ -35,6 +35,13 @@ class GamesRoom {
 		});
 	};
 
+	//send stage to user
+	sendStage = (io, room, stage, username) => {
+		return new Promise((resolve, reject) => {
+			io.to(room).emit("getstages", { stage, username });
+		});
+	};
+
 
 }
 

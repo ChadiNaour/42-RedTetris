@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import Tetris from "../Tetris/Tetris";
+import Stage from "../Tetris/Stage";
+import { useSelector } from "react-redux";
 
 const StyledOtherStages = styled.div`
   width: 100%;
@@ -30,32 +31,29 @@ const StyledOtherStages = styled.div`
     gap: 50px;
     /* box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px; */
     /* box-shadow: ${(props) =>
-      props.theme.background.stage} 0px 0px 0px 3px; */
+    props.theme.background.stage} 0px 0px 0px 3px; */
   }
 `;
 
-const OtherStages = () => {
+const OtherStages = (stages) => {
+  const name = useSelector((state) => state.playerReducer.userName);
+  console.log("in stage elements", stages.stages, name);
+  // console.log("username",name);
   return (
     <StyledOtherStages>
       <h1>Other Stages</h1>
-      <div className="stages">
-        <div className="stages-item">
-          {/* <h3>username</h3> */}
-          <Tetris />
-        </div>
-        <div className="stages-item">
-          {/* <h3>username</h3> */}
-          <Tetris />
-        </div>
-        <div className="stages-item">
-          {/* <h3>username</h3> */}
-          <Tetris />
-        </div>
-        <div className="stages-item">
-          {/* <h3>username</h3> */}
-          <Tetris />
-        </div>
-      </div>
+      {stages.stages.map((elm, i) => {
+        return(
+          elm.username !== name && 
+            <div className="stages" key={i}>
+              <div className="stages-item">
+                <h3>{name}</h3>
+                <Stage stage={elm.stage} />
+              </div>
+            </div>
+        )
+      })
+      }
     </StyledOtherStages>
   );
 };

@@ -104,7 +104,7 @@ const Rooms = () => {
           <div className="w-full mt-4 flex flex-col sm:flex-row justify-center align-center md:h-12 md:w-4/12">
             <input
               className={
-                "input mx-auto bg-transparent rounded py-4 px-4 mb-3 h-full focus:outline-none"
+                "input rounded px-4 focus:outline-none"
               }
               type="text"
               placeholder="Room name"
@@ -113,7 +113,7 @@ const Rooms = () => {
                 setRoom(e.target.value);
               }}
             />
-            <div className="h-12 w-full my-2 mx-0 md:mx-6 xl:my-0">
+            <div className="h-12 mx-auto w-full mx-0 md:mx-6 xl:my-0">
               <button
                 style={{ fontFamily: "Pixel", border: "1px solid #f9253c", color: "whitesmoke", backgroundColor: "#212121" }}
                 type="button"
@@ -149,7 +149,7 @@ const Rooms = () => {
                 </li>
               </ul>
             </div>
-            <div className="h-12 my-2 w-full  xl:m-0">
+            <div className="h-12 w-full  xl:m-0">
 
               <StartButton mode={mode} createRoom={createRoom} />
             </div>

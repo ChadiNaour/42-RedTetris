@@ -14,7 +14,10 @@ import {
   startTheGame,
   setAdminError,
   newTetrosRequest,
-  concatTetros
+  concatTetros,
+  sendStage,
+  setStage,
+  getStages
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
@@ -94,12 +97,21 @@ export const socketMiddleware = (store) => {
         // store.dispatch(addToChat(data));
       });
       socket.on("newTetriminos", (data) => {
-        console.log("new tetros",data);
+        console.log("new tetros", data);
         store.dispatch(concatTetros(data));
         //console.log("emited from back data",data);
         // store.dispatch(addToChat(data));
       });
-      // wait_for_admin
+      //get stages
+      socket.on("getstages", (data) => {
+
+        // console.log("new stages", data);
+        store.dispatch(setStage(data))
+
+        // store.dispatch(concatTetros(data));
+        //console.log("emited from back data",data);
+        // store.dispatch(addToChat(data));
+      });
       socket.on("emit-disconnect", () => {
         socket.off("user_exists");
         socket.off("room_exists");
@@ -109,7 +121,8 @@ export const socketMiddleware = (store) => {
         socket.off("update_players");
         socket.off("startGame");
         socket.off("wait_for_admin");
-        socket.off("newTetriminos")
+        socket.off("newTetriminos");
+        socket.off("getstages");
       });
       if (action.payload.hash) {
         //console.log(action.payload.hash);
@@ -160,7 +173,6 @@ export const socketMiddleware = (store) => {
 
       //sending message to room
       if (sendMessage.match(action)) {
-        //console.log("message sended", action.payload);
         socket.emit("send_Message", {
           message: action.payload,
           username: user.userName,
@@ -171,23 +183,21 @@ export const socketMiddleware = (store) => {
       //adding the room with check if its duplicated
       if (startTheGameRequest.match(action)) {
         socket.emit("startgame", action.payload);
-        //   socket.emit("create_room", {
-        //     room: action.payload.room,
-        //     mode: action.payload.mode,
-        //     username: user.userName,
-        //     avatar: user.avatar,
-        //   });
       }
+
+      //request for new tetros
       if (newTetrosRequest.match(action)) {
         console.log(action.payload);
         socket.emit("newTetriminos", action.payload);
-        //   socket.emit("create_room", {
-        //     room: action.payload.room,
-        //     mode: action.payload.mode,
-        //     username: user.userName,
-        //     avatar: user.avatar,
-        //   });
       }
+      //send stage
+      if (sendStage.match(action)) {
+        socket.emit("send_stage", {stage : action.payload ,username: user.userName, room: user.roomName} )
+
+      }
+      // if (getStages.match(action)){
+
+      // }
     }
     next(action);
   };

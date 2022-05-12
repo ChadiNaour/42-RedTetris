@@ -63,12 +63,12 @@ io.on("connection", (socket) => {
       if (data.mode === "battle")
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1, state: false },
+          { name: data.room, mode: data.mode, maxPlayers: 5, playersIn: 1, state: false, stages: [] },
         ];
       else
         rooms = [
           ...rooms,
-          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1, state: false },
+          { name: data.room, mode: data.mode, maxPlayers: 1, playersIn: 1, state: false, stages: [] },
         ];
       //still checking the player
       // players = [...players, { username: data.username, socketId: socket.id, room: data.room, avatar: data.avatar }];
@@ -188,9 +188,9 @@ io.on("connection", (socket) => {
       if (user.admin) {
         const tetros = await tetrominos.getTetriminos();
         game.startGame(io, room, tetros);
-        io.emit("update_rooms", {rooms : rooms});
+        io.emit("update_rooms", { rooms: rooms });
       }
-       else {
+      else {
         io.to(socket.id).emit("wait_for_admin");
       }
     });
@@ -201,6 +201,18 @@ io.on("connection", (socket) => {
     const tetriminos = await tetrominos.getTetriminos();
     console.log(data, tetriminos)
     game.newTetriminos(io, data, tetriminos);
+  });
+
+  //add stage
+  socket.on("send_stage", async (data) => {
+    console.log(data);
+    const player = players.find((p) => p.username === data.username);
+    console.log(player);
+    if (player && player.room === data.room)
+    {
+
+      game.sendStage(io, data.room, data.stage, data.username);
+    }
   });
 
   //disconnect
