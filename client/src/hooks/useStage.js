@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { createStage, STAGE_HEIGHT, checkCollision } from '../utils/gameHelpers';
+import {addWallRequest } from "../store/slices/playerSlice";
+import { useDispatch } from "react-redux";
 
 export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
   const [stage, setStage] = useState(createStage());
   const [nextStage, setNextStage] = useState(createStage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setRowsCleared(0);
@@ -42,6 +45,15 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
             }
           });
         });
+      }
+
+      //Emit the wall
+      console.log("rowscleared",rowsCleared)
+      if (rowsCleared > 1) {
+        console.log("wallllllllllllllllllllll")
+        dispatch(addWallRequest());
+
+        // socket.emit("addWall", { room: roomName, userName: userName });
       }
 
       // Then draw the tetromino

@@ -171,7 +171,7 @@ io.on("connection", (socket) => {
         }
       }
     }
-    console.log("roomPlayers", roomPlayers);
+    // console.log("roomPlayers", roomPlayers);
     io.to(data).emit("update_players", roomPlayers);
     // var clients = io.sockets.clients();
     // var clients = io.sockets.clients(data.room);
@@ -180,11 +180,11 @@ io.on("connection", (socket) => {
 
   //start the game
   socket.on("startgame", (data) => {
-    console.log(data);
+    // console.log(data);
     const room = rooms.find((room) => room.name === data);
-    console.log(room);
+    // console.log(room);
     game.getUser(io, socket.id, room, players).then(async (user) => {
-      console.log(user);
+      // console.log(user);
       if (user.admin) {
         const tetros = await tetrominos.getTetriminos();
         game.startGame(io, room, tetros);
@@ -199,20 +199,25 @@ io.on("connection", (socket) => {
   //new tetros
   socket.on("newTetriminos", async (data) => {
     const tetriminos = await tetrominos.getTetriminos();
-    console.log(data, tetriminos)
+    // console.log(data, tetriminos)
     game.newTetriminos(io, data, tetriminos);
   });
 
   //add stage
   socket.on("send_stage", async (data) => {
-    console.log(data);
+    // console.log(data);
     const player = players.find((p) => p.username === data.username);
-    console.log(player);
+    // console.log(player);
     if (player && player.room === data.room)
     {
 
       game.sendStage(io, data.room, data.stage, data.username);
     }
+  });
+
+  socket.on("addWall", async (data) => {
+    console.log("some data to wall")
+    game.addWall(socket, data.room);
   });
 
   //disconnect

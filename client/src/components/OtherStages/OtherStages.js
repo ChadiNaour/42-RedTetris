@@ -37,20 +37,20 @@ const StyledOtherStages = styled.div`
 
 const OtherStages = (stages) => {
   const name = useSelector((state) => state.playerReducer.userName);
-  console.log("in stage elements", stages.stages, name);
+  // console.log("in stage elements", stages.stages, name);
   // console.log("username",name);
   return (
     <StyledOtherStages>
       <h1>Other Stages</h1>
       {stages.stages.map((elm, i) => {
         return(
-          elm.username !== name && 
+          elm.username !== name &&
             <div className="stages" key={i}>
               <div className="stages-item">
-                <h3>{name}</h3>
+                <h3>{elm.username}</h3>
                 <Stage stage={elm.stage} />
               </div>
-            </div>
+            </div> 
         )
       })
       }

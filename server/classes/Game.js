@@ -42,6 +42,13 @@ class GamesRoom {
 		});
 	};
 
+	//adding wall
+	addWall = (socket, room) => {
+		return new Promise((resolve, reject) => {
+			socket.broadcast.to(room).emit("addWall");
+		});
+	};
+
 
 }
 

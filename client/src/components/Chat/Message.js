@@ -6,7 +6,7 @@ import { useRef, useEffect } from "react";
 const StyledMsgs = styled.div`
   width: 100%;
   height: 100%;
-  max-height: 555px;
+  // max-height: 555px;
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;

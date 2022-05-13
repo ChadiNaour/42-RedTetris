@@ -19,10 +19,11 @@ import { ToastContainer, toast } from "react-toastify";
 
 const StyledContainer = styled.div`
   /* width: 100%; */
+  background-color: red;
   display: grid;
-  background-color: ${(props) => props.theme.background.primary};
+  // background-color: ${(props) => props.theme.background.primary};
   grid-template-columns: 500px 500px 500px;
-  grid-template-rows: 350px 350px 350px;
+  grid-template-rows: 250px 400px 400px;
   // padding: 1rem;
   gap: 1rem;
   justify-content: center;
@@ -30,13 +31,18 @@ const StyledContainer = styled.div`
     "otherstage stage info"
     "otherstage stage msgs"
     "otherstage stage msgs";
+  @media (max-width: 1500px) {
+    background-color: blue;
+    grid-template-columns: 450px 450px 450px !important;
+    grid-template-rows: 250px 325px 325px !important;
+  }
   @media (max-width: 1300px) {
-    /* height: 1800px !important; */
-    grid-template-columns: 300px 300px 300px !important;
-    grid-template-rows: 300px 300px 300px !important;
+    background-color: green;
+    gap: 5px;
+    grid-template-columns: 350px 350px 350px !important;
+    grid-template-rows: 250px 250px 250px !important;
   }
   @media (max-width: 1000px) {
-    /* height: 1800px !important; */
     grid-template-columns: 300px 300px !important;
     grid-template-rows: 400px 600px !important;
     grid-template-areas:

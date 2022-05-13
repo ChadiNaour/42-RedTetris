@@ -5,16 +5,19 @@ import NextCell from './NextCell'
 const StyledInfo = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0.5rem;
+  padding: 1.5rem;
   background-color: ${(props) => props.theme.background.secondary};
   display: flex;
+  justify-content : center;
+  align-items: center;
 `;
 
 const NextTetromino = styled.div`
   flex: 3;
   display: flex;
   flex-direction: column;
-  // background-color: yellow;
+  height: 100%;
+  // background-color: blue;
   h1 {
     width: 100%;
     text-align: center;
@@ -54,6 +57,7 @@ const GameDetails = styled.div`
   display: flex;
   flex-direction: column;
   // background-color: blue;
+  height: 100%;
   h1 {
     width: 100%;
     text-align: center;
@@ -90,7 +94,7 @@ const GameDetails = styled.div`
 
 export const StyledNext = styled.div`
   display: grid;
-  // background-color: red;
+  // background-color: green;
   grid-template-columns: repeat(${props => props.width}, 48px);
   grid-template-rows: repeat(
     ${props => props.height},
@@ -98,32 +102,34 @@ export const StyledNext = styled.div`
   );
   height: 185px;
   width: 180px;
-  // margin-bottom: -70px;
-  // margin-left: 0px;
+
 `;
 
 const Info = ({ score, level, rows, nextStage }) => {
   return (
     <StyledInfo>
-      <GameDetails>
-        <h1>Details</h1>
-        <div className="content">
-          <p>rows : {rows}</p>
-          <p>level : {level}</p>
-          <p >score : {score}</p>
-        </div>
-      </GameDetails>
-      <NextTetromino>
-        <h1>Next</h1>
-        <div className="content">
-          {/* <div className="tetromino"></div> */}
-          <div className="background">
-          <StyledNext width={nextStage[0].length} height={nextStage.length} >
-            {nextStage.map(row => row.map((cell, x) => <NextCell key={x} type={cell[0]} />))}
-          </StyledNext>
+      {/* <div style={{ margin: "5px" }}> */}
+        <GameDetails>
+          {/* <h1>Details</h1> */}
+          <div className="content">
+            <p>rows : {rows}</p>
+            <p>level : {level}</p>
+            <p >score : {score}</p>
           </div>
-        </div>
-      </NextTetromino>
+        </GameDetails>
+        <NextTetromino>
+          {/* sljfnadjkgmadg */}
+          {/* <h1>Next</h1> */}
+          <div className="content">
+            {/* <div className="tetromino"></div> */}
+            <div className="background">
+              <StyledNext width={nextStage[0].length} height={nextStage.length} >
+                {nextStage.map(row => row.map((cell, x) => <NextCell key={x} type={cell[0]} />))}
+              </StyledNext>
+            </div>
+          </div>
+        </NextTetromino>
+      {/* </div> */}
     </StyledInfo>
   );
 };

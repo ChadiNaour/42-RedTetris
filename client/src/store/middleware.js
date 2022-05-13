@@ -17,7 +17,7 @@ import {
   concatTetros,
   sendStage,
   setStage,
-  getStages
+  addWallRequest
 } from "./slices/playerSlice";
 import { updatePlayers } from "./slices/playersSlice";
 import { updateRooms } from "./slices/roomsSlice";
@@ -99,18 +99,13 @@ export const socketMiddleware = (store) => {
       socket.on("newTetriminos", (data) => {
         console.log("new tetros", data);
         store.dispatch(concatTetros(data));
-        //console.log("emited from back data",data);
-        // store.dispatch(addToChat(data));
       });
       //get stages
       socket.on("getstages", (data) => {
-
-        // console.log("new stages", data);
         store.dispatch(setStage(data))
-
-        // store.dispatch(concatTetros(data));
-        //console.log("emited from back data",data);
-        // store.dispatch(addToChat(data));
+      });
+      socket.on("addWall", (data) => {
+        console.log("recieve emit to add wall")
       });
       socket.on("emit-disconnect", () => {
         socket.off("user_exists");
@@ -192,9 +187,16 @@ export const socketMiddleware = (store) => {
       }
       //send stage
       if (sendStage.match(action)) {
-        socket.emit("send_stage", {stage : action.payload ,username: user.userName, room: user.roomName} )
+        socket.emit("send_stage", { stage: action.payload, username: user.userName, room: user.roomName })
 
       }
+      //send stage
+      if (addWallRequest.match(action)) {
+        console.log("jksnjsbvjksv"); 
+        // socket.emit("addWall", {username: user.userName, room: user.roomName })
+
+      }
+      // addWallRequest
       // if (getStages.match(action)){
 
       // }

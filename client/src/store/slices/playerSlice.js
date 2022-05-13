@@ -15,6 +15,7 @@ export const playerSlice = createSlice({
     gameEnd: null,
     gameOver: null,
     tetros: [],
+    wall: false,
   },
   reducers: {
     addUser: (state, action) => {
@@ -105,7 +106,7 @@ export const playerSlice = createSlice({
         }
       }
     },
-    getStages: (action) => {},
+    addWallRequest: (action) => {},
   },
 });
 
@@ -130,7 +131,8 @@ export const {
   concatTetros,
   sendStage,
   setStage,
-  getStages
+  getStages,
+  addWallRequest
 } = playerSlice.actions;
 
 export default playerSlice.reducer;
