@@ -11,7 +11,6 @@ const store = configureStore({
   reducer: {
     connection: connectionReducer,
     playerReducer: playerReducer,
-    roomsReducer: roomsReducer,
     playersReducer: playersReducer,
     playersReducer: playersReducer,
   },
