@@ -9,7 +9,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 const store = configureStore({
   reducer: {
-    connection: connectionReducer,
+    connection: connectnReducer,
     playerReducer: playerReducer,
     playersReducer: playersReducer,
     playersReducer: playersReducer,
