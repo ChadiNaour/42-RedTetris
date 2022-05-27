@@ -13,6 +13,7 @@ const store = configureStore({
     playerReducer: playerReducer,
     roomsReducer: roomsReducer,
     playersReducer: playersReducer,
+    playersReducer: playersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([logger, socketMiddleware, thunk]),
