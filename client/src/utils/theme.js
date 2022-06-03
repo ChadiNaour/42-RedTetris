@@ -21,7 +21,7 @@ export const Theme = {
             padding: "1rem",
         },
         h2: {
-            backgroundColor: "yellow", 
+            backgroundColor: "yellow",
             font: "'Saira', sans-serif",
             fontSize: "2rem",
             fontWeight: "regular",

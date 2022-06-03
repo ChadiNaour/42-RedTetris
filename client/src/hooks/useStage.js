@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { createStage, STAGE_HEIGHT, checkCollision } from '../utils/gameHelpers';
-import {addWallRequest } from "../store/slices/playerSlice";
+import { addWallRequest, AddWall } from "../store/slices/playerSlice";
 import { useDispatch } from "react-redux";
 
-export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
+export const useStage = (player, resetPlayer, nextPiece, gameOver, wall) => {
   const [stage, setStage] = useState(createStage());
   const [nextStage, setNextStage] = useState(createStage(4, 4));
   const [rowsCleared, setRowsCleared] = useState(0);
@@ -11,11 +11,10 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
 
   useEffect(() => {
     setRowsCleared(0);
-    const sweepRows = newStage =>
+    const sweepRows = (newStage) =>
       newStage.reduce((ack, row) => {
-        if (row.findIndex(cell => cell[0] === 0) === -1) {
-          // console.log("hhhhhhhhh", rowsCleared);
-          setRowsCleared(rowsCleared + 1);
+        if (row.findIndex((cell) => cell[0] === 0 || cell[0] === "Wall") === -1) {
+          setRowsCleared((prev) => prev + 1);
           ack.unshift(new Array(newStage[0].length).fill([0, 'clear']));
           return ack;
         }
@@ -48,16 +47,12 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
       }
 
       //Emit the wall
-      console.log("rowscleared",rowsCleared)
       if (rowsCleared > 1) {
         console.log("wallllllllllllllllllllll")
         dispatch(addWallRequest());
-
-        // socket.emit("addWall", { room: roomName, userName: userName });
       }
 
       // Then draw the tetromino
-      // console.log("player and next to draw", player.tetromino, nextPiece.tetromino)
       player.tetromino.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value !== 0) {
@@ -81,11 +76,19 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
 
       // Then check if we got some score if collided
       if (player.collided && !gameOver) {
-        // console.log("call to reset from stage")
         resetPlayer(newStage);
         setNextStage(createStage(4, 4));
         return sweepRows(newStage);
       }
+
+      //Add the wall
+      if (wall) {
+        let wall = new Array(10).fill(["Wall", "merged"]);
+        newStage.push(wall);
+        newStage.shift();
+        dispatch(AddWall({ wall: false }));
+      }
+
       return newStage;
     };
 
@@ -96,7 +99,6 @@ export const useStage = (player, resetPlayer, nextPiece, gameOver) => {
     player.pos.x,
     player.pos.y,
     player.tetromino,
-    resetPlayer,
     nextStage
   ]);
 

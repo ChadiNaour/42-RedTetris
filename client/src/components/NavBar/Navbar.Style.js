@@ -8,7 +8,6 @@ export const StyledNav = styled.nav`
     height: 120px;
     display: flex;
     align-items: center;
-    // margin: 0 auto;
     .list {
         width: 90%;
         height: 100%;
@@ -21,35 +20,34 @@ export const StyledNav = styled.nav`
             height: 100%;
             align-items: center;
             font-size: 2rem;
-            font-family: ${(props) => props.theme.headers.h1.font};
+            font-family: ${(props) => props.theme.headers?.h1?.font};
             &--title {
                 color: whitesmoke;
                 font-size: 70px;
-                font-family: ${(props) => props.theme.headers.h1.font};
+                font-family: ${(props) => props.theme.headers?.h1?.font};
                 &--span {
                     margin-left: 10px;
                     color: #f9253c;
                     @media (max-width: 450px) {
                         margin-left: 5px;
-                      }
+                    }
                 }
                 @media (max-width: 450px) {
                     font-size: 50px;
-                  }
-                  @media (max-width: 375px) {
+                }
+                @media (max-width: 375px) {
                     font-size: 45px;
-                  }
+                }
             }
             @media (max-width: 450px) {
                 font-size: 1rem;
-              }
+            }
             .profile {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
                 height: 60px;
-                // padding: 0 1.5rem 0 0.2rem;
                 border-radius: 50px;
                 .banyola {
                     position: relative;
@@ -63,27 +61,23 @@ export const StyledNav = styled.nav`
                     @media (max-width: 450px) {
                         width: 48px;
                         height: 48px;
-                      }
-                      
+                    }
                 }
                 .username {
                     color: whitesmoke;
                     font-size: 2.6rem;
                     @media (max-width: 450px) {
                         font-size: 2.2rem;
-                      }
+                    }
                 }
                 @media (max-width: 450px) {
                     gap: 5px;
-                  }
+                }
             }
         }
     }
     @media (max-width: 450px) {
         margin: 0;
         padding: 0;
-        // background-color: white;
-        // height: 80px;
-      }
-    
+    }
 `;

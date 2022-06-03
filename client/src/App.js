@@ -1,94 +1,71 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import io from "socket.io-client";
+import "./App.css";
+import Home from "./views/Home/Home";
 import styled, { ThemeProvider } from "styled-components";
-import "react-toastify/dist/ReactToastify.css";
-import Rooms from "./views/Rooms";
 import { Theme } from "./utils/theme";
-import NavBar from "./components/NavBar/NavBar";
-import NoMatch from "./components/NoMatch";
-import Game from "./views/Game";
-import Home from "./views/Home";
-import { startConnecting, isConnected } from "./store/slices/connectionSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Navbar from "./components/NavBar/NavBar";
+import Rooms from "./views/Rooms/Rooms";
 import {
-  Outlet,
-  Route,
-  Routes,
-  Navigate,
-  useLocation,
-  useNavigate,
-} from "react-router";
-import {
-  addRoomRequest,
-  addUser,
-  joinRoomRequest,
+    addPlayerRequest,
+    addRoomRequest,
+    joinRoomFromLink,
 } from "./store/slices/playerSlice";
-import { getRoomsRequest } from "./actions/roomsActions";
+import { startConnecting } from "./store/slices/connectionSlice";
+import Game from "./views/Game/Game";
 
 const StyledApp = styled.div`
-  width: 100vw;
-  height: auto;
-  height: 100vh;
-  background-color: ${(props) => props.theme.background.primary};
+    width: 100vw;
+    height: auto;
+    height: 100vh;
+    background-color: ${(props) => props.theme.background.primary};
 `;
 
-const Layout = () => {
-  return (
-    <StyledApp>
-      <Outlet />
-    </StyledApp>
-  );
-};
-
-const ProtectedRoute = ({ children }) => {
-  const player = useSelector((state) => state.playerReducer);
-
-  if (player.userName)
-    return (
-      <>
-        <NavBar user={player} />
-        <Outlet />
-      </>
-    );
-  return <Navigate to="/home" />;
-};
-
 function App() {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const state = useSelector((state) => state);
-  const rooms = useSelector((state) => state.roomsReducer.rooms);
-
-  const [load, setLoad] = useState(true);
-  const [url, setUrl] = useState({});
-
-  useEffect(() => {
-    dispatch(startConnecting({ hash: location.hash }));
-  }, []);
-
-  useEffect(() => {
-    if (state.playerReducer.userName && state.playerReducer.roomName)
-      navigate("/game");
-  }, [state]);
-
-  useEffect(() => {}, [load, state]);
-
-  return (
-    <ThemeProvider theme={Theme}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route index path="home" element={<Home />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="rooms" element={<Rooms />} />
-            <Route path="*" element={<Game />} />
-          </Route>
-          <Route path="*" element={<NoMatch />} />
-        </Route>
-      </Routes>
-    </ThemeProvider>
-  );
+    const { player } = useSelector((state) => state);
+    const {
+        connection: { connected: connected },
+    } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(startConnecting());
+    }, []);
+    useEffect(() => {
+        if (connected) {
+            let hash = window.location.hash;
+            let room;
+            let firstIndex = hash.indexOf("[");
+            room = hash.substring(1, firstIndex);
+            let username = hash.substring(
+                firstIndex + 1,
+                hash.indexOf("]", firstIndex)
+            );
+            if (username && room)
+                dispatch(joinRoomFromLink({ username, room }));
+            else if (username && !room) {
+                dispatch(
+                    addPlayerRequest({
+                        username: username,
+                        avatar: "Rhett_James.png",
+                    })
+                );
+            }
+        }
+    }, [connected]);
+    return (
+        <ThemeProvider theme={Theme}>
+            <StyledApp>
+                {!player.userName ? (
+                    <Home />
+                ) : (
+                    <>
+                        <Navbar user={player} />
+                        {!player.roomName ? <Rooms /> : <Game />}
+                    </>
+                )}
+            </StyledApp>
+        </ThemeProvider>
+    );
 }
 
 export default App;

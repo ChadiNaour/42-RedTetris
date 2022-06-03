@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6101c7b0.css",
+    "main.js": "/static/js/main.1587a3bc.js",
+    "static/media/redTetris2.png": "/static/media/redTetris2.95adc4c413b884c78ffb.png",
+    "static/media/Saira-VariableFont_wdth,wght.ttf": "/static/media/Saira-VariableFont_wdth,wght.a8d971fcc37af54773d6.ttf",
+    "static/media/Cute_Cowboy.png": "/static/media/Cute_Cowboy.8f7ecd09a621ed5d6c71.png",
+    "static/media/Agoumi.png": "/static/media/Agoumi.e7a0d0da3dbca3cce099.png",
+    "static/media/Gawri.png": "/static/media/Gawri.3d6fc7a11119f7f09646.png",
+    "static/media/Cosmo_Blue.png": "/static/media/Cosmo_Blue.a78182e1ed87e6338b1b.png",
+    "static/media/Benguiat_Bold.ttf": "/static/media/Benguiat_Bold.554409a15fa3b9080111.ttf",
+    "static/media/Rhett_James.png": "/static/media/Rhett_James.7903e521c5d2328ed899.png",
+    "static/media/Morty.png": "/static/media/Morty.ff6654a83b2fdcf22fc9.png",
+    "static/media/Pechorin_Bloom.png": "/static/media/Pechorin_Bloom.2e03fbc15f204e631a0a.png",
+    "static/media/Gadouma.png": "/static/media/Gadouma.14f2f09a417716564ccf.png",
+    "static/media/ChingChang.png": "/static/media/ChingChang.a348e257cd18476b9026.png",
+    "static/media/WinCup.gif": "/static/media/WinCup.3fe7dfc2bac34de8551d.gif",
+    "static/media/DEBUG FREE TRIAL-5b92.woff": "/static/media/DEBUG FREE TRIAL-5b92.e1087c63aae447cd4511.woff",
+    "static/media/Pixel-LCD-7.woff": "/static/media/Pixel-LCD-7.63d9c15192fdeab6d3a6.woff",
+    "index.html": "/index.html",
+    "main.6101c7b0.css.map": "/static/css/main.6101c7b0.css.map",
+    "main.1587a3bc.js.map": "/static/js/main.1587a3bc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6101c7b0.css",
+    "static/js/main.1587a3bc.js"
+  ]
+}

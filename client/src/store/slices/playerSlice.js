@@ -1,138 +1,159 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const playerSlice = createSlice({
-  name: "playerReducer",
-  initialState: {
-    userName: null,
-    error: null,
-    roomName: null,
-    roomError: null,
-    avatar: null,
-    chat: [],
-    stages: [],
-    admin: null,
-    adminError: null,
-    gameEnd: null,
-    gameOver: null,
-    tetros: [],
-    wall: false,
-  },
-  reducers: {
-    addUser: (state, action) => {
-      state.userName = null;
-      state.roomName = null;
-      state.avatar = null;
-      state.error = null;
-      state.roomError = null;
-      // return action;
+    name: "playerReducer",
+    initialState: {
+        userName: null,
+        roomName: null,
+        avatar: null,
+        error: null,
+        roomError: null,
+        loading: false,
+        chat: [],
+        stages: [],
+        admin: null,
+        adminError: null,
+        gameEnd: null,
+        gameOver: null,
+        tetros: [],
+        wall: false,
     },
-    UserAdded: (state, action) => {
-      // //console.log("in here!");
-      state.userName = action.payload.username;
-      state.avatar = action.payload.avatar;
-      state.error = null;
+    reducers: {
+        addPlayerRequest(state) {
+            state.loading = true;
+        },
+        addPlayerSuccess(state, action) {
+            state.userName = action.payload.username;
+            state.avatar = action.payload.avatar;
+            state.loading = false;
+        },
+        seRoomError: (state, action) => {
+            state.roomError = action.payload;
+        },
+        addPlayerFail(state, action) {
+            state.error = action.payload.error;
+            state.loading = false;
+        },
+        addRoomRequest: (state, action) => {
+            state.loading = true;
+        },
+        addRoomName: (state, action) => {
+            state.roomName = action.payload;
+            state.loading = false;
+        },
+        setAdmin: (state, action) => {
+            if (action.payload === 1) state.admin = true;
+            else state.admin = false;
+        },
+        joinRoomRequest: (state, action) => {
+            state.loading = true;
+        },
+        sendMessage: (state) => {
+            state.chat = [...state.chat];
+        },
+        addToChat: (state, action) => {
+            state.chat = [...state.chat, action.payload];
+        },
+        startTheGameRequest: (state) => {
+            state.gameEnd = false;
+            state.gameOver = false;
+            state.adminError = null;
+            state.tetros = [];
+        },
+        startTheGame: (state, action) => {
+            state.gameEnd = false;
+            state.gameOver = false;
+            state.tetros = action.payload;
+            state.adminError = null;
+        },
+        setAdminError: (state, action) => {
+            state.adminError = true;
+        },
+        ShiftTetros: (state, action) => {
+            state.tetros.shift();
+        },
+        newTetrosRequest: (state) => {},
+        concatTetros: (state, action) => {
+            let newTetros = [];
+            state.tetros = newTetros.concat(state.tetros, action.payload);
+            // state.tetros.concat(state.tetros, action.payload);
+        },
+        sendStage: (action) => {},
+        setStage: (state, action) => {
+            // console.log("in adding action",action.payload)
+            if (!state.stages.length) {
+                state.stages.push(action.payload);
+            } else {
+                let Stg = state.stages.filter(
+                    (stg) => stg.username === action.payload.username
+                );
+                if (Stg[0]?.username) Stg[0].stage = action.payload.stage;
+                else {
+                    state.stages.push(action.payload);
+                    // socket.emit("checkStages", { Stages, stage, room: roomname });
+                }
+            }
+        },
+        addWallRequest: (action) => {},
+        AddWall: (state, action) => {
+            console.log("hhhhhhhhhh", action.payload);
+            state.wall = action.payload.wall;
+        },
+        gameOverAction: (state, action) => {
+            state.gameOver = true;
+        },
+        GameFinishedPlayer: (state, action) => {
+            state.gameEnd = true;
+            state.wall = false;
+            state.tetros = [];
+        },
+        leaveRoomRequest: (state, action) => {},
+        leaveRoomSuccess: (state, action) => {
+            state.roomName = null;
+            state.error = null;
+            state.roomError = null;
+            state.loading = false;
+            state.chat = [];
+            state.stages = [];
+            state.admin = null;
+            state.adminError = null;
+            state.gameEnd = null;
+            state.gameOver = null;
+            state.tetros = [];
+            state.wall = false;
+        },
+        joinRoomFromLink: (state, action) => {},
     },
-    addRoomName: (state, action) => {
-      state.roomName = action.payload;
-    },
-    setUserAvatar: (state, action) => {
-      state.avatar = action.avatar;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
-    setRoomError: (state, action) => {
-      state.roomError = action.payload;
-    },
-    addRoomRequest: (state) => {
-      state.roomError = null;
-    },
-    joinRoomRequest: (state) => {
-      state.roomError = null;
-    },
-    addToChat: (state, action) => {
-      state.chat = [...state.chat, action.payload];
-    },
-    sendMessage: (state) => {
-      state.chat = [...state.chat];
-    },
-    creatRoomFromUrl: (action) => { },
-    setAdmin: (state, action) => {
-      if (action.payload === 1)
-        state.admin = true;
-      else
-        state.admin = false;
-    },
-    startTheGameRequest: (state) => {
-      state.gameEnd = null;
-      state.gameOver = null;
-      state.adminError = null;
-      state.tetros = [];
-
-    },
-    startTheGame: (state, action) => {
-      state.gameEnd = false;
-      state.gameOver = false;
-      state.tetros = action.payload;
-      state.adminError = null;
-    },
-    setAdminError: (state, action) => {
-      state.adminError = true;
-    },
-    ShiftTetros: (state) => {
-      state.tetros.shift();
-    },
-    newTetrosRequest: (state) => { },
-    concatTetros: (state, action) => {
-      console.log(action.payload);
-      let newTetros = [];
-      state.tetros = newTetros.concat(state.tetros, action.payload)
-      // state.tetros.concat(state.tetros, action.payload);
-    },
-    sendStage: (action) => {},
-    setStage: (state, action) => {
-      // console.log("in adding action",action.payload)
-      if (!state.stages.length)
-      {
-        state.stages.push(action.payload);
-      }
-      else
-      {
-        let Stg = state.stages.filter((stg) => stg.username === action.payload.username);
-        if (Stg[0]?.username) Stg[0].stage = action.payload.stage;
-        else {
-          state.stages.push(action.payload);
-          // socket.emit("checkStages", { Stages, stage, room: roomname });
-        }
-      }
-    },
-    addWallRequest: (action) => {},
-  },
 });
 
 // Action creators are generated for each case reducer function
 export const {
-  addUser,
-  addRoomName,
-  setUserAvatar,
-  setError,
-  UserAdded,
-  setRoomError,
-  addRoomRequest,
-  joinRoomRequest,
-  addToChat,
-  sendMessage,
-  setAdmin,
-  startTheGameRequest,
-  startTheGame,
-  setAdminError,
-  ShiftTetros,
-  newTetrosRequest,
-  concatTetros,
-  sendStage,
-  setStage,
-  getStages,
-  addWallRequest
+    addPlayerRequest,
+    addPlayerSuccess,
+    addPlayerFail,
+    addRoomRequest,
+    addRoomName,
+    setAdmin,
+    joinRoomRequest,
+    sendMessage,
+    ShiftTetros,
+    addWallRequest,
+    sendStage,
+    newTetrosRequest,
+    startTheGameRequest,
+    addToChat,
+    setAdminError,
+    startTheGame,
+    concatTetros,
+    setStage,
+    AddWall,
+    gameOverRequ,
+    gameOverAction,
+    GameFinishedPlayer,
+    seRoomError,
+    leaveRoomRequest,
+    leaveRoomSuccess,
+    joinRoomFromLink,
 } = playerSlice.actions;
 
 export default playerSlice.reducer;
