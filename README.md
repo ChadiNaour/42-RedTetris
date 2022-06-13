@@ -48,3 +48,19 @@ To see the test coverage, run:
 ```
 npm run test:coverage
 ```
+
+## Project preview
+
+### Home page
+<img src="./screens/login" />
+
+### Lobby 
+
+### Solo game 
+
+### In a 'battle' game (2 players)
+
+### Game Over screen
+
+### Winner screen
+<img src="https://github.com/Ysrbolles/Red-tetris-42Network/blob/main/images/Winner.png" />
