@@ -10,11 +10,11 @@ const StyledUserCard = styled.div`
     gap: 0.2rem;
     h3 {
         font-size: ${(props) => props.theme?.headers?.h3?.fontSize};
-        font-size: 0.8rem;
+        font-size: 1rem;
         font-family: ${(props) => props.theme?.headers?.h3?.font};
         font-weight: ${(props) => props.theme?.headers?.h3?.fontWeight};
         letter-spacing: ${(props) => props.theme?.headers?.h3?.letterSpacing};
-        color: ${(props) => props.theme?.headers?.h3?.color};
+        color: white;
     }
 `;
 

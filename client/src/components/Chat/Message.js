@@ -39,12 +39,13 @@ const StyledMessage = styled.div`
         gap: 0.5rem;
         flex-direction: column;
         .username {
+            color: red;
             text-align: ${(props) => {
                 if (props.type !== 0) return "start";
                 return "end";
             }};
-            font-size: 0.9rem;
-            font-weight: lighter;
+            font-size: 1rem;
+            font-weight: light;
             color: white;
             line-height: 1.5;
             letter-spacing: 2px;

@@ -78,7 +78,7 @@ const Home = () => {
                     }}
                 >
                     <span
-                        title="changeAvatar"
+                        // title="changeAvatar"
                         className="w-52 h-52 relative mb-4"
                         onClick={() => ChangeAvatar(avatar)}
                     >

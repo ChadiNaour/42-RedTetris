@@ -14,7 +14,7 @@ const StyledInfo = styled.div`
 `;
 
 const NextTetromino = styled.div`
-    flex: 3;
+    flex: 2;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -62,19 +62,21 @@ const GameDetails = styled.div`
     }
     .content {
         flex: 1;
+        padding-left: 1rem;
         background-color: black;
         width: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
         flex-direction: column;
+        justify-content: center;
+        align-items: ;
         border-top: 1px solid #b33030;
         border-left: 1px solid #b33030;
         border-bottom: 1px solid #b33030;
     }
     p {
         width: 100%;
-        text-align: center;
+        // background-color: green;
+        text-align: start;
         font-size: 1rem;
         font-family: Pixel, Arial, Helvetica, sans-serif;
         font-weight: ${(props) => props.theme?.message?.fontWeight};
@@ -85,7 +87,7 @@ const GameDetails = styled.div`
     @media (max-width: 1300px) {
         p {
         width: 100%;
-        text-align: center;
+        text-align: start;
         font-size: 75%;
         font-family: Pixel, Arial, Helvetica, sans-serif;
         font-weight: ${(props) => props.theme?.message?.fontWeight};
@@ -97,12 +99,12 @@ const GameDetails = styled.div`
 `;
 
 export const StyledNext = styled.div`
-    // background-color: white;
+    // background-color: blue;
     display: grid;
-    grid-template-columns: repeat(${(props) => props.width}, 48px);
+    grid-template-columns: repeat(${(props) => props.width}, 45px);
     grid-template-rows: repeat(
         ${(props) => props.height},
-        calc(200px / ${(props) => props.width})
+        calc(180px / ${(props) => props.width})
     );
     height: 180px;
     width: 180px;

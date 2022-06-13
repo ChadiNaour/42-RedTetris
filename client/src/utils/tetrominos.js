@@ -142,8 +142,8 @@ export const NEXT_TETROMINOS = {
     Z: {
         shape: [
             [0, 0, 0, 0],
+            ["Z", "Z", 0, 0],
             [0, "Z", "Z", 0],
-            [0, 0, "Z", "Z"],
             [0, 0, 0, 0],
         ],
         color: "227, 78, 78",

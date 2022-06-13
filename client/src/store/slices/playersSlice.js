@@ -10,7 +10,7 @@ export const playersSlice = createSlice({
             state.players = action.payload;
         },
         GameFinishedPlayers: (state, action) => {
-            state.players = [];
+            // state.players = [];
         }
     },
 });

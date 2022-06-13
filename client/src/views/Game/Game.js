@@ -20,7 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const StyledContainer = styled.div`
     display: grid;
-    grid-template-columns: 25% 22% 25%;
+    grid-template-columns: 25% 23% 28%;
     grid-template-rows: 25vh 25vh 30vh ;
     gap: 1rem;
     justify-content: center;
