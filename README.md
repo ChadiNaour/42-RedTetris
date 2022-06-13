@@ -52,15 +52,22 @@ npm run test:coverage
 ## Project preview
 
 ### Home page
-<img src="./screens/login" />
+<img src="./screens/changeAvatar.png" />
 
-### Lobby 
+### Lobby
+<img src="./screens/empty_lobby.png" />
+<img src="./screens/full_lobby.png" />
 
-### Solo game 
+### game launched
+<img src="./screens/admin_game.png" />
+<img src="./screens/game_started.png" />
 
-### In a 'battle' game (2 players)
+### chat & score infos
+<img src="./screens/chat.png" />
+<img src="./screens/rows.png" />
 
 ### Game Over screen
+<img src="./screens/wined_game.png" />
 
 ### Winner screen
-<img src="https://github.com/Ysrbolles/Red-tetris-42Network/blob/main/images/Winner.png" />
+<img src="./screens/winner_view.png" />
