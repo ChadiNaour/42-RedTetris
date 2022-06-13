@@ -44,7 +44,7 @@ It can take some time to load the app, heroku servers must wake up. -->
   The client is running on port 3000. (http://localhost:3000/)
 
 ## TEST
-To see the test, run:
+To see the test coverage, run:
 ```
-npm run coverage
+npm run test:coverage
 ```
