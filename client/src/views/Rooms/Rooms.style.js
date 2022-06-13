@@ -51,18 +51,9 @@ export const StyledRoomCard = styled.div`
 export const StyledContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 2%;
+    // margin-top: 2%;
     justify-content: center;
     align-items: center;
-    .title {
-        width: 100%;
-        text-align: center;
-        font-size: 6em;
-        font-family: ${(props) => props.theme?.headers?.h1?.font};
-        font-weight: ${(props) => props.theme?.headers?.h1?.fontWeight};
-        letter-spacing: ${(props) => props.theme?.headers?.h1?.letterSpacing};
-        color: ${(props) => props.theme?.headers?.h1?.color};
-    }
     .create {
         display: flex;
         width: 100%;
@@ -86,8 +77,14 @@ export const StyledContainer = styled.div`
         align-items: center;
         justify-content: center;
         .title {
-            font-size: 4em;
-            padding-bottom: 0.5rem;
+            font-size: 2.5rem;
+            width: 100%;
+            padding: 0;
+            text-align: center;
+            font-family: ${(props) => props.theme?.headers?.h1?.font};
+            font-weight: ${(props) => props.theme?.headers?.h1?.fontWeight};
+            letter-spacing: ${(props) => props.theme?.headers?.h1?.letterSpacing};
+            color: ${(props) => props.theme?.headers?.h1?.color};
         }
     }
     .input {
@@ -106,8 +103,14 @@ export const JoinRoom = styled.div`
     flex-direction: column;
     align-items: center;
     .title {
-        font-size: 4em;
-        padding-bottom: 0.5rem;
+        font-size: 2.5rem;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+        font-family: ${(props) => props.theme?.headers?.h1?.font};
+        font-weight: ${(props) => props.theme?.headers?.h1?.fontWeight};
+        letter-spacing: ${(props) => props.theme?.headers?.h1?.letterSpacing};
+        color: ${(props) => props.theme?.headers?.h1?.color};
     }
     .rooms-container {
         width: 100%;

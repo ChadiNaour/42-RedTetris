@@ -123,7 +123,7 @@ const Rooms = () => {
                 style={{ backgroundColor: "#333333" }}
             >
                 <div className="create">
-                    <div className="title">create room</div>
+                    <span className="title">create room</span>
                     <div className="w-full mt-4 flex flex-col sm:flex-row justify-center align-center md:h-12 md:w-4/12">
                         <input
                             className={"input h-12 md:h-auto rounded px-4 focus:outline-none"}
@@ -231,7 +231,7 @@ const Rooms = () => {
                 style={{ backgroundColor: "#333333" }}
             >
                 <JoinRoom>
-                    <h2 className="title">join room</h2>
+                    <span className="title">join room</span>
                     <div className="rooms-container">
                         {rooms?.length === 0 && (
                             <div

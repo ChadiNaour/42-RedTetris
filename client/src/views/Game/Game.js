@@ -20,8 +20,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const StyledContainer = styled.div`
     display: grid;
-    grid-template-columns: 500px 500px 500px;
-    grid-template-rows: 250px 400px 400px;
+    grid-template-columns: 25% 22% 25%;
+    grid-template-rows: 25vh 25vh 30vh ;
     gap: 1rem;
     justify-content: center;
     grid-template-areas:
@@ -29,13 +29,15 @@ const StyledContainer = styled.div`
         "otherstage stage msgs"
         "otherstage stage msgs";
     @media (max-width: 1500px) {
-        grid-template-columns: 450px 450px 450px !important;
-        grid-template-rows: 250px 325px 325px !important;
+        // background-color: red;
+        grid-template-columns: 420px 420px 420px !important;
+        grid-template-rows: 230px 270px 270px !important;
     }
     @media (max-width: 1300px) {
+        // background-color: green;
         gap: 10px;
-        grid-template-columns: 30% 30% 30% !important;
-        grid-template-rows: 250px 250px 250px !important;
+        grid-template-columns: 32% 32% 32% !important;
+        grid-template-rows: 220px 220px 220px !important;
     }
     @media (max-width: 1000px) {
         grid-template-columns: 48% 48% !important;
@@ -71,7 +73,7 @@ const StyledOtherStages = styled.div`
     background: blue;
 `;
 const StyledStage = styled.div`
-    background: yellow;
+    // background: yellow;
     grid-area: stage;
     border: 1px solid ${(props) => props.theme.border.stage};
 `;

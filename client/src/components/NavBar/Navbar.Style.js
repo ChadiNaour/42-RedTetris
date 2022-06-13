@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const StyledNav = styled.nav`
     width: 100%;
-    padding-top: 4rem;
+    // padding-top: 4rem;
     padding-inline: 60px;
-    padding-bottom: 6rem;
+    // padding-bottom: 6rem;
     height: 120px;
     display: flex;
     align-items: center;
