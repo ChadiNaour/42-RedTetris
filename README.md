@@ -59,7 +59,8 @@ npm run test:coverage
 <img src="./screens/full_lobby.png" />
 
 ### game launched
-<img src="./screens/admin_game.png" />
+<img width="1440" alt="other_player" src="https://user-images.githubusercontent.com/52707617/173421430-7132adba-055f-4c35-b97b-ed9daa88cf77.png">
+<img width="1440" alt="player_admin" src="https://user-images.githubusercontent.com/52707617/173422122-a4ad44cd-cc98-4709-9efc-3382a7e70e27.png">
 <img src="./screens/game_started.png" />
 
 ### chat & score infos
